@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:id="@+id/ll_root_foot_video_fragment"
+              android:layout_marginLeft="36px"
+              android:background="@color/white"
+              android:layout_marginRight="36px"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView android:layout_width="wrap_content"
+              android:id="@+id/tv_title_recycler_foot_video_fragment"
+              android:layout_marginTop="40px"
+              android:layout_marginBottom="40px"
+              android:ellipsize="end"
+              android:maxLines="1"
+              android:text="口味研究所"
+              android:textSize="38px"
+              android:textColor="@color/fragment_video_text_title_blue"
+              android:layout_height="wrap_content"/>
+
+    <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
+                                            android:id="@+id/recyclerview_foot_video_fragment"
+                                            android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

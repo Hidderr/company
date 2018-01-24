@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tl="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:fitsSystemWindows="true"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:paddingLeft="36px"
+                  android:orientation="horizontal"
+                  android:id="@+id/ill_head_activity_main_new"
+                  android:gravity="center_vertical"
+                  android:background="@color/white"
+                  android:paddingRight="36px"
+                  android:layout_height="88px">
+
+        <ImageView android:layout_width="66px"
+                   android:layout_height="66px"
+                   android:id="@+id/iv_user_head_activity_main_new"
+                   android:src="@drawable/activity_main_user_head"
+                   android:layout_marginRight="10px"/>
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/tablayout_activity_main_new"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            tl:tl_tab_space_equal="true"
+            tl:tl_textSelectColor="#007aff"
+            tl:tl_textUnselectColor="#a3afc2"
+            tl:tl_textsize="38px"
+            android:layout_height="match_parent"
+            tl:tl_indicator_color="#007aff"
+            tl:tl_indicator_height="3px"
+            tl:tl_indicator_width="30px"/>
+
+        <ImageView android:layout_width="48px"
+                   android:layout_marginLeft="10px"
+                   android:id="@+id/iv_search_activity_main_new"
+                   android:src="@drawable/activity_main_search"
+                   android:layout_height="48px"/>
+
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+          android:background="#e9eff5"
+          android:layout_height="1px"/>
+
+
+    <android.support.v4.view.ViewPager  android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:id="@+id/vp_activity_main_new">
+    </android.support.v4.view.ViewPager>
+
+
+</LinearLayout>

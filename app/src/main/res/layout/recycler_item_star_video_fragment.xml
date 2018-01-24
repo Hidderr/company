@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="590px"
+              android:layout_marginBottom="25px"
+              android:layout_marginRight="25px"
+              android:layout_height="150px">
+
+    <Button android:layout_width="25px"
+            android:layout_marginRight="10px"
+            android:textColor="@color/white"
+            android:background="@drawable/fragment_video_root_item_tag"
+            android:id="@+id/btn_ranking_star_recycler_item_video_fragment"
+            android:layout_height="40px"/>
+
+    <ImageView android:layout_width="100px"
+               android:id="@+id/iv_star_recycler_item_video_fragment"
+               android:src="@drawable/icon_default"
+               android:scaleType="fitXY"
+               android:layout_marginRight="25px"
+               android:layout_height="match_parent"/>
+
+    <LinearLayout android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:orientation="vertical"
+                  android:layout_height="match_parent">
+
+        <TextView android:layout_width="wrap_content"
+                  android:id="@+id/tv_title_star_recycler_video_fragment"
+                  android:layout_marginTop="20px"
+                  android:layout_marginBottom="25px"
+                  android:ellipsize="end"
+                  android:maxLines="1"
+                  android:text="影视标题"
+                  android:textSize="34px"
+                  android:textColor="@color/fragment_video_text_title_blue"
+                  android:layout_height="wrap_content"/>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content">
+
+            <TextView android:layout_width="wrap_content"
+                      android:id="@+id/tv_evaluation_star_recycler_item_video_fragment"
+                      android:text="评价："
+                      android:ellipsize="end"
+                      android:maxLines="1"
+                      android:textSize="26px"
+                      android:textColor="#b9c6d8"
+                      android:layout_height="wrap_content"/>
+
+            <RatingBar
+                android:id="@+id/ratingbar_star_recycler_item_video_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginLeft="4dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:paddingTop="3dp"
+                android:progressDrawable="@drawable/custom_ratingbar"
+                android:rating="1" />
+
+        </LinearLayout>
+
+        <View android:layout_width="match_parent"
+              android:layout_weight="1"
+              android:layout_height="0dp"/>
+
+        <View android:layout_width="match_parent"
+              android:background="#e9eff5"
+              android:layout_height="1px"/>
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

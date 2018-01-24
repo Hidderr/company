@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:id="@+id/ll_root_time_p_t_recycler_item_video_fragment"
+              android:layout_width="206px"
+              android:layout_height="wrap_content">
+
+   <LinearLayout android:layout_width="match_parent"
+                 android:gravity="center_vertical"
+                 android:layout_height="wrap_content">
+
+      <View android:layout_width="8px"
+            android:id="@+id/v_circle_time_p_t_recycler_item_video_fragment"
+            android:background="@drawable/shape_circle"
+            android:layout_height="8px"/>
+
+      <View android:layout_width="match_parent"
+            android:background="#e9eff5"
+            android:id="@+id/v_line_time_p_t_recycler_item_video_fragment"
+            android:layout_height="1px"/>
+
+   </LinearLayout>
+
+   <TextView android:layout_width="wrap_content"
+             android:gravity="center_vertical"
+             android:layout_marginTop="25px"
+             android:layout_marginBottom="25px"
+             android:id="@+id/tv_date_time_p_t_recycler_item_video_fragment"
+             android:text="2018.1.20"
+             android:ellipsize="end"
+             android:maxLines="1"
+             android:textSize="24px"
+             android:textColor="@color/fragment_video_text_des_blue"
+             android:layout_height="wrap_content"/>
+
+   <ImageView android:layout_width="196px"
+              android:id="@+id/iv_time_p_t_recycler_item_video_fragment"
+              android:src="@drawable/icon_default"
+              android:scaleType="fitXY"
+              android:layout_height="294px"/>
+
+   <TextView android:layout_width="wrap_content"
+             android:gravity="center_vertical"
+             android:layout_marginTop="25px"
+             android:layout_marginBottom="25px"
+             android:id="@+id/tv_title_time_p_t_recycler_item_video_fragment"
+             android:text="影视标题"
+             android:ellipsize="end"
+             android:maxLines="1"
+             android:textSize="28px"
+             android:textColor="@color/fragment_video_text_title_blue"
+             android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

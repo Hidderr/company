@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="294px"
+              android:layout_marginRight="10px"
+              android:layout_height="wrap_content">
+
+        <ImageView android:layout_width="match_parent"
+                   android:id="@+id/iv_p_t_d_recycler_item_video_fragment"
+                   android:src="@drawable/icon_default"
+                   android:scaleType="fitXY"
+                   android:layout_height="196px"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_marginTop="25px"
+                  android:id="@+id/tv_title_p_t_d_recycler_item_video_fragment"
+                  android:text="影视标题"
+                  android:ellipsize="end"
+                  android:maxLines="1"
+                  android:textSize="28px"
+                  android:textColor="@color/fragment_video_text_title_blue"
+                  android:layout_height="wrap_content"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_marginTop="25px"
+                  android:id="@+id/tv_des_p_t_d_recycler_item_video_fragment"
+                  android:text="影视描述"
+                  android:ellipsize="end"
+                  android:maxLines="1"
+                  android:textSize="22px"
+                  android:layout_marginBottom="40px"
+                  android:textColor="#b9c6d8"
+                  android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

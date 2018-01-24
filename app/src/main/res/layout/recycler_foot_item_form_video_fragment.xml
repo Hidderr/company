@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <View android:layout_width="match_parent"
+          android:layout_marginBottom="40px"
+          android:background="#e9eff5"
+          android:layout_height="1px"/>
+
+    <ImageView android:layout_width="match_parent"
+               android:id="@+id/iv_form_recycler_foot_item_video_fragment"
+               android:src="@drawable/icon_default"
+               android:scaleType="fitXY"
+               android:layout_height="280px"/>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="horizontal"
+                  android:layout_marginTop="25px"
+                  android:layout_marginBottom="25px"
+                  android:layout_height="wrap_content">
+
+        <TextView android:layout_width="wrap_content"
+                  android:gravity="center_vertical"
+                  android:id="@+id/tv_title_form_recycler_foot_item_video_fragment"
+                  android:text="影视标题"
+                  android:ellipsize="end"
+                  android:maxLines="1"
+                  android:textSize="30px"
+                  android:textColor="@color/fragment_video_text_title_blue"
+                  android:layout_height="wrap_content"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:gravity="center_vertical"
+                  android:paddingLeft="30px"
+                  android:paddingRight="30px"
+                  android:paddingBottom="10px"
+                  android:paddingTop="10px"
+                  android:layout_marginLeft="220px"
+                  android:background="@drawable/shape_coner_rectangle"
+                  android:id="@+id/tv1_title_form_recycler_foot_item_video_fragment"
+                  android:text="类型"
+                  android:ellipsize="end"
+                  android:maxLines="1"
+                  android:textSize="22px"
+                  android:textColor="@color/fragment_video_text_des_blue"
+                  android:layout_height="wrap_content"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_marginLeft="20px"
+                  android:layout_marginRight="20px"
+                  android:gravity="center_vertical"
+                  android:paddingLeft="30px"
+                  android:paddingRight="30px"
+                  android:paddingBottom="10px"
+                  android:paddingTop="10px"
+                  android:background="@drawable/shape_coner_rectangle"
+                  android:id="@+id/tv2_title_form_recycler_foot_item_video_fragment"
+                  android:text="类型"
+                  android:ellipsize="end"
+                  android:maxLines="1"
+                  android:textSize="22px"
+                  android:textColor="@color/fragment_video_text_des_blue"
+                  android:layout_height="wrap_content"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:gravity="center_vertical"
+                  android:paddingLeft="30px"
+                  android:paddingRight="30px"
+                  android:paddingBottom="10px"
+                  android:paddingTop="10px"
+                  android:background="@drawable/shape_coner_rectangle"
+                  android:id="@+id/tv3_title_form_recycler_foot_item_video_fragment"
+                  android:text="类型"
+                  android:ellipsize="end"
+                  android:maxLines="1"
+                  android:textSize="22px"
+                  android:textColor="@color/fragment_video_text_des_blue"
+                  android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

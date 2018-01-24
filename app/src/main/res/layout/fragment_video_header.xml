@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <com.example.alan.myapplication.alan.view.InterceptViewPager android:layout_width="match_parent"
+                                                                 android:id="@+id/vp_header_video_fragment"
+                                                                 android:layout_height="wrap_content">
+
+    </com.example.alan.myapplication.alan.view.InterceptViewPager>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:id="@+id/ll_video_nav_header_video_fragment"
+                  android:layout_marginLeft="36px"
+                  android:layout_marginRight="36px"
+                  android:layout_marginBottom="40px"
+                  android:layout_marginTop="80px"
+                  android:layout_height="wrap_content">
+
+        <ImageView android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:id="@+id/iv_my_movie_header_video_fragment"
+                   android:src="@drawable/fragment_video_header_my_movie"
+                   android:layout_height="110px"/>
+
+        <ImageView android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:id="@+id/iv_see_live_header_video_fragment"
+                   android:src="@drawable/fragment_video_header_see_live"
+                   android:layout_height="110px"/>
+
+        <ImageView android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:id="@+id/iv_find_movie_header_video_fragment"
+                   android:src="@drawable/fragment_video_header_find_movie"
+                   android:layout_height="110px"/>
+
+
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+          android:background="#ebf0f4"
+          android:layout_height="23px"/>
+
+
+</LinearLayout>
