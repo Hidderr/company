@@ -22,7 +22,7 @@ import com.example.alan.myapplication.alan.constants.AppUrl;
 import com.example.alan.myapplication.alan.http.HttpFrame;
 import com.example.alan.myapplication.alan.http.HttpManager;
 import com.example.alan.myapplication.alan.view.InterceptViewPager;
-import com.zhy.magicviewpager.transformer.ScaleInTransformer;
+import com.example.alan.myapplication.alan.view.vp.ScaleInTransformer;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -33,6 +33,8 @@ import butterknife.ButterKnife;
 
 import static com.example.alan.myapplication.R.id.iv_my_movie_header_video_fragment;
 import static com.example.alan.myapplication.alan.global.GlobalApplication.context;
+
+//import com.zhy.magicviewpager.transformer.ScaleInTransformer;
 
 
 /**

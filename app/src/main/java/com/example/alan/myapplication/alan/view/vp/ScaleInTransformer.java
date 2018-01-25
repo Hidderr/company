@@ -5,13 +5,16 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+
+import com.example.alan.myapplication.R;
+
 /**
  * Created by Alan on 2018/1/22.
  */
 
 public class ScaleInTransformer extends BasePageTransformer
 {
-    private static final float DEFAULT_MIN_SCALE = 0.85f;
+    private static final float DEFAULT_MIN_SCALE = 0.83f;
     private float mMinScale = DEFAULT_MIN_SCALE;
 
     public ScaleInTransformer()
@@ -40,6 +43,7 @@ public class ScaleInTransformer extends BasePageTransformer
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void pageTransform(View view, float position)
     {
+        view = view.findViewById(R.id.iv_vp_item_video_fragment);
         int pageWidth = view.getWidth();
         int pageHeight = view.getHeight();
 
