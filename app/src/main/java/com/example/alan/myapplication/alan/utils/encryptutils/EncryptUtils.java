@@ -2,7 +2,7 @@ package com.example.alan.myapplication.alan.utils.encryptutils;
 
 import android.util.Base64;
 
-import com.daishuhaoche.daishuserverapp.utils.CloseUtils;
+import com.example.alan.myapplication.alan.utils.CloseUtils;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -9,11 +9,11 @@ import java.util.List;
  *影视页VideoFragment的footer口味研究所的bean
  */
 
-public class VideoFragmentFooter  {
+public class VideoFragmentFooterBean {
     /**
      * code : 200
      * msg : SUCCESS
-     * data : {"total_page":1,"individuality":[{"type":2,"content_id":"3838002","img":"https://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d","name":"极寒之地","tag":"动作,冒险,科幻"},{"type":1,"content_id":"66e2f8965a095c9897883ade9942a9f5","img":"http://pic2.qiyipic.com/image/20150316/4b/7a/1f/a_50000313_m_601_m2_260_360.jpg","name":"寒战1","area":"","directors":"\u0081梁乐民,陆剑青 ","actors":"郭富城,梁家辉,李治廷,彭于晏,杨采妮 \u0090","showtime":"2012-11-08","score":9.2},{"type":1,"content_id":"66e2f8965a095c9897883ade9942a9f5","img":"http://pic2.qiyipic.com/image/20150316/4b/7a/1f/a_50000313_m_601_m2_260_360.jpg","name":"寒战2","area":"","directors":"\u0081梁乐民,陆剑青 ","actors":"郭富城,梁家辉,李治廷,彭于晏,杨采妮\u0090","showtime":"2016-07-08","score":8.7},{"type":1,"content_id":"66e2f8965a095c9897883ade9942a9f5","img":"http://pic2.qiyipic.com/image/20150316/4b/7a/1f/a_50000313_m_601_m2_260_360.jpg","name":"寒战3","area":"","directors":"\u0081梁乐民,陆剑青 ","actors":"郭富城,梁家辉,李治廷,彭于晏,杨采妮","showtime":"2017-11-08","score":8.9}]}
+     * mItemDataList : {"total_page":1,"individuality":[{"type":2,"content_id":"3838002","img":"https://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d","name":"极寒之地","tag":"动作,冒险,科幻"},{"type":1,"content_id":"66e2f8965a095c9897883ade9942a9f5","img":"http://pic2.qiyipic.com/image/20150316/4b/7a/1f/a_50000313_m_601_m2_260_360.jpg","name":"寒战1","area":"","directors":"\u0081梁乐民,陆剑青 ","actors":"郭富城,梁家辉,李治廷,彭于晏,杨采妮 \u0090","showtime":"2012-11-08","score":9.2},{"type":1,"content_id":"66e2f8965a095c9897883ade9942a9f5","img":"http://pic2.qiyipic.com/image/20150316/4b/7a/1f/a_50000313_m_601_m2_260_360.jpg","name":"寒战2","area":"","directors":"\u0081梁乐民,陆剑青 ","actors":"郭富城,梁家辉,李治廷,彭于晏,杨采妮\u0090","showtime":"2016-07-08","score":8.7},{"type":1,"content_id":"66e2f8965a095c9897883ade9942a9f5","img":"http://pic2.qiyipic.com/image/20150316/4b/7a/1f/a_50000313_m_601_m2_260_360.jpg","name":"寒战3","area":"","directors":"\u0081梁乐民,陆剑青 ","actors":"郭富城,梁家辉,李治廷,彭于晏,杨采妮","showtime":"2017-11-08","score":8.9}]}
      */
 
     public int code;

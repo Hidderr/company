@@ -7,14 +7,26 @@ package com.example.alan.myapplication.alan.constants;
 
 public class AppUrl {
 
-    public static final String BASE_URL = "http://app.stbloc.com/v1/"; // 正式域名
-    public static final String BASE_CAR_PARAMETER_DETAIL = "http://app.stbloc.com/index/goods/cardetail/id/"; // 汽车参数详情baseurl
-    public static final String BASE_XIEYI_URL = "http://app.stbloc.com/"; // 注册协议
-    public static final String BASE_REPAIR_URL = "http://app.stbloc.com/index/index/weixiudian/id/"; // 维修点详情拼接url
+    /**
+     * 正式根域名
+     */
+//    public static final String BASE_URL = "https://screenapi.xgimi.com"; // 正式域名
+    /**
+     * 测试根域名
+     */
+    public static final String BASE_URL = "http://10.40.33.172"; // 测试域名
 
-// public static final String BASE_URL = "http://test.stbloc.com/v1/"; // 正式域名
-// public static final String BASE_XIEYI_URL = "http://test.stbloc.com/"; // 注册协议
-// public static final String BASE_REPAIR_URL = "http://test.stbloc.com/index/index/weixiudian/id/"; // 维修点详情拼接url
-// public static final String BASE_CAR_PARAMETER_DETAIL = "http://test.stbloc.com/index/goods/cardetail/id/"; // 汽车参数详情baseurl
-//
+
+    /**
+     * 影视的bannerGet
+     */
+    public static final String HOMEPAGE_BANNER = "/v4/home_page_banner";
+    /**
+     * 影视专题Get
+     */
+    public static final String HOMEPAGE_SUBJECT = "/v4/home_page_subject";
+    /**
+     * 口味研究所Get
+     */
+    public static final String HOME_PAGE_INDIVIDUALITY = "/v4/home_page_individuality";
 }

@@ -1,8 +1,7 @@
 package com.example.alan.myapplication.alan.fragment;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
-
-import butterknife.ButterKnife;
 
 /**
  * Created by Alan on 2018/1/24.
@@ -10,9 +9,12 @@ import butterknife.ButterKnife;
  */
 
 public class ABaseFragment extends  Fragment{
+    public Context mFragmentContext;
+
     @Override
-    public void onDestroyView() {
-        ButterKnife.unbind(this);
-        super.onDestroyView();
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mFragmentContext = context;
     }
+
 }

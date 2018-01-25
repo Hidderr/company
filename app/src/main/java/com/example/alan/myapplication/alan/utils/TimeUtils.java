@@ -2,7 +2,7 @@ package com.example.alan.myapplication.alan.utils;
 
 import android.annotation.SuppressLint;
 
-import com.daishuhaoche.daishuserverapp.constants.TimeConstants;
+import com.example.alan.myapplication.alan.constants.TimeConstants;
 
 import java.text.DateFormat;
 import java.text.ParseException;

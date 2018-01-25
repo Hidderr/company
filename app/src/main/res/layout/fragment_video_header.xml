@@ -5,11 +5,27 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-    <com.example.alan.myapplication.alan.view.InterceptViewPager android:layout_width="match_parent"
-                                                                 android:id="@+id/vp_header_video_fragment"
-                                                                 android:layout_height="wrap_content">
 
-    </com.example.alan.myapplication.alan.view.InterceptViewPager>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="500px"
+        android:clipChildren="false"
+        android:layout_centerInParent="true"
+    >
+
+
+        <com.example.alan.myapplication.alan.view.InterceptViewPager android:layout_width="match_parent"
+        android:id="@+id/vp_header_video_fragment" android:clipChildren="false"
+                                                                     android:layout_gravity="center"
+        android:layout_height="wrap_content"
+                                                                     android:layout_marginLeft="30px"
+                                                                     android:layout_marginRight="30px"
+        >
+
+        </com.example.alan.myapplication.alan.view.InterceptViewPager>
+
+
+    </FrameLayout>
 
     <LinearLayout android:layout_width="match_parent"
                   android:id="@+id/ll_video_nav_header_video_fragment"

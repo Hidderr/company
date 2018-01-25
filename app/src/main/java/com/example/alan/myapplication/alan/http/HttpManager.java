@@ -1,6 +1,9 @@
 package com.example.alan.myapplication.alan.http;
 
+import com.google.gson.Gson;
+
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by Alan on 2018/1/4.
@@ -23,6 +26,17 @@ public class HttpManager {
             }
         }
         return mHttpManager;
+    }
+
+    /**get网络请求带有参数
+     * @param url
+     * @param params
+     * @param callBack
+     * @param obj
+     */
+    public void getCallWithParamas(String url, LinkedHashMap<String,String> params, HttpFrame.ServerCallBack callBack, Object obj){
+        HttpFrame.getInstance().getFromServerHasParamas(url, params, callBack, obj);
+
     }
 
     /**get网络请求
@@ -88,5 +102,12 @@ public class HttpManager {
      */
     public void cancelCallByTag(Object obj){
         HttpFrame.getInstance().cancelCallByTag(obj);
+    }
+
+    /**获取Gson
+     * @return
+     */
+    public Gson getGson(){
+        return  HttpFrame.getInstance().getGson();
     }
 }

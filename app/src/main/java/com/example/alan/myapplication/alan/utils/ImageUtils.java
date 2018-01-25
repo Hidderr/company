@@ -35,7 +35,7 @@ import android.support.annotation.IntRange;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
-import com.daishuhaoche.daishuserverapp.constants.MemoryConstants;
+import com.example.alan.myapplication.alan.constants.MemoryConstants;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;

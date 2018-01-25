@@ -3,16 +3,24 @@ package com.example.alan.myapplication.alan.http;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.example.alan.myapplication.alan.constants.AppUrl;
 import com.example.alan.myapplication.alan.global.GlobalApplication;
 import com.example.alan.myapplication.alan.utils.AllUtils;
+import com.example.alan.myapplication.alan.utils.encryptutils.EasyAES;
 import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -82,6 +90,14 @@ public class HttpFrame {
     }
 
 
+    public Gson getGson(){
+        if (mGson == null) {
+            mGson = new Gson();
+        }
+        return mGson;
+    }
+
+
 
 
 
@@ -89,9 +105,15 @@ public class HttpFrame {
 
 
     public void getFromServer(String url, ServerCallBack callBack, Object obj){
+        LinkedHashMap<String,String>  paramas =  new LinkedHashMap<>();
+        try {
+            url = url+"?param="+getEncodeParam(paramas);
+            Log.w("TAG","url:getFromServer:  ................,,,,,,,,,,     "+url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (mOkHttpClient != null) {
             Request request = new Request.Builder()
-                    .header("token",TOKEN+"")
                     .get()
                     .tag(obj)
                     .cacheControl(AllUtils.getInstance().isNetworkConnected()==false? CacheControl.FORCE_CACHE: CacheControl.FORCE_NETWORK)
@@ -105,6 +127,97 @@ public class HttpFrame {
 
 
 
+    public void getFromServerHasParamas(String url, LinkedHashMap<String,String> paramas, ServerCallBack callBack, Object obj){
+
+        try {
+            url = url+"?param="+getEncodeParam(paramas);
+            Log.w("TAG","url:getFromServerHasParamas:  ................,,,,,,,,,,     "+url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//        Log.w("TAG","url:getFromServerHasParamas:  ................,,,,,,,,,,     "+url);
+        if (mOkHttpClient != null) {
+            Request request = new Request.Builder()
+                    .get()
+                    .tag(obj)
+                    .cacheControl(AllUtils.getInstance().isNetworkConnected()==false? CacheControl.FORCE_CACHE: CacheControl.FORCE_NETWORK)
+                    .url(AppUrl.BASE_URL+url)
+                    .build();
+            httpCall(request,callBack);
+        }
+
+    }
+
+
+
+    public  String getEncodeParam(LinkedHashMap<String,String> params) throws Exception {
+
+        JSONObject j = new JSONObject();
+        try {
+
+
+            Iterator<String> keys = params.keySet().iterator();
+            Iterator<String> values = params.values().iterator();
+
+            for (int i=0;i<params.size();i++ ) {
+                if (true) {
+                    String key = keys.next();
+                    String value = values.next();
+                    if ("page".equals(key)) {
+                        j.put("page", Integer.valueOf(value));
+                    } else if ("category_id".equals(key)) {
+                        j.put("category_id", Integer.valueOf(value));
+                    } else if ("id".equals(key)) {
+                        j.put("id", Integer.valueOf(value));
+                    }else if("user_id".equals(key)){
+                        j.put("user_id", Integer.valueOf(value));
+                    }
+                    else if("mac_id".equals(key)){
+                        j.put("mac_id", Integer.valueOf(value));
+                    }
+                    else {
+                        j.put(key, value);
+                    }
+                }
+            }
+
+            j.put("time", String.valueOf(System.currentTimeMillis() / 1000));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+//        String res = URLEncoder.encode(EasyAES.getInstance().encrypt(j.toString()), "UTF-8");
+//        XGIMILOG.E("\n未加密参数 : " + j.toString()
+//                + "\n 加密参数 : " + EasyAES.getInstance().encrypt(j.toString()).trim()
+//                + "\nurlEncode : " + res
+//        );
+
+//        System.out.println("url:json:  .......................................  "+j.toString());
+        Log.w("TAG","url:json:  ................,,,,,,,,,,     "+j.toString());
+        String s = EasyAES.getInstance().encrypt(j.toString().trim());
+
+        return getURLEncoderString(s);
+    }
+
+    /**
+     * URL 转码
+     *
+     * @return String
+     * @author lifq
+     * @date 2015-3-17 下午04:10:28
+     */
+    public  String getURLEncoderString(String str) {
+        String result = "";
+        if (null == str) {
+            return "";
+        }
+        try {
+            result =     URLEncoder.encode( str, "UTF-8" );
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 
 
@@ -273,7 +386,9 @@ public class HttpFrame {
                 public void onResponse(Call call, Response response) throws IOException {
                     final int code = response.code();
                     final String json = response.body().string();
-                    if(code>=200 && code<300){
+                    Log.w("TAG","JSON:  ................,,,,,,,,,,     "+json);
+
+                    if(json.contains("SUCCESS")){
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {

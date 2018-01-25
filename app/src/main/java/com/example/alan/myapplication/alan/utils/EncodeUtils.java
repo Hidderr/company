@@ -1,7 +1,5 @@
 package com.example.alan.myapplication.alan.utils;
 
-import android.os.Build;
-import android.text.Html;
 import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
@@ -173,18 +171,18 @@ public class EncodeUtils {
         return sb.toString();
     }
 
-    /**
-     * Html 解码
-     *
-     * @param input 待解码的字符串
-     * @return Html 解码后的字符串
-     */
-    @SuppressWarnings("deprecation")
-    public static CharSequence htmlDecode(final String input) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return Html.fromHtml(input, Html.FROM_HTML_MODE_LEGACY);
-        } else {
-            return Html.fromHtml(input);
-        }
-    }
+//    /**
+//     * Html 解码
+//     *
+//     * @param input 待解码的字符串
+//     * @return Html 解码后的字符串
+//     */
+//    @SuppressWarnings("deprecation")
+//    public static CharSequence htmlDecode(final String input) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            return Html.fromHtml(input, Html.FROM_HTML_MODE_LEGACY);
+//        } else {
+//            return Html.fromHtml(input);
+//        }
+//    }
 }
