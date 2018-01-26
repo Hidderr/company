@@ -84,6 +84,22 @@
 
 
 
+    <!--没有ActionBar主题-->
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="android:textColor">#000</item>
+        <item name="colorPrimary">#fff</item>
+        <item name="colorPrimaryDark">#fff</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!--设置menu中item的图标颜色-->
+        <item name="android:textColorSecondary">#ffffff</item>
+    </style>
+
+
+    <style name="AppTheme.NoActionBar.Android5" parent="AppTheme.NoActionBar">
+        <item name="colorButtonNormal">#fff</item>
+        <item name="colorControlHighlight">#fff</item>
+    </style>
 
     <!--CollapsingToolbarLayout展开时标题文字样式-->
     <style name="ExpandedTitleTextAppearance" parent="TextAppearance.AppCompat.Title">

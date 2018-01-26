@@ -34,7 +34,7 @@ public class HttpManager {
      * @param callBack
      * @param obj
      */
-    public void getCallWithParamas(String url, LinkedHashMap<String,String> params, HttpFrame.ServerCallBack callBack, Object obj){
+    public void getCallWithParamas(String url, LinkedHashMap<String,String> params, ServerCallBack callBack, Object obj){
         HttpFrame.getInstance().getFromServerHasParamas(url, params, callBack, obj);
 
     }
@@ -43,7 +43,7 @@ public class HttpManager {
      * @param url
      * @param callBack
      */
-    public void getCall(String url, HttpFrame.ServerCallBack callBack, Object obj){
+    public void getCall(String url,ServerCallBack callBack, Object obj){
         HttpFrame.getInstance().getFromServer(url,callBack,obj);
     }
 
@@ -53,7 +53,7 @@ public class HttpManager {
      * @param callBack
      * @param map
      */
-    public void postCall(String url, HttpFrame.ServerCallBack callBack, HashMap<String,String> map, Object obj){
+    public void postCall(String url, ServerCallBack callBack, HashMap<String,String> map, Object obj){
         HttpFrame.getInstance().postFromServer(url,callBack,map,obj);
     }
 
@@ -63,7 +63,7 @@ public class HttpManager {
      * @param callBack
      * @param jsonContent
      */
-    public void postStringToServer(String url, HttpFrame.ServerCallBack callBack, String jsonContent, Object obj){
+    public void postStringToServer(String url, ServerCallBack callBack, String jsonContent, Object obj){
         HttpFrame.getInstance().postStringToServer(url,callBack,jsonContent,obj);
     }
 
@@ -76,7 +76,7 @@ public class HttpManager {
      * @param fileName 文件名称
      * @param listener 文件进度监听
      */
-    public void postFileToServer(String url, HttpFrame.ServerCallBack callBack, String filePath,
+    public void postFileToServer(String url, ServerCallBack callBack, String filePath,
                                  String fileName, final HttpFrame.FileProgressListener listener, Object obj){
         HttpFrame.getInstance().postFileToServer(url, callBack, filePath, fileName, listener,obj);
     }
@@ -91,7 +91,7 @@ public class HttpManager {
      * @param listener 文件上传进度监听
      * @param map 参数
      */
-    public void postMultiFormToServer(String url, HttpFrame.ServerCallBack callBack, String fileKey, String filePath,
+    public void postMultiFormToServer(String url, ServerCallBack callBack, String fileKey, String filePath,
                                       String fileName, final HttpFrame.FileProgressListener listener, HashMap<String,String> map, Object obj){
         HttpFrame.getInstance().postMultiFormToServer(url, callBack, fileKey, filePath, fileName, listener, map,obj);
     }

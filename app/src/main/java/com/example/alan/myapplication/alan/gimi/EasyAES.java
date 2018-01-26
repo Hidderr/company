@@ -1,4 +1,4 @@
-package com.example.alan.myapplication.alan.utils.encryptutils;
+package com.example.alan.myapplication.alan.gimi;
 
 import android.util.Base64;
 

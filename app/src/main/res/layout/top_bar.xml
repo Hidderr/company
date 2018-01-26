@@ -18,10 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:collapsedTitleGravity="center_horizontal"
+            app:collapsedTitleGravity="start"
             app:expandedTitleGravity="start|bottom"
             app:contentScrim="?attr/colorPrimary"
-            app:title="CSDN_LQR"
             app:expandedTitleMarginBottom="20dp"
             app:expandedTitleMarginStart="10dp"
             app:expandedTitleTextAppearance="@style/ExpandedTitleTextAppearance"
@@ -32,17 +31,15 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-
                 app:layout_collapseMode="pin"
             >
 
                 <ImageView
                     android:layout_width="20dp"
                     android:id="@+id/iv"
-                    android:layout_marginLeft="10dp"
                     android:layout_height="20dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/titler_left_arrow_return"
+                    android:src="@drawable/fragment_video_root_item_enter"
                 />
             </android.support.v7.widget.Toolbar>
 

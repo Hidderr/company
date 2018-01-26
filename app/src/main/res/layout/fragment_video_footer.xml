@@ -2,9 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:id="@+id/ll_root_foot_video_fragment"
-              android:layout_marginLeft="36px"
-              android:background="@color/white"
-              android:layout_marginRight="36px"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 

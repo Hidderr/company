@@ -1,0 +1,213 @@
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/main_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:orientation="vertical"
+                      app:layout_scrollFlags="scroll|enterAlways"
+                      android:layout_height="match_parent">
+
+            <View android:layout_width="match_parent"
+                  android:layout_marginBottom="40px"
+                  android:background="#e9eff5"
+                  android:layout_height="5px"/>
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36px"
+                android:layout_marginRight="36px"
+                layout="@layout/recycler_foot_item_detail_video_fragment"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_marginTop="40px"
+                  android:background="#e9eff5"
+                  android:layout_height="5px"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_marginLeft="36px"
+                          android:layout_marginBottom="40px"
+                          android:gravity="center_vertical"
+                          android:layout_marginTop="40px"
+                          android:layout_marginRight="36px"
+                          android:layout_height="wrap_content">
+
+                <Button android:layout_width="140px"
+                           android:id="@+id/btn_play_video_detail_activity"
+                           android:background="@drawable/activity_video_detail_play_btn"
+                           android:layout_marginRight="40px"
+                            android:text="播放"
+                           android:layout_height="62px"/>
+
+                <ImageView android:layout_width="62px"
+                           android:id="@+id/iv_play_source_video_detail_activity"
+                           android:src="@drawable/shape_circle"
+                           android:scaleType="fitXY"
+                           android:layout_marginRight="25px"
+                           android:layout_height="62px"/>
+
+                <View android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:layout_height="40px"/>
+
+                <TextView android:layout_width="wrap_content"
+                          android:text="分享"
+                          android:drawablePadding="10px"
+                          android:gravity="center"
+                          android:layout_marginRight="40px"
+                          android:drawableLeft="@drawable/activity_video_detail_share"
+                          android:id="@+id/tv_share_video_detail_activity"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:layout_width="wrap_content"
+                          android:text="收藏"
+                          android:drawablePadding="10px"
+                          android:gravity="center"
+                          android:drawableLeft="@drawable/selector_collection"
+                          android:id="@+id/tv_collection_video_detail_activity"
+                          android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="vertical"
+                      android:background="@color/white"
+                      android:layout_height="wrap_content">
+
+
+            <View android:layout_width="match_parent"
+                  android:background="#e9eff5"
+                  android:layout_height="23px"/>
+
+
+            <TextView android:layout_width="wrap_content"
+                      android:id="@+id/tv_title_video_detail_activity"
+                      android:layout_marginTop="40px"
+                      android:layout_marginBottom="40px"
+                      android:ellipsize="end"
+                      android:maxLines="1"
+                      android:layout_marginLeft="36px"
+                      android:layout_marginRight="36px"
+                      android:text="影视标题"
+                      android:textSize="38px"
+                      android:textColor="@color/fragment_video_text_title_blue"
+                      android:layout_height="wrap_content"/>
+
+
+            <com.lcodecore.extextview.ExpandTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/expand_tv_filem_desc_video_detail_activity"
+                android:padding="36px"
+                android:text="影视介绍"
+                app:collapseDrawable="@drawable/fragment_video_root_item_enter"
+                app:expandDrawable="@drawable/shape_circle"
+                android:textColor="#666666"
+                android:textSize="16sp"
+                app:arrowAlign="right"
+                app:arrowPadding="8dp"
+                app:arrowPosition="below"
+                app:maxCollapsedLines="4" />
+
+            <View android:layout_width="match_parent"
+                  android:background="#e9eff5"
+                  android:layout_height="23px"/>
+
+
+            <TextView android:layout_width="wrap_content"
+                      android:id="@+id/tv_director_video_detail_activity"
+                      android:layout_marginTop="40px"
+                      android:layout_marginBottom="40px"
+                      android:ellipsize="end"
+                      android:maxLines="1"
+                      android:layout_marginLeft="36px"
+                      android:layout_marginRight="36px"
+                      android:text="导演"
+                      android:textSize="38px"
+                      android:textColor="@color/fragment_video_text_title_blue"
+                      android:layout_height="wrap_content"/>
+
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:background="@color/white"
+                          android:layout_margin="36px"
+                          android:layout_height="wrap_content">
+                <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/flowlayout_directors_video_detail_activity"
+                    app:max_select="1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+                </com.zhy.view.flowlayout.TagFlowLayout>
+            </LinearLayout>
+
+
+            <View android:layout_width="match_parent"
+                  android:background="#e9eff5"
+                  android:layout_height="1px"/>
+
+            <TextView android:layout_width="wrap_content"
+                      android:id="@+id/tv_actors_video_detail_activity"
+                      android:layout_marginTop="40px"
+                      android:layout_marginBottom="40px"
+                      android:ellipsize="end"
+                      android:maxLines="1"
+                      android:layout_marginLeft="36px"
+                      android:layout_marginRight="36px"
+                      android:text="主演"
+                      android:textSize="38px"
+                      android:textColor="@color/fragment_video_text_title_blue"
+                      android:layout_height="wrap_content"/>
+
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:background="@color/white"
+                          android:layout_margin="36px"
+                          android:layout_height="wrap_content">
+                <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/flowlayout_actors_video_detail_activity"
+                    app:max_select="1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+                </com.zhy.view.flowlayout.TagFlowLayout>
+            </LinearLayout>
+
+            <View android:layout_width="match_parent"
+                  android:background="#e9eff5"
+                  android:layout_height="23px"/>
+
+            <include layout="@layout/recycler_item_root_video_fragment"/>
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
+

@@ -45,11 +45,18 @@ public class MainActivityNew extends AutoLayoutActivity {
         initTabLayout();
     }
 
+
+
+
     private void initVp() {
         MainFragmentVpAdpater adapter = new MainFragmentVpAdpater(getSupportFragmentManager(), FragmentFactory.getInstance().getMainFragment(),mTitles);
         mVpActivityMainNew.setAdapter(adapter);
+        mVpActivityMainNew.setOffscreenPageLimit(3);//>=3
         mTablayoutActivityMainNew.setViewPager(mVpActivityMainNew);
     }
+
+
+
 
     private void initTabLayout() {
         mTablayoutActivityMainNew.setOnTabSelectListener(new OnTabSelectListener() {
@@ -59,17 +66,14 @@ public class MainActivityNew extends AutoLayoutActivity {
                 Toast.makeText(MainActivityNew.this,""+position,Toast.LENGTH_LONG).show();
                TextView view = mTablayoutActivityMainNew.getTitleView(position);
 //                view.setTextSize(50);
-
-
             }
 
             @Override
-            public void onTabReselect(int position) {
-
-            }
-        });
+            public void onTabReselect(int position) {}});
 
     }
+
+
 
     @OnClick({R.id.iv_user_head_activity_main_new, R.id.iv_search_activity_main_new})
     public void onViewClicked(View view) {

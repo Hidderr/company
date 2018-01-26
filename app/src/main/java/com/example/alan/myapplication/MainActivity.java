@@ -19,6 +19,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.top_bar);
+//    WebView webView = (WebView) findViewById(R.id.webView_animation);
+//        webView.loadUrl("https://baidu.com");
+//        webView.setWebViewClient(new WebViewClient(){
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                view.loadUrl(url);
+//                return true;
+//            }
+//
+//
+//        });
+
+
+
+
+
+
         CollapsingToolbarLayout st = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         ImageView iv = (ImageView) findViewById(R.id.iv);
         iv.setOnClickListener(new View.OnClickListener() {

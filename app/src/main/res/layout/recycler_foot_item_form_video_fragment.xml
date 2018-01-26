@@ -10,12 +10,16 @@
           android:layout_height="1px"/>
 
     <ImageView android:layout_width="match_parent"
+               android:layout_marginLeft="10px"
+               android:layout_marginRight="10px"
                android:id="@+id/iv_form_recycler_foot_item_video_fragment"
                android:src="@drawable/icon_default"
                android:scaleType="fitXY"
                android:layout_height="280px"/>
 
     <LinearLayout android:layout_width="match_parent"
+                  android:layout_marginLeft="10px"
+                  android:layout_marginRight="10px"
                   android:orientation="horizontal"
                   android:layout_marginTop="25px"
                   android:layout_marginBottom="25px"

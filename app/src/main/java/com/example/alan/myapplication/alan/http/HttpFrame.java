@@ -5,10 +5,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.example.alan.myapplication.alan.bean.BaseDataBean;
 import com.example.alan.myapplication.alan.constants.AppUrl;
+import com.example.alan.myapplication.alan.gimi.EasyAES;
+import com.example.alan.myapplication.alan.gimi.LogUtil;
+import com.example.alan.myapplication.alan.gimi.ToastUtil;
 import com.example.alan.myapplication.alan.global.GlobalApplication;
 import com.example.alan.myapplication.alan.utils.AllUtils;
-import com.example.alan.myapplication.alan.utils.encryptutils.EasyAES;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -108,7 +111,7 @@ public class HttpFrame {
         LinkedHashMap<String,String>  paramas =  new LinkedHashMap<>();
         try {
             url = url+"?param="+getEncodeParam(paramas);
-            Log.w("TAG","url:getFromServer:  ................,,,,,,,,,,     "+url);
+            LogUtil.w("TAG","url:getFromServer:  ................,,,,,,,,,,     "+url);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -131,12 +134,12 @@ public class HttpFrame {
 
         try {
             url = url+"?param="+getEncodeParam(paramas);
-            Log.w("TAG","url:getFromServerHasParamas:  ................,,,,,,,,,,     "+url);
+            LogUtil.w("TAG","url:getFromServerHasParamas" +
+                    ":  ................,,,,,,,,,,     "+url);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-//        Log.w("TAG","url:getFromServerHasParamas:  ................,,,,,,,,,,     "+url);
         if (mOkHttpClient != null) {
             Request request = new Request.Builder()
                     .get()
@@ -152,11 +155,8 @@ public class HttpFrame {
 
 
     public  String getEncodeParam(LinkedHashMap<String,String> params) throws Exception {
-
         JSONObject j = new JSONObject();
         try {
-
-
             Iterator<String> keys = params.keySet().iterator();
             Iterator<String> values = params.values().iterator();
 
@@ -192,8 +192,7 @@ public class HttpFrame {
 //                + "\nurlEncode : " + res
 //        );
 
-//        System.out.println("url:json:  .......................................  "+j.toString());
-        Log.w("TAG","url:json:  ................,,,,,,,,,,     "+j.toString());
+        LogUtil.w("TAG","url:json:  ................,,,,,,,,,,     "+j.toString());
         String s = EasyAES.getInstance().encrypt(j.toString().trim());
 
         return getURLEncoderString(s);
@@ -373,22 +372,36 @@ public class HttpFrame {
      * @param request
      */
     private void httpCall(final Request request, final ServerCallBack callBack) {
+
         if (mOkHttpClient != null && callBack !=null) {
+            if (!AllUtils.getInstance().isNetworkConnected()) {
+                ToastUtil.getToast("网络未连接",mContext);
+                callBack.netWorkFailure("网络未连接");
+                return;
+            }
             Call call = mOkHttpClient.newCall(request);
             //异步调用,并设置回调函数
             call.enqueue(new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {
-                    callBack.netWorkFailure(e.getMessage());
+                public void onFailure(Call call, final IOException e) {
+
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callBack.netWorkFailure(e.getMessage());
+                        }
+                    });
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    final int code = response.code();
+
                     final String json = response.body().string();
+                    BaseDataBean baseDataBean = getGson().fromJson(json,BaseDataBean.class);
+                    final int code = baseDataBean.code;
                     Log.w("TAG","JSON:  ................,,,,,,,,,,     "+json);
 
-                    if(json.contains("SUCCESS")){
+                    if(code>=200&& code<300){
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -458,15 +471,15 @@ public class HttpFrame {
 
 
 
-    /**
-     * 网络请求回调
-     */
-    public interface ServerCallBack{
-        void responseSucessful(String json);
-        void responseClientFailure(String json, int code);
-        void responseServerFailure(String json, int code);
-        void netWorkFailure(String error);
-    }
+//    /**
+//     * 网络请求回调
+//     */
+//    public interface ServerCallBack{
+//        void responseSucessful(String json);
+//        void responseClientFailure(String json, int code);
+//        void responseServerFailure(String json, int code);
+//        void netWorkFailure(String error);
+//    }
 
 
     public interface FileProgressListener{

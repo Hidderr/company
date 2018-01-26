@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="wrap_content"
+          android:id="@+id/tv_item_flow_layout"
+          android:text="导演"
+          android:gravity="center"
+          android:textSize="28px"
+          android:paddingLeft="30px"
+          android:paddingRight="30px"
+          android:paddingBottom="10px"
+          android:paddingTop="10px"
+          android:textColor="@color/selector_default_whrite_blue"
+          android:background="@drawable/selector_flow_layout"
+          android:layout_height="wrap_content">
+
+</TextView>
