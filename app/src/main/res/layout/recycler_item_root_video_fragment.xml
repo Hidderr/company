@@ -19,7 +19,7 @@
                   android:ellipsize="end"
                   android:maxLines="1"
                   android:layout_marginLeft="10px"
-                  android:text="推荐描述"
+                  android:text="推荐片单"
                   android:textSize="38px"
                   android:textColor="@color/fragment_video_text_title_blue"
                   android:layout_height="wrap_content"/>
@@ -31,7 +31,7 @@
         <TextView android:layout_width="wrap_content"
                   android:id="@+id/tv_enter_recycler_item_root_video_fragment"
                   android:visibility="invisible"
-                  android:text="影视描述"
+                  android:text="查看全部"
                   android:ellipsize="end"
                   android:drawableRight="@drawable/fragment_video_root_item_enter"
                   android:layout_marginRight="36px"

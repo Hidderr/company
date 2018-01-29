@@ -29,4 +29,12 @@ public class AppUrl {
      * 口味研究所Get
      */
     public static final String HOME_PAGE_INDIVIDUALITY = "/v4/home_page_individuality";
+    /**
+     * 获取影视详情
+     */
+    public static final String VIDEO_DETAIL = "/v3/video_detail";
+    /**
+     * 影视分类
+     */
+    public static final String VIDEO_CLASSIFICATION = "/v4/video_classification_list";
 }

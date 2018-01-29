@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/shape_selcted_flow_layout_bg"
-          android:state_checked="true"></item>
     <item android:state_selected="true" android:drawable="@drawable/shape_selcted_flow_layout_bg"/>
 
-    <item android:drawable="@drawable/shape_coner_rectangle"></item>
+    <item android:drawable="@drawable/shape_whrite_rectangle"></item>
 </selector>

@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.alan.myapplication.R;
 import com.example.alan.myapplication.alan.bean.VideoFragmentBannerBean;
 import com.example.alan.myapplication.alan.picture.loadpicture.PictureManager;
+import com.example.alan.myapplication.alan.utils.AllUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +26,7 @@ public class ViewPagerHeaderVideoFragmentAdapter extends PagerAdapter {
 
     private List<VideoFragmentBannerBean.DataBean.BannerListBean> banner_list = new ArrayList<>();
     private Context context;
+    public VideoFragmentBannerBean.DataBean.BannerListBean mBannerListBean;
 
     public ViewPagerHeaderVideoFragmentAdapter(List<VideoFragmentBannerBean.DataBean.BannerListBean> banner_list,Context cxt ) {
         this.banner_list = banner_list;
@@ -50,15 +51,18 @@ public class ViewPagerHeaderVideoFragmentAdapter extends PagerAdapter {
         TextView desc= (TextView) view.findViewById(R.id.tv_desc_vp_item_video_fragment);
         ImageView iv =  (ImageView) view.findViewById(R.id.iv_vp_item_video_fragment);
         if (banner_list.size()>0) {
-            VideoFragmentBannerBean.DataBean.BannerListBean bean = banner_list.get(realPosition);
-            PictureManager.getInstance().loadServerPic(context,bean.img, iv,R.drawable.icon_default,R.drawable.icon_default,PictureManager.ROUND_TYPE,8);
-            title.setText(bean.title);
-            desc.setText(bean.subtitle);
+            mBannerListBean = banner_list.get(realPosition);
+            PictureManager.getInstance().loadServerPic(context, mBannerListBean.img, iv,R.drawable.icon_default,R.drawable.icon_default,PictureManager.ROUND_TYPE,8);
+            title.setText(mBannerListBean.title);
+            desc.setText(mBannerListBean.subtitle);
         }
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, realPosition+"头布局", Toast.LENGTH_SHORT).show();
+                if (mBannerListBean.type==1) {
+                    AllUtils.getInstance().startVideoDetailActivity(context,mBannerListBean.detail);
+                }
+//                Toast.makeText(context, realPosition+"头布局", Toast.LENGTH_SHORT).show();
             }
         });
         container.addView(view);

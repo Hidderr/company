@@ -23,6 +23,8 @@ import com.example.alan.myapplication.alan.gimi.ToastUtil;
 import com.example.alan.myapplication.alan.http.HttpLoadStateUtil;
 import com.example.alan.myapplication.alan.http.HttpManager;
 import com.example.alan.myapplication.alan.http.ServerCallBack;
+import com.example.alan.myapplication.alan.ui.VideoClassificationActivity;
+import com.example.alan.myapplication.alan.utils.AllUtils;
 import com.example.alan.myapplication.alan.view.InterceptViewPager;
 import com.example.alan.myapplication.alan.view.vp.ScaleInTransformer;
 
@@ -129,7 +131,6 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
         mRecyclerFooterItemAdapter.setContext(mFragmentContext);
         mRecyclerFooterItemAdapter.setEnableLoadMore(true);
         mRecyclerFooterItemAdapter.setHasStableIds(true);
-
         LinearLayoutManager linearLayoutManagerFooter = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         footerRecyclerView.setLayoutManager(linearLayoutManagerFooter);
         footerRecyclerView.getItemAnimator().setChangeDuration(0);
@@ -139,6 +140,14 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Toast.makeText(mFragmentContext, position + "口味研究所", Toast.LENGTH_SHORT).show();
+                if (mFooterDataList != null && mFooterDataList.size()>0) {
+                   VideoFragmentFooterBean.DataBean.IndividualityBean bean =  mFooterDataList.get(position);
+                   String contentId =  bean.content_id;
+                    if (2!=bean.type) {
+                        AllUtils.getInstance().startVideoDetailActivity(mFragmentContext,contentId);
+                    }
+
+                }
             }
         });
     }
@@ -169,7 +178,8 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
         mRecyclerViewVideoFragment.setLayoutManager(linearLayoutManager1);
         mRecyclerViewVideoFragment.getItemAnimator().setChangeDuration(0);
         mRecyclerViewVideoFragment.setAdapter(mRootRecyclerItemAdapter);
-        mRootRecyclerItemAdapter.setEmptyView(HttpLoadStateUtil.getInstance().setContextAndInitView(mFragmentContext));
+        View view = HttpLoadStateUtil.getInstance().setContextAndInitView(mFragmentContext);
+        mRootRecyclerItemAdapter.setEmptyView(view);
         mRootRecyclerItemAdapter.setHeaderViewAsFlow(true);
         mRootRecyclerItemAdapter.addHeaderView(mHeaderView);
         mRootRecyclerItemAdapter.addFooterView(mFooterView);
@@ -213,7 +223,6 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
         } else {
             paramas.put("page", 1 + "");
         }
-
         paramas.put("user_id", "8888");
         paramas.put("mac_id", "8888");
         HttpManager.getInstance().getCallWithParamas(AppUrl.HOME_PAGE_INDIVIDUALITY, paramas, new ServerCallBack() {
@@ -226,9 +235,11 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
                         if (footerData != null) {
                             if (footerData.size() > 0) {
                                 if (loadMore) {
+                                    mFooterDataList.addAll(footerData);
                                     mRecyclerFooterItemAdapter.addData(footerData);
                                     mRecyclerFooterItemAdapter.loadMoreComplete();
                                 } else {
+                                    mFooterDataList = footerData;
                                     mRecyclerFooterItemAdapter.setNewData(footerData);
                                 }
 
@@ -280,7 +291,10 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
                             if (subjects.size() > 0) {
                                 mRootRecyclerItemAdapter.setNewData(subjects);
                             }else {
-                                HttpLoadStateUtil.getInstance().loadSateChange(false);
+                                if (!isRefresh) {
+                                    HttpLoadStateUtil.getInstance().loadSateChange(false);
+                                }
+
                             }
                         }
                     }
@@ -321,6 +335,7 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
                         if (banner_list != null) {
                             if (banner_list.size() > 0) {
                                 mViewPagerHeaderVideoFragmentAdapter = new ViewPagerHeaderVideoFragmentAdapter(banner_list, mFragmentContext);
+
                                 mHeaderVp.setAdapter(mViewPagerHeaderVideoFragmentAdapter);
                             }
                         }
@@ -356,6 +371,8 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
     @Override
     public void onRefresh() {//SwiprRefreshLayout正在刷新
         if (mRecyclerFooterItemAdapter.isLoading()) {//正在加载更多，则不刷新
+            mSrLayoutVideoFragment.setRefreshing(false);
+            ToastUtil.getToast("正在加载更多",mFragmentContext);
             return;
         }
         if (!isLoading) {
@@ -382,6 +399,7 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
                 break;
 
             case R.id.iv_find_movie_header_video_fragment://找影视
+                AllUtils.getInstance().startActivity(mFragmentContext, VideoClassificationActivity.class);
                 break;
             case R.id.rl_root_load_state://重新加载
                 loadData();

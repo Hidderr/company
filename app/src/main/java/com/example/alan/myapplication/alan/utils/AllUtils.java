@@ -1,6 +1,9 @@
 package com.example.alan.myapplication.alan.utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Base64;
@@ -8,6 +11,7 @@ import android.util.DisplayMetrics;
 
 import com.example.alan.myapplication.alan.constants.Constants;
 import com.example.alan.myapplication.alan.global.GlobalApplication;
+import com.example.alan.myapplication.alan.ui.VideoDetailActivityNew;
 import com.example.alan.myapplication.alan.utils.encryptutils.CryptUtil;
 
 
@@ -75,6 +79,45 @@ public class AllUtils {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
         return px;
+    }
+
+    /**
+     * 获取app版本信息
+     *
+     * @param context
+     * @return
+     */
+    public  String getappVersion(Context context) {
+        String appVersion = "0.0.0";
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(
+                    context.getPackageName(), 0);
+            appVersion = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return appVersion;
+    }
+
+    /**影视详情界面
+     * @param activity
+     * @param videoId
+     */
+    public void startVideoDetailActivity(Context activity,String videoId){
+        Intent view = new Intent(activity, VideoDetailActivityNew.class);
+        view.putExtra("video_id",videoId);
+        activity.startActivity(view);
+    }
+
+
+    /**
+     * 启动activity
+     *
+     * @param cxt
+     * @param cls
+     */
+    public void startActivity(Context cxt, Class<?> cls) {
+        cxt.startActivity(new Intent(cxt, cls));
     }
 
 }

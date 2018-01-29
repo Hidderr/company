@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.alan.myapplication.R;
@@ -21,6 +22,8 @@ public class HttpLoadStateUtil {
     public ImageView mIvLoadState;
     public TextView mTvLoadState;
     private NetRetryListener netRetryListener;
+    private TextView mTvLoadingLoadState;
+    private LinearLayout mLlErrorLoadState;
 
     private HttpLoadStateUtil(){}
     private Context context ;
@@ -60,7 +63,6 @@ public class HttpLoadStateUtil {
 
     private View initView(Context cxt) {
         mView = View.inflate(cxt, R.layout.http_load_state,null);
-        mView.setVisibility(View.VISIBLE);
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +74,8 @@ public class HttpLoadStateUtil {
         });
         mIvLoadState = (ImageView) mView.findViewById(R.id.iv_load_state);
         mTvLoadState = (TextView) mView.findViewById(R.id.tv_des_load_state);
+        mTvLoadingLoadState = (TextView) mView.findViewById(R.id.tv_loading_load_state);
+        mLlErrorLoadState = (LinearLayout) mView.findViewById(R.id.ll_error_load_state);
         return mView;
     }
 
@@ -79,6 +83,7 @@ public class HttpLoadStateUtil {
      * @param noNet
      */
     public void loadSateChange(boolean noNet){
+        setLoadingLayoutGone();
         if (mTvLoadState != null) {
             if (noNet) {
                 mTvLoadState.setText(TYPE_NO_NET);
@@ -89,11 +94,12 @@ public class HttpLoadStateUtil {
     }
 
     /**
-     * 有数据隐藏布局
+     * 隐藏正在加载布局，显示错误布局
      */
-    public void setLayoutGone(){
-        if (mView != null) {
-            mView.setVisibility(View.GONE);
+    public void setLoadingLayoutGone(){
+        if (mTvLoadingLoadState != null) {
+            mTvLoadingLoadState.setVisibility(View.GONE);
+            mLlErrorLoadState.setVisibility(View.VISIBLE);
         }
     }
 

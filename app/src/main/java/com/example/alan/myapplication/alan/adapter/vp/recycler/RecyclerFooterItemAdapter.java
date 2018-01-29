@@ -65,8 +65,10 @@ public class RecyclerFooterItemAdapter extends BaseMultiItemQuickAdapter<VideoFr
                     String[] tags =null;
                     if (tag.contains(";")) {
                         tags =tag.split(";");
-                    }else {
+                    }else if(tag.contains("、")){
                         tags =tag.split("、");
+                    }else {
+                        tags =tag.split(",");
                     }
 
                     t1.setText(tags[0]);

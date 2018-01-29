@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_marginTop="40px"
+              android:layout_height="wrap_content">
+
+    <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
+                                            android:layout_marginBottom="40px"
+                                            android:id="@+id/recyclerview1_recycler_item_header_video_screening_activity"
+                                            android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
+                                            android:layout_marginBottom="40px"
+                                            android:id="@+id/recyclerview2_recycler_item_header_video_screening_activity"
+                                            android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
+                                            android:layout_marginBottom="40px"
+                                            android:id="@+id/recyclerview3_recycler_item_header_video_screening_activity"
+                                            android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>
