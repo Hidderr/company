@@ -64,9 +64,7 @@ public class VideoClassificationActivity extends AutoLayoutActivity implements S
                             if (category.size() > 0) {
                                 mRootRecyclerItemAdapter.setNewData(category);
                             }else {
-                                if (!isRefresh) {
                                     HttpLoadStateUtil.getInstance().loadSateChange(false);
-                                }
                             }
                         }
                     }

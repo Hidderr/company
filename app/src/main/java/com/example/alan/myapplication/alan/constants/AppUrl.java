@@ -37,4 +37,12 @@ public class AppUrl {
      * 影视分类
      */
     public static final String VIDEO_CLASSIFICATION = "/v4/video_classification_list";
+    /**
+     * 影视筛选条件获取
+     */
+    public static final String VIDEO_CLASSIFICATION_CONDITION_GET = "/v3/video_screen_condition";
+    /**
+     * 影视筛选结果
+     */
+    public static final String VIDEO_CLASSIFICATION_RESULT = "/v3/video_screen_list";
 }

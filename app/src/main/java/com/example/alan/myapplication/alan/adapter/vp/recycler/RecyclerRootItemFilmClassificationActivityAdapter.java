@@ -14,7 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alan.myapplication.R;
 import com.example.alan.myapplication.alan.bean.VideoClassificationBean;
 import com.example.alan.myapplication.alan.gimi.LogUtil;
-import com.example.alan.myapplication.alan.ui.VideoDetailActivityNew;
+import com.example.alan.myapplication.alan.ui.VideoScreeningActivity;
 import com.example.alan.myapplication.alan.utils.AllUtils;
 
 import java.util.List;
@@ -68,7 +68,7 @@ public class RecyclerRootItemFilmClassificationActivityAdapter extends BaseQuick
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(title)) {
-                    Intent view = new Intent(context, VideoDetailActivityNew.class);
+                    Intent view = new Intent(context, VideoScreeningActivity.class);
                     view.putExtra("title",title);
                     view.putExtra("type",type);
                     context.startActivity(view);

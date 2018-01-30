@@ -98,6 +98,7 @@
 
     <style name="AppTheme.NoActionBar.Android5" parent="AppTheme.NoActionBar">
         <item name="colorButtonNormal">#fff</item>
+        <item name="android:listDivider">@drawable/divider_bg</item>
         <item name="colorControlHighlight">#fff</item>
     </style>
 

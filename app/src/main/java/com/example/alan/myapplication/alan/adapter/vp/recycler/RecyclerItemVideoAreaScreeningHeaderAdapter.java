@@ -13,24 +13,23 @@ import com.example.alan.myapplication.alan.bean.VideoScreeningActivityHeaderBean
 import java.util.List;
 
 /**
- * Created by Alan on 2018/1/29.
- * 功能：影视筛选条件，影片类型
+ * Created by Alan on 2018/1/30.
+ * 功能：影视筛选条件，影片地区
  */
 
-public class RecyclerItemVideoTypeScreeningHeaderAdapter extends BaseQuickAdapter<VideoScreeningActivityHeaderBean.DataBean.TypeBean,AutoLayoutRecyclerBaseHolder> {
+public class RecyclerItemVideoAreaScreeningHeaderAdapter extends BaseQuickAdapter<VideoScreeningActivityHeaderBean.DataBean.AreaBean,AutoLayoutRecyclerBaseHolder> {
     private Context context;
     public int currSelectedPositon = -1;
     public void setContext(Context cxt){
         this.context = cxt;
     }
 
-
-    public RecyclerItemVideoTypeScreeningHeaderAdapter(@LayoutRes int layoutResId, @Nullable List<VideoScreeningActivityHeaderBean.DataBean.TypeBean> data) {
+    public RecyclerItemVideoAreaScreeningHeaderAdapter(@LayoutRes int layoutResId, @Nullable List<VideoScreeningActivityHeaderBean.DataBean.AreaBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(AutoLayoutRecyclerBaseHolder helper, final VideoScreeningActivityHeaderBean.DataBean.TypeBean item) {
+    protected void convert(AutoLayoutRecyclerBaseHolder helper, final VideoScreeningActivityHeaderBean.DataBean.AreaBean item) {
         final TextView tv = helper.getView(R.id.tv_item_header_video_screening_activity);
         helper.setText(R.id.tv_item_header_video_screening_activity,item.name+"");
         final int positon = helper.getLayoutPosition();
@@ -57,5 +56,4 @@ public class RecyclerItemVideoTypeScreeningHeaderAdapter extends BaseQuickAdapte
     public void setOnRecyclerViewItemListener(OnRecyclerViewItemListener onRecyclerViewItemListener){
         this.onRecyclerViewItemListener = onRecyclerViewItemListener;
     }
-
 }

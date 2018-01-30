@@ -33,6 +33,10 @@ public class VideoScreeningActivityHeaderBean {
             public int id;
             public int category_id;
             public String name;
+
+            public void setName(String name) {
+                this.name = name;
+            }
         }
 
         public static class YearBean {
@@ -40,7 +44,10 @@ public class VideoScreeningActivityHeaderBean {
              * name : 2018
              */
 
-            public int name;
+            public String name;
+            public void setName(String name) {
+                this.name = name;
+            }
         }
 
         public static class AreaBean {
@@ -51,6 +58,9 @@ public class VideoScreeningActivityHeaderBean {
 
             public int category_id;
             public String name;
+            public void setName(String name) {
+                this.name = name;
+            }
         }
     }
 }

@@ -260,22 +260,29 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
 
             @Override
             public void responseClientFailure(String json, int code) {
+                loadMoreFailFinish(loadMore);
                 allCallFinished();
-                mRecyclerFooterItemAdapter.loadMoreFail();
             }
 
             @Override
             public void responseServerFailure(String json, int code) {
+                loadMoreFailFinish(loadMore);
                 allCallFinished();
-                mRecyclerFooterItemAdapter.loadMoreFail();
             }
 
             @Override
             public void netWorkFailure(String error) {
+                loadMoreFailFinish(loadMore);
                 allCallFinished();
-                mRecyclerFooterItemAdapter.loadMoreFail();
             }
         }, this);
+    }
+
+    private void loadMoreFailFinish(boolean loadMore) {
+        if (loadMore) {
+            mCurrentPage--;
+        }
+        mRecyclerFooterItemAdapter.loadMoreFail();
     }
 
     private void loadItemData(final boolean isRefresh) {
@@ -372,11 +379,12 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
     public void onRefresh() {//SwiprRefreshLayout正在刷新
         if (mRecyclerFooterItemAdapter.isLoading()) {//正在加载更多，则不刷新
             mSrLayoutVideoFragment.setRefreshing(false);
-            ToastUtil.getToast("正在加载更多",mFragmentContext);
+            AllUtils.showToast(mFragmentContext,"正在加载更多");
             return;
         }
         if (!isLoading) {
             isLoading = true;
+            mCurrentPage =1;
             loadDataRefreshing();
         }
     }
@@ -384,6 +392,7 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
     @Override
     public void onLoadMoreRequested() {//RecyclerView的footer加载更多
         if (mSrLayoutVideoFragment.isRefreshing()) {//正在刷新，则不加载更多
+            mRecyclerFooterItemAdapter.loadMoreComplete();
             return;
         }
         loadFooterData(true);

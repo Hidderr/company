@@ -6,6 +6,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -37,7 +38,7 @@ public class RootRecyclerItemAdapter extends BaseQuickAdapter<VideoFragmentProje
     protected void convert(AutoLayoutRecyclerBaseHolder helper, VideoFragmentProjectBean.DataBean.SubjectsBean item) {
         helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,item.title);
         RecyclerView recyclerView = helper.getView(R.id.recyclerview_recycler_item_root_video_fragment);
-        int type = item.type;
+        final int type = item.type;
         final List<VideoFragmentProjectBean.DataBean.SubjectsBean.SubjectDataBean> subject_data= item.subject_data;
 
         if (type==2) {
@@ -97,10 +98,49 @@ public class RootRecyclerItemAdapter extends BaseQuickAdapter<VideoFragmentProje
                     mRecyclerStarItemAdapter.setEnableLoadMore(false);
                     mRecyclerStarItemAdapter.setHasStableIds(true);
                     startVideoDetailActivity(subject_data, mRecyclerStarItemAdapter);
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(context,3,GridLayoutManager.HORIZONTAL,false);
+                    final GridLayoutManager gridLayoutManager = new GridLayoutManager(context,3,GridLayoutManager.HORIZONTAL,false);
                     recyclerView.setLayoutManager(gridLayoutManager);
                     recyclerView.getItemAnimator().setChangeDuration(0);
                     recyclerView.setAdapter(mRecyclerStarItemAdapter);
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+                    final RecyclerView.SmoothScroller areaScroller = new LinearSmoothScroller(context) {
+                        @Override
+                        protected int getVerticalSnapPreference() {
+                            return LinearSmoothScroller.SNAP_TO_START;
+                        }
+                    };
+                    final boolean[] rightScroll = {true};
+                    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                            super.onScrollStateChanged(recyclerView, newState);
+                            if (newState== RecyclerView.SCROLL_STATE_IDLE) {
+                                if (gridLayoutManager.findLastVisibleItemPosition() == 5 && rightScroll[0]) {
+                                    areaScroller.setTargetPosition(5);
+                                    gridLayoutManager.startSmoothScroll(areaScroller);
+                                    rightScroll[0] = false;
+                                    LogUtil.w("SC","向右滑动");
+                                }else if(gridLayoutManager.findFirstVisibleItemPosition() == 0 && !rightScroll[0]){
+                                    areaScroller.setTargetPosition(0);
+                                    gridLayoutManager.startSmoothScroll(areaScroller);
+                                    rightScroll[0] = true;
+                                    LogUtil.w("SC","向左滑动。。。。。。。。。。");
+                                }
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                            super.onScrolled(recyclerView, dx, dy);
+
+                        }
+                    });
+
+
+
                     break;
 
 

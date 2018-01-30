@@ -13,32 +13,37 @@ import com.example.alan.myapplication.alan.bean.VideoScreeningActivityHeaderBean
 import java.util.List;
 
 /**
- * Created by Alan on 2018/1/29.
- * 功能：影视筛选条件，影片类型
+ * Created by Alan on 2018/1/30.
+ * 功能：影视筛选条件，影片时间
  */
 
-public class RecyclerItemVideoTypeScreeningHeaderAdapter extends BaseQuickAdapter<VideoScreeningActivityHeaderBean.DataBean.TypeBean,AutoLayoutRecyclerBaseHolder> {
+public class RecyclerItemVideoYearScreeningHeaderAdapter extends BaseQuickAdapter<VideoScreeningActivityHeaderBean.DataBean.YearBean,AutoLayoutRecyclerBaseHolder> {
     private Context context;
     public int currSelectedPositon = -1;
+
+
+    public RecyclerItemVideoYearScreeningHeaderAdapter(@LayoutRes int layoutResId, @Nullable List<VideoScreeningActivityHeaderBean.DataBean.YearBean> data) {
+        super(layoutResId, data);
+    }
+
     public void setContext(Context cxt){
         this.context = cxt;
     }
 
-
-    public RecyclerItemVideoTypeScreeningHeaderAdapter(@LayoutRes int layoutResId, @Nullable List<VideoScreeningActivityHeaderBean.DataBean.TypeBean> data) {
-        super(layoutResId, data);
-    }
-
     @Override
-    protected void convert(AutoLayoutRecyclerBaseHolder helper, final VideoScreeningActivityHeaderBean.DataBean.TypeBean item) {
+    protected void convert(AutoLayoutRecyclerBaseHolder helper, final VideoScreeningActivityHeaderBean.DataBean.YearBean item) {
         final TextView tv = helper.getView(R.id.tv_item_header_video_screening_activity);
         helper.setText(R.id.tv_item_header_video_screening_activity,item.name+"");
         final int positon = helper.getLayoutPosition();
         if (currSelectedPositon!=positon) {
             tv.setSelected(false);
         }
-        if (currSelectedPositon==-1 && positon==0) {
-            tv.setSelected(true);
+        if (positon==0) {
+            helper.setText(R.id.tv_item_header_video_screening_activity,"全部");
+            if (currSelectedPositon==-1) {
+                tv.setSelected(true);
+            }
+
         }
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,5 +62,4 @@ public class RecyclerItemVideoTypeScreeningHeaderAdapter extends BaseQuickAdapte
     public void setOnRecyclerViewItemListener(OnRecyclerViewItemListener onRecyclerViewItemListener){
         this.onRecyclerViewItemListener = onRecyclerViewItemListener;
     }
-
 }

@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.widget.Toast;
 
 import com.example.alan.myapplication.alan.constants.Constants;
 import com.example.alan.myapplication.alan.global.GlobalApplication;
@@ -120,4 +121,7 @@ public class AllUtils {
         cxt.startActivity(new Intent(cxt, cls));
     }
 
+    public static void showToast(Context context,String content){
+        Toast.makeText(context, content+"", Toast.LENGTH_SHORT).show();
+    }
 }

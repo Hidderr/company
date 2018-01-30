@@ -91,4 +91,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.0.0'
 
+    //RecyclerView分割线
+    compile 'com.yanyusong.y_divideritemdecoration:y_divideritemdecoration:1.0'
+
 }
