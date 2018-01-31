@@ -45,4 +45,8 @@ public class AppUrl {
      * 影视筛选结果
      */
     public static final String VIDEO_CLASSIFICATION_RESULT = "/v3/video_screen_list";
+    /**
+     * 我的影视
+     */
+    public static final String VIDEO_USER_VIDEO = "/v4/collection_list";
 }

@@ -20,8 +20,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import static com.example.alan.myapplication.alan.global.GlobalApplication.context;
-
 /**
  * Created by Alan on 2018/1/29.
  * 功能：影视分类
@@ -99,7 +97,7 @@ public class VideoClassificationActivity extends AutoLayoutActivity implements S
         mRootRecyclerItemAdapter.setContext(this);
         mRootRecyclerItemAdapter.setEnableLoadMore(false);
         mRootRecyclerItemAdapter.setHasStableIds(true);
-        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerViewVideoClassificationActivity.setLayoutManager(linearLayoutManager1);
         mRecyclerViewVideoClassificationActivity.getItemAnimator().setChangeDuration(0);
         mRecyclerViewVideoClassificationActivity.setAdapter(mRootRecyclerItemAdapter);

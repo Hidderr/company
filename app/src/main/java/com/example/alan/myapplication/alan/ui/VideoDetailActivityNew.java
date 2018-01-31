@@ -98,6 +98,8 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
      */
     public String mVideoId;
 
+    public VideoDetailBean mVideoDetailBean;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +109,8 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
         loadDataFromServer();
 
     }
+
+
 
     private void initView(VideoDetailBean.DataBean dataBean) {
         initHeaderDetail(dataBean);
@@ -126,10 +130,10 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
         HttpManager.getInstance().getCallWithParamas(AppUrl.VIDEO_DETAIL, paramas, new ServerCallBack() {
             @Override
             public void responseSucessful(String json) {
-                VideoDetailBean videoDetailBean = JsonConvertUtils.AesJson2Json(json,new VideoDetailBean());
-                if (videoDetailBean != null) {
-                    if (videoDetailBean.data != null) {
-                        initView(videoDetailBean.data);
+                mVideoDetailBean = JsonConvertUtils.AesJson2Json(json,new VideoDetailBean());
+                if (mVideoDetailBean != null) {
+                    if (mVideoDetailBean.data != null) {
+                        initView(mVideoDetailBean.data);
                     }
                 }
             }
@@ -266,16 +270,20 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
     @OnClick({R.id.btn_play_video_detail_activity, R.id.iv_play_source_video_detail_activity, R.id.tv_share_video_detail_activity, R.id.tv_collection_video_detail_activity})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_play_video_detail_activity:
+            case R.id.btn_play_video_detail_activity://播放
                 break;
-            case R.id.iv_play_source_video_detail_activity:
+            case R.id.iv_play_source_video_detail_activity://播放源
                 break;
-            case R.id.tv_share_video_detail_activity:
+            case R.id.tv_share_video_detail_activity://分享
                 break;
-            case R.id.tv_collection_video_detail_activity:
+            case R.id.tv_collection_video_detail_activity://收藏
                 break;
             default:
                 break;
         }
     }
+
+
+
+
 }

@@ -6,14 +6,20 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alan.myapplication.alan.constants.Constants;
+import com.example.alan.myapplication.alan.gimi.LogUtil;
 import com.example.alan.myapplication.alan.global.GlobalApplication;
 import com.example.alan.myapplication.alan.ui.VideoDetailActivityNew;
 import com.example.alan.myapplication.alan.utils.encryptutils.CryptUtil;
+
+import static com.example.alan.myapplication.alan.global.GlobalApplication.context;
 
 
 /**
@@ -124,4 +130,28 @@ public class AllUtils {
     public static void showToast(Context context,String content){
         Toast.makeText(context, content+"", Toast.LENGTH_SHORT).show();
     }
+
+
+    /**跳转影视详情
+     * @param video_id 影视详情的id
+     * @param Adpater
+     */
+    public void startVideoDetailActivityAll(final String video_id, BaseQuickAdapter Adpater) {
+        Adpater.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                LogUtil.w("TAG", "position: :  " + position);
+                if (!TextUtils.isEmpty(video_id)) {
+                   startVideoDetailActivity(context, video_id);
+                }
+
+            }
+        });
+    }
+
+
+
+
+
+
 }

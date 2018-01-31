@@ -23,6 +23,7 @@ import com.example.alan.myapplication.alan.gimi.ToastUtil;
 import com.example.alan.myapplication.alan.http.HttpLoadStateUtil;
 import com.example.alan.myapplication.alan.http.HttpManager;
 import com.example.alan.myapplication.alan.http.ServerCallBack;
+import com.example.alan.myapplication.alan.ui.UserVideoActivity;
 import com.example.alan.myapplication.alan.ui.VideoClassificationActivity;
 import com.example.alan.myapplication.alan.utils.AllUtils;
 import com.example.alan.myapplication.alan.view.InterceptViewPager;
@@ -402,6 +403,7 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_my_movie_header_video_fragment://我的影视
+                AllUtils.getInstance().startActivity(mFragmentContext, UserVideoActivity.class);
                 break;
 
             case R.id.iv_see_live_header_video_fragment://直播

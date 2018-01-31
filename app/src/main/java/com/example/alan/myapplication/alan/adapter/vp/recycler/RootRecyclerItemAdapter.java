@@ -36,7 +36,7 @@ public class RootRecyclerItemAdapter extends BaseQuickAdapter<VideoFragmentProje
 
     @Override
     protected void convert(AutoLayoutRecyclerBaseHolder helper, VideoFragmentProjectBean.DataBean.SubjectsBean item) {
-        helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,item.title);
+        helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,item.title+"");
         RecyclerView recyclerView = helper.getView(R.id.recyclerview_recycler_item_root_video_fragment);
         final int type = item.type;
         final List<VideoFragmentProjectBean.DataBean.SubjectsBean.SubjectDataBean> subject_data= item.subject_data;
@@ -128,8 +128,6 @@ public class RootRecyclerItemAdapter extends BaseQuickAdapter<VideoFragmentProje
                                     LogUtil.w("SC","向左滑动。。。。。。。。。。");
                                 }
                             }
-
-
                         }
 
                         @Override
@@ -138,9 +136,6 @@ public class RootRecyclerItemAdapter extends BaseQuickAdapter<VideoFragmentProje
 
                         }
                     });
-
-
-
                     break;
 
 

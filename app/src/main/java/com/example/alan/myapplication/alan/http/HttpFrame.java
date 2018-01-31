@@ -166,17 +166,23 @@ public class HttpFrame {
                     String value = values.next();
                     if ("page".equals(key)) {
                         j.put("page", Integer.valueOf(value));
+
                     } else if ("category_id".equals(key)) {
                         j.put("category_id", Integer.valueOf(value));
+
                     } else if ("id".equals(key)) {
                         j.put("id", Integer.valueOf(value));
+
                     }else if("user_id".equals(key)){
                         j.put("user_id", Integer.valueOf(value));
-                    }
-                    else if("mac_id".equals(key)){
+
+                    } else if("mac_id".equals(key)){
                         j.put("mac_id", Integer.valueOf(value));
-                    }
-                    else {
+
+                    }else if("watch_history".equals(key)){
+                        j.put("watch_history", Integer.valueOf(value));
+
+                    } else {
                         j.put(key, value);
                     }
                 }
