@@ -1,32 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              android:orientation="horizontal"
               android:layout_marginRight="10px"
               android:id="@+id/ll_root_form_recycler_item_video_fragment"
-              android:layout_width="678px"
+              android:layout_width="match_parent"
+              android:gravity="center_vertical"
               android:layout_height="wrap_content">
 
-    <ImageView android:layout_width="match_parent"
-               android:id="@+id/iv_form_recycler_item_video_fragment"
-               android:src="@drawable/icon_default"
+
+    <ImageView android:layout_width="42px"
+               android:layout_marginLeft="40px"
+               android:visibility="gone"
+               android:id="@+id/iv_delete_history_recycler_foot_item_history_activity"
+               android:src="@drawable/selector_delete"
                android:scaleType="fitXY"
-               android:layout_height="280px"/>
+               android:layout_marginRight="25px"
+               android:layout_height="42px"/>
 
     <LinearLayout android:layout_width="match_parent"
-                  android:orientation="horizontal"
-                  android:layout_marginTop="25px"
-                  android:layout_marginBottom="25px"
+                  android:orientation="vertical"
                   android:layout_height="wrap_content">
 
-        <TextView android:layout_width="wrap_content"
-                  android:gravity="center_vertical"
-                  android:id="@+id/tv_title_form_recycler_item_video_fragment"
-                  android:text="影视标题"
-                  android:ellipsize="end"
-                  android:maxLines="1"
-                  android:textSize="30px"
-                  android:textColor="@color/fragment_video_text_title_blue"
-                  android:layout_height="wrap_content"/>
+        <ImageView android:layout_width="match_parent"
+                   android:id="@+id/iv_form_recycler_item_video_fragment"
+                   android:src="@drawable/icon_default"
+                   android:scaleType="fitXY"
+                   android:layout_height="280px"/>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_marginTop="25px"
+                      android:layout_marginBottom="25px"
+                      android:layout_height="wrap_content">
+
+            <TextView android:layout_width="wrap_content"
+                      android:gravity="center_vertical"
+                      android:id="@+id/tv_title_form_recycler_item_video_fragment"
+                      android:text="影视标题"
+                      android:ellipsize="end"
+                      android:maxLines="1"
+                      android:textSize="30px"
+                      android:textColor="@color/fragment_video_text_title_blue"
+                      android:layout_height="wrap_content"/>
+            <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"/>
 
             <TextView android:layout_width="wrap_content"
                       android:gravity="center_vertical"
@@ -34,7 +50,6 @@
                       android:paddingRight="30px"
                       android:paddingBottom="10px"
                       android:paddingTop="10px"
-                      android:layout_marginLeft="179px"
                       android:background="@drawable/shape_coner_rectangle"
                       android:id="@+id/tv1_title_form_recycler_item_video_fragment"
                       android:text="类型"
@@ -76,7 +91,12 @@
                       android:textColor="@color/fragment_video_text_des_blue"
                       android:layout_height="wrap_content"/>
 
+        </LinearLayout>
+
+
+
     </LinearLayout>
+
 
 
 </LinearLayout>

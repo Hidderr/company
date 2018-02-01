@@ -8,8 +8,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alan.myapplication.R;
@@ -36,7 +38,11 @@ public class RootRecyclerItemAdapter extends BaseQuickAdapter<VideoFragmentProje
 
     @Override
     protected void convert(AutoLayoutRecyclerBaseHolder helper, VideoFragmentProjectBean.DataBean.SubjectsBean item) {
-        helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,item.title+"");
+//        helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,item.title+"");
+        TextView tv = helper.getView(R.id.tv_desc_recycler_item_root_video_fragment);
+        TextPaint tp = tv.getPaint();
+        tp.setFakeBoldText(true);
+        tv.setText(item.title+"");
         RecyclerView recyclerView = helper.getView(R.id.recyclerview_recycler_item_root_video_fragment);
         final int type = item.type;
         final List<VideoFragmentProjectBean.DataBean.SubjectsBean.SubjectDataBean> subject_data= item.subject_data;

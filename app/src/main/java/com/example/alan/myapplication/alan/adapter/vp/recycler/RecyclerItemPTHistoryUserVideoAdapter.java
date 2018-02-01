@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alan.myapplication.R;
-import com.example.alan.myapplication.alan.bean.VideoPlayHistoryBean;
+import com.example.alan.myapplication.alan.bean.UserVideoPlayHistoryBean;
 import com.example.alan.myapplication.alan.picture.loadpicture.PictureManager;
 
 import java.util.List;
@@ -17,10 +17,10 @@ import java.util.List;
  * 功能：我的影视观影历史记录
  */
 
-public class RecyclerItemPTHistoryUserVideoAdapter extends BaseQuickAdapter<VideoPlayHistoryBean,AutoLayoutRecyclerBaseHolder> {
+public class RecyclerItemPTHistoryUserVideoAdapter extends BaseQuickAdapter<UserVideoPlayHistoryBean,AutoLayoutRecyclerBaseHolder> {
     private Context context;
 
-    public RecyclerItemPTHistoryUserVideoAdapter(@LayoutRes int layoutResId, @Nullable List<VideoPlayHistoryBean> data) {
+    public RecyclerItemPTHistoryUserVideoAdapter(@LayoutRes int layoutResId, @Nullable List<UserVideoPlayHistoryBean> data) {
         super(layoutResId, data);
     }
 
@@ -29,7 +29,7 @@ public class RecyclerItemPTHistoryUserVideoAdapter extends BaseQuickAdapter<Vide
     }
 
     @Override
-    protected void convert(AutoLayoutRecyclerBaseHolder helper, VideoPlayHistoryBean item) {
+    protected void convert(AutoLayoutRecyclerBaseHolder helper, UserVideoPlayHistoryBean item) {
         ImageView iv =  (ImageView) helper.getView(R.id.iv_p_t_recycler_item_video_fragment);
         PictureManager.getInstance().loadServerPic(context,item.image, iv,R.drawable.icon_default,R.drawable.icon_default,PictureManager.ROUND_TYPE,8);
         helper.setText(R.id.tv_title_p_t_recycler_item_video_fragment,item.title+"");

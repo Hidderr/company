@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/white"
+              android:fitsSystemWindows="true"
+              android:id="@+id/ll_root_title_bar"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_marginTop="30px"
+                  android:layout_height="wrap_content">
+
+        <ImageView android:layout_width="wrap_content"
+                   android:id="@+id/iv_return_title_bar"
+                   android:src="@drawable/title_return"
+                   android:scaleType="fitXY"
+                   android:layout_marginLeft="36px"
+                   android:layout_marginRight="25px"
+                   android:layout_height="wrap_content"/>
+
+        <View android:layout_width="0dp"
+              android:layout_weight="1"
+              android:layout_height="match_parent"/>
+
+        <TextView android:layout_width="wrap_content"
+                    android:text="删除"
+                  android:visibility="invisible"
+                  android:textSize="18sp"
+                  android:id="@+id/tv_delete_title_bar"
+                  android:textColor="@color/main_black"
+                  android:layout_height="wrap_content"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_marginLeft="30px"
+                  android:text="选择"
+                  android:visibility="invisible"
+                  android:id="@+id/tv_choose_title_bar"
+                  android:textSize="18sp"
+                  android:layout_marginRight="30px"
+                  android:textColor="@color/main_black"
+                  android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_marginTop="35px"
+                  android:gravity="center_vertical"
+                  android:layout_marginBottom="10px"
+                  android:layout_height="wrap_content">
+
+        <TextView android:layout_width="wrap_content"
+                  android:text="标题"
+                  android:id="@+id/tv_title_title_bar"
+                  android:layout_marginLeft="40px"
+                  android:textSize="50px"
+                  android:textColor="@color/main_black"
+                  android:layout_height="wrap_content"/>
+
+        <View android:layout_width="0dp"
+              android:layout_weight="1"
+              android:layout_height="match_parent"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_marginLeft="30px"
+                  android:text="全选"
+                  android:visibility="invisible"
+                  android:id="@+id/tv_choose_all_title_bar"
+                  android:textSize="18sp"
+                  android:layout_marginRight="30px"
+                  android:textColor="@color/main_black"
+                  android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+</LinearLayout>

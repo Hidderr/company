@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.alan.myapplication.alan.bean.VideoPlayHistoryBean;
+import com.example.alan.myapplication.alan.bean.UserVideoPlayHistoryBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -198,7 +198,7 @@ public class RecordDao {
      * @param playHistoryBean
      */
     // TODO: 2018/1/31 alan增加
-    public void addPlayHistory(VideoPlayHistoryBean playHistoryBean){
+    public void addPlayHistory(UserVideoPlayHistoryBean playHistoryBean){
         db = dbHelper.getReadableDatabase();
         db.execSQL(
                 "insert into videoplayhistory(title,image,category,duration,year,playsource,sourceicon,video_id) values (?,?,?,?,?,?,?,?)",
@@ -214,8 +214,8 @@ public class RecordDao {
     /**查询播放记录
      * @return
      */
-    public List<VideoPlayHistoryBean> queryVideoPlayHistory(){
-        ArrayList<VideoPlayHistoryBean> records = new ArrayList<VideoPlayHistoryBean>();
+    public List<UserVideoPlayHistoryBean> queryVideoPlayHistory(){
+        ArrayList<UserVideoPlayHistoryBean> records = new ArrayList<UserVideoPlayHistoryBean>();
         db = dbHelper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from videoplayhistory", null);
         while (cursor.moveToNext()) {
@@ -227,7 +227,7 @@ public class RecordDao {
             String playsource = cursor.getString(cursor.getColumnIndex("playsource"));
             String sourceicon = cursor.getString(cursor.getColumnIndex("sourceicon"));
             String video_id = cursor.getString(cursor.getColumnIndex("video_id"));
-            VideoPlayHistoryBean record = new VideoPlayHistoryBean(title, image, category, duration, year,playsource,sourceicon,video_id);
+            UserVideoPlayHistoryBean record = new UserVideoPlayHistoryBean(title, image, category, duration, year,playsource,sourceicon,video_id);
             records.add(record);
         }
         cursor.close();
@@ -238,7 +238,7 @@ public class RecordDao {
     /**删除数据库中已经存在的播放记录
      * @param bean
      */
-    public void deleteRepeatVideoPlayHistory(VideoPlayHistoryBean bean){
+    public void deleteRepeatVideoPlayHistory(UserVideoPlayHistoryBean bean){
         db = dbHelper.getReadableDatabase();
         db.execSQL("delete from videoplayhistory where video_id ='"
                 + bean.video_id + "'");

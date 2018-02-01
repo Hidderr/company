@@ -1,11 +1,11 @@
 package com.example.alan.myapplication.alan.adapter.vp.recycler;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,9 +14,9 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alan.myapplication.R;
 import com.example.alan.myapplication.alan.bean.UserVideoBean;
+import com.example.alan.myapplication.alan.bean.UserVideoPlayHistoryBean;
 import com.example.alan.myapplication.alan.bean.UserVideoRootBean;
-import com.example.alan.myapplication.alan.bean.VideoPlayHistoryBean;
-import com.example.alan.myapplication.alan.ui.VideoScreeningActivity;
+import com.example.alan.myapplication.alan.ui.UserVideoClassificationActivity;
 import com.example.alan.myapplication.alan.utils.AllUtils;
 
 import java.util.List;
@@ -31,7 +31,8 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
     /**
      * 观影记录
      */
-    private List<VideoPlayHistoryBean> historyBeanList;
+    private List<UserVideoPlayHistoryBean> historyBeanList;
+    public boolean mHasStartActivity =false;
 
     public void setContext(Context cxt){
         this.context = cxt;
@@ -50,7 +51,27 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
      */
     public List<UserVideoBean.DataBean.RecommendVideoBean> recommend_video;
 
-    public void setData(UserVideoBean.DataBean data,List<VideoPlayHistoryBean> historyBeanList){
+    /**
+     * 收藏的片单类型
+     */
+    public  String TYPE_COLLECTION_FORM="0";
+    /**
+     * 收藏的影视类型
+     */
+    public String TYPE_COLLECTION_VIDEO="1";
+    /**
+     * 观影历史
+     */
+    public String TYPE_VIDEO_HISORY="2";
+
+    /**
+     * 跳转到Activity需要传递的类型
+     */
+    public String mType;
+
+
+
+    public void setData(UserVideoBean.DataBean data,List<UserVideoPlayHistoryBean> historyBeanList){
         if (data != null) {
             this.collect_video_list = data.collect_video_list;
             this.collect_video  =  data.collect_video;
@@ -66,17 +87,26 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
 
     @Override
     protected void convert(AutoLayoutRecyclerBaseHolder helper, UserVideoRootBean.RooBean item) {
-        helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,item.titleName+"");
+//        helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,item.titleName+"");
+        TextView tv = helper.getView(R.id.tv_desc_recycler_item_root_video_fragment);
+        TextPaint tp = tv.getPaint();
+        tp.setFakeBoldText(true);
+        tv.setText(item.titleName+"");
         LinearLayout rootView = helper.getView(R.id.ll_root_recycler_item_root_video_fragment);
         RecyclerView recyclerView = helper.getView(R.id.recyclerview_recycler_item_root_video_fragment);
-        TextView tv_more = helper.getView(R.id.tv_enter_recycler_item_root_video_fragment);
+        final TextView tv_more = helper.getView(R.id.tv_enter_recycler_item_root_video_fragment);
         tv_more.setVisibility(View.VISIBLE);
         int position = helper.getLayoutPosition();
         rootView.setVisibility(View.VISIBLE);
+
+
         switch (position){
             case 0://推荐片单或者收藏的片单
                 if (collect_video_list != null && collect_video_list.video_list!=null&&collect_video_list.video_list.size()>0) {
                     helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,collect_video_list.type==2?"推荐片单":"收藏片单");
+                    if (collect_video_list.type==2) {
+                        tv_more.setVisibility(View.INVISIBLE);
+                    }
                     final List<UserVideoBean.DataBean.CollectVideoListBean.VideoListBean> video_list = collect_video_list.video_list;
                     RecyclerFormItemUserVideoAdapter mFormRecyclerAdpater0 = new RecyclerFormItemUserVideoAdapter(R.layout.recycler_item_form_video_fragment, video_list);
                     mFormRecyclerAdpater0.setContext(context);
@@ -87,12 +117,13 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
                     recyclerView.setLayoutManager(linearLayoutManager2);
                     recyclerView.getItemAnimator().setChangeDuration(0);
                     recyclerView.setAdapter(mFormRecyclerAdpater0);
+                    mType = TYPE_COLLECTION_FORM;
                 }else {
-//                    rootView.setVisibility(View.GONE);
                     helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,"收藏片单(暂无收藏)");
                     tv_more.setVisibility(View.INVISIBLE);
                 }
                 break;
+
 
             case 1://收藏的影视
                 if (collect_video != null && collect_video.collect!=null && collect_video.collect.size()>0 ) {
@@ -111,12 +142,14 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
                     recyclerView.setLayoutManager(linearLayoutManager4);
                     recyclerView.getItemAnimator().setChangeDuration(0);
                     recyclerView.setAdapter(mRecyclerPTItemAdapter1);
+                    mType = TYPE_COLLECTION_VIDEO;
                 }else {
-//                    rootView.setVisibility(View.GONE);
+                    rootView.setVisibility(View.GONE);
                     helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,"收藏影视(暂无收藏)");
                     tv_more.setVisibility(View.INVISIBLE);
                 }
                 break;
+
 
             case 2://观影记录
                 if (historyBeanList != null && historyBeanList.size()>0) {
@@ -134,6 +167,7 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
                     recyclerView.setLayoutManager(linearLayoutManager4);
                     recyclerView.getItemAnimator().setChangeDuration(0);
                     recyclerView.setAdapter(mRecyclerPTItemAdapter2);
+                    mType = TYPE_VIDEO_HISORY;
                 }else {
 //                    rootView.setVisibility(View.GONE);
                     helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,"观影记录(暂无记录)");
@@ -175,17 +209,29 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
                         recyclerView.setLayoutManager(linearLayoutManager4);
                         recyclerView.getItemAnimator().setChangeDuration(0);
                         recyclerView.setAdapter(mRecyclerDeatilItemAdapter4);
+                        tv_more.setVisibility(View.INVISIBLE);
                     }else {
                         helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,"暂无推荐");
                         tv_more.setVisibility(View.INVISIBLE);
                     }
-
-
                 }else {helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,"暂无推荐");tv_more.setVisibility(View.INVISIBLE);}
                 break;
+
             default:
                 break;
         }
+
+        AllUtils.getInstance().startActivityWithView(UserVideoClassificationActivity.class,tv_more,context,new String[]{"type"},new String[]{mType});//点击跳转详情Activity
+
+        //滑动到底跳转Activity
+       recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+           @Override
+           public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+               super.onScrolled(recyclerView, dx, dy);
+                   AllUtils.getInstance().scrollEndEnterActivity(recyclerView,context,UserVideoClassificationActivity.class,AllUtils.HORIZONTAL,new String[]{"type"},new String[]{mType});
+
+           }
+       });
 
     }
 
@@ -197,22 +243,7 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
     }
 
 
-    /**跳转到影视筛选
-     * @param title
-     * @param tv_more
-     * @param type
-     */
-    private void startUserCollectionActivity(final String title, TextView tv_more, final int type) {
-        tv_more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!TextUtils.isEmpty(title)) {
-                    Intent view = new Intent(context, VideoScreeningActivity.class);
-                    view.putExtra("title",title);
-                    view.putExtra("type",type);
-                    context.startActivity(view);
-                }
-            }
-        });
-    }
+
+
+
 }

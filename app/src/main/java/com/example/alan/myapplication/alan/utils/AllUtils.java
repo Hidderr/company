@@ -6,10 +6,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -28,8 +31,15 @@ import static com.example.alan.myapplication.alan.global.GlobalApplication.conte
 
 public class AllUtils {
 
+    /**
+     * 滑动方向
+     */
+    public static final String HORIZONTAL  = "horizontal";
+    public static final String VERTICAL  = "vertical";
     public static AllUtils mAllUtils;
     public static Context mContext = GlobalApplication.getGlobalContext();
+    public boolean hasStart;
+
     private AllUtils() {}
     public static AllUtils getInstance() {
         if (mAllUtils == null)
@@ -127,6 +137,23 @@ public class AllUtils {
         cxt.startActivity(new Intent(cxt, cls));
     }
 
+    /**启动Activity
+     * @param cxt
+     * @param cls
+     * @param key
+     * @param value
+     */
+    public void startActivityWithParamas(Context cxt, Class<?> cls,String[] key,String[] value) {
+        Intent view = new Intent(cxt, cls);
+        if (key != null && key.length>0 && value!=null && value.length>0 && key.length==value.length) {
+            for (int i = 0; i < key.length; i++) {
+                view.putExtra(key[i],value[i]);
+            }
+        }
+
+        cxt.startActivity(view);
+    }
+
     public static void showToast(Context context,String content){
         Toast.makeText(context, content+"", Toast.LENGTH_SHORT).show();
     }
@@ -150,6 +177,57 @@ public class AllUtils {
     }
 
 
+
+    /**跳转到到我的影视详情里
+     * @param cls
+     * @param view 点击事件
+     */
+   public void startActivityWithView(final Class<?> cls, View view, final Context cxt, final String[] key, final String[] value) {
+       view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityWithParamas(cxt,cls,key,value);
+
+            }
+        });
+    }
+
+
+    /**判断RecyclerView是否滑动到底，然后进行跳转Activity
+     * @param recyclerView
+     * @param cxt
+     * @param claz 跳转的Activity
+     * @param direction RecyclerView可以滑动的方向
+     * @param key 传递的参数
+     * @param value 传递的参数
+     */
+    public  void scrollEndEnterActivity(RecyclerView recyclerView , Context cxt, Class<?> claz,String direction,String[] key,String[] value){
+        switch (direction){
+            case HORIZONTAL:
+                if (!recyclerView.canScrollHorizontally(1) && !hasStart ) {//判断不能左滑，即互动到底
+                        startActivityWithParamas(cxt,claz,key,value);
+                    hasStart = true;
+
+                }
+                break;
+            case VERTICAL:
+                if (!recyclerView.canScrollVertically(1)) {//判断不能上滑，即互动到底
+                    startActivity(cxt,claz);
+                }
+                break;
+
+        }
+
+    }
+
+
+    /**设置TextView字体加粗
+     * @param tv
+     */
+    public void setTextBold(TextView tv) {
+        TextPaint tp = tv.getPaint();
+        tp.setFakeBoldText(true);
+    }
 
 
 

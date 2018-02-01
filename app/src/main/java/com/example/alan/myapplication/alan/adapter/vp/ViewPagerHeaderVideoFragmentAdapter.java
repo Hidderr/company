@@ -3,6 +3,7 @@ package com.example.alan.myapplication.alan.adapter.vp;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,8 @@ public class ViewPagerHeaderVideoFragmentAdapter extends PagerAdapter {
         final int realPosition = getRealPosition(position);
         TextView title = (TextView) view.findViewById(R.id.tv_title_vp_item_video_fragment);
         TextView desc= (TextView) view.findViewById(R.id.tv_desc_vp_item_video_fragment);
+        TextPaint tp = desc.getPaint();
+        tp.setFakeBoldText(true);
         ImageView iv =  (ImageView) view.findViewById(R.id.iv_vp_item_video_fragment);
         if (banner_list.size()>0) {
             mBannerListBean = banner_list.get(realPosition);

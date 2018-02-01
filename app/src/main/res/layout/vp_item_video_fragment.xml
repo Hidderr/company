@@ -21,6 +21,7 @@
               android:ellipsize="end"
               android:maxLines="1"
               android:text="推荐描述"
+              android:textStyle="bold"
               android:textSize="42px"
               android:textColor="@color/fragment_video_text_title_blue"
               android:layout_height="wrap_content"/>

@@ -49,4 +49,12 @@ public class AppUrl {
      * 我的影视
      */
     public static final String VIDEO_USER_VIDEO = "/v4/collection_list";
+    /**
+     * 用户收藏的片单
+     */
+    public static final String VIDEO_USER_VIDEO_FORM = "/v4/video_list_collections";
+    /**
+     * 用户收藏的影视
+     */
+    public static final String VIDEO_USER_VIDEO_VIDEO = "/v4/video_collections";
 }

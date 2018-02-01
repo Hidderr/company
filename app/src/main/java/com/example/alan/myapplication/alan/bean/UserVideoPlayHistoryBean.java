@@ -5,7 +5,7 @@ package com.example.alan.myapplication.alan.bean;
  * 功能：播放历史记录
  */
 
-public class VideoPlayHistoryBean {
+public class UserVideoPlayHistoryBean {
     /**
      * 影片标题
      */
@@ -38,7 +38,11 @@ public class VideoPlayHistoryBean {
      * 影片播放来源的icon
      */
     public String sourceicon;
-    public VideoPlayHistoryBean(String title,String image,String category,int duration,String year,String playsource,String sourceicon,String video_id){
+    /**
+     * 是否选中
+     */
+    public boolean isSelcted;
+    public UserVideoPlayHistoryBean(String title, String image, String category, int duration, String year, String playsource, String sourceicon, String video_id){
         this.title = title;
         this.image = image;
         this.category = category;

@@ -107,8 +107,18 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
         ButterKnife.bind(this);
         initIntent();
         loadDataFromServer();
+        initTextViewBold();
 
     }
+
+
+    private void initTextViewBold() {
+        AllUtils.getInstance().setTextBold(mTvTitleVideoDetailActivity);
+        AllUtils.getInstance().setTextBold(mTvDirectorVideoDetailActivity);
+        AllUtils.getInstance().setTextBold(mTvActorsVideoDetailActivity);
+        AllUtils.getInstance().setTextBold(mTvDescRecyclerItemRootVideoFragment);
+    }
+
 
 
 

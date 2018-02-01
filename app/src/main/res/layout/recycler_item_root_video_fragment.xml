@@ -20,6 +20,7 @@
                   android:maxLines="1"
                   android:layout_marginLeft="10px"
                   android:text="推荐片单"
+                  android:textStyle="bold"
                   android:textSize="38px"
                   android:textColor="@color/fragment_video_text_title_blue"
                   android:layout_height="wrap_content"/>

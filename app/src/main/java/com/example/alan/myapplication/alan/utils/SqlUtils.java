@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.example.alan.myapplication.alan.bean.UserVideoPlayHistoryBean;
 import com.example.alan.myapplication.alan.bean.VideoDetailBean;
-import com.example.alan.myapplication.alan.bean.VideoPlayHistoryBean;
 import com.example.alan.myapplication.alan.gimi.LogUtil;
 import com.example.alan.myapplication.alan.gimi.RecordDao;
 import com.example.alan.myapplication.alan.listener.OnControlSqlFinishListener;
@@ -20,7 +20,7 @@ import java.util.List;
 public class SqlUtils {
     RecordDao dao;
     public static SqlUtils mSqlUtils;
-    public List<VideoPlayHistoryBean> mPlayHistoryBeanList;
+    public List<UserVideoPlayHistoryBean> mPlayHistoryBeanList;
     private OnControlSqlFinishListener onControlSqlFinishListener;
 
     private SqlUtils() {}
@@ -55,13 +55,13 @@ public class SqlUtils {
 //               if (bean != null && dao!=null) {
 //                   VideoDetailBean.DataBean data= bean;
 //                   if (TextUtils.isEmpty(data.image) &&  TextUtils.isEmpty(data.title)) {
-//                       List<VideoPlayHistoryBean> playHistoryBeanList = dao.queryVideoPlayHistory();
-//                       for (VideoPlayHistoryBean videoPlayHistoryBean : playHistoryBeanList) {
+//                       List<UserVideoPlayHistoryBean> playHistoryBeanList = dao.queryVideoPlayHistory();
+//                       for (UserVideoPlayHistoryBean videoPlayHistoryBean : playHistoryBeanList) {
 //                           if (videoPlayHistoryBean.video_id.equals(video_id)) {
 //                               dao.deleteRepeatVideoPlayHistory(videoPlayHistoryBean);
 //                           }
 //                       }
-//                       dao.addPlayHistory(new VideoPlayHistoryBean(data.title,data.image,data.category,data.duration/60,data.year,playsource,sourceicon,video_id));
+//                       dao.addPlayHistory(new UserVideoPlayHistoryBean(data.title,data.image,data.category,data.duration/60,data.year,playsource,sourceicon,video_id));
 //                   }
 //               }
 //
@@ -77,13 +77,13 @@ public class SqlUtils {
                 if (bean != null && dao!=null) {
                     VideoDetailBean.DataBean data= bean;
                     if (!TextUtils.isEmpty(data.image) &&  !TextUtils.isEmpty(data.title)) {
-                        List<VideoPlayHistoryBean> playHistoryBeanList = dao.queryVideoPlayHistory();
-                        for (VideoPlayHistoryBean videoPlayHistoryBean : playHistoryBeanList) {
-                            if (videoPlayHistoryBean.video_id.equals(video_id)) {
-                                dao.deleteRepeatVideoPlayHistory(videoPlayHistoryBean);
+                        List<UserVideoPlayHistoryBean> playHistoryBeanList = dao.queryVideoPlayHistory();
+                        for (UserVideoPlayHistoryBean userVideoPlayHistoryBean : playHistoryBeanList) {
+                            if (userVideoPlayHistoryBean.video_id.equals(video_id)) {
+                                dao.deleteRepeatVideoPlayHistory(userVideoPlayHistoryBean);
                             }
                         }
-                        dao.addPlayHistory(new VideoPlayHistoryBean(data.title,data.image,data.category,data.duration/60,data.year,playsource,sourceicon,video_id));
+                        dao.addPlayHistory(new UserVideoPlayHistoryBean(data.title,data.image,data.category,data.duration/60,data.year,playsource,sourceicon,video_id));
                     }
                 }
 
@@ -94,7 +94,7 @@ public class SqlUtils {
      * @param cxt
      * @return
      */
-    public List<VideoPlayHistoryBean> queryVideoPlayHistory2Show(final Context cxt){
+    public List<UserVideoPlayHistoryBean> queryVideoPlayHistory2Show(final Context cxt){
         LogUtil.w("SQL","查询完成000000");
         new Thread(){
             @Override

@@ -8,14 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import com.example.alan.myapplication.R;
 import com.example.alan.myapplication.alan.adapter.vp.recycler.RecyclerItemUserVideoAdapter;
 import com.example.alan.myapplication.alan.bean.UserVideoBean;
+import com.example.alan.myapplication.alan.bean.UserVideoPlayHistoryBean;
 import com.example.alan.myapplication.alan.bean.UserVideoRootBean;
 import com.example.alan.myapplication.alan.bean.VideoDetailBean;
-import com.example.alan.myapplication.alan.bean.VideoPlayHistoryBean;
 import com.example.alan.myapplication.alan.constants.AppUrl;
 import com.example.alan.myapplication.alan.http.HttpLoadStateUtil;
 import com.example.alan.myapplication.alan.http.HttpManager;
 import com.example.alan.myapplication.alan.http.ServerCallBack;
 import com.example.alan.myapplication.alan.listener.OnControlSqlFinishListener;
+import com.example.alan.myapplication.alan.utils.AllUtils;
 import com.example.alan.myapplication.alan.utils.SqlUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -51,7 +52,7 @@ public class UserVideoActivity extends AutoLayoutActivity implements SwipeRefres
      * 是否有观影历史
      */
     private int watch_history;
-    public List<VideoPlayHistoryBean> mVideoHistoryList;
+    public List<UserVideoPlayHistoryBean> mVideoHistoryList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,8 +63,6 @@ public class UserVideoActivity extends AutoLayoutActivity implements SwipeRefres
         initRootData();
         initRecyclerView();
         initQuerySQL(false);
-
-
     }
 
     private void initRootData() {
@@ -102,7 +101,7 @@ public class UserVideoActivity extends AutoLayoutActivity implements SwipeRefres
         SqlUtils.getInstance().setOnControlSqlFinishListener(new OnControlSqlFinishListener() {
             @Override
             public void onQuerySqlFinishListener(Object obj) {
-                mVideoHistoryList = (List<VideoPlayHistoryBean>) obj;
+                mVideoHistoryList = (List<UserVideoPlayHistoryBean>) obj;
                 if (mVideoHistoryList == null || mVideoHistoryList.size()==0) {
                     watch_history = 2;
                     mVideoHistoryList =null;
@@ -129,8 +128,11 @@ public class UserVideoActivity extends AutoLayoutActivity implements SwipeRefres
                     if (userVideoBean.data != null) {
                        UserVideoBean.DataBean.CollectVideoBean collect_video =  userVideoBean.data.collect_video;
                         if ((collect_video != null || collect_video.collect!=null || collect_video.collect.size()>0) || mVideoHistoryList!=null ) {
-                            mItemDataList.remove(3);
-                            mRootRecyclerItemAdapter.notifyDataSetChanged();
+                            if (mItemDataList != null && mItemDataList.size()==4) {
+                                mItemDataList.remove(3);
+                                mRootRecyclerItemAdapter.notifyDataSetChanged();
+                            }
+
                         }
 
                     }
@@ -204,4 +206,10 @@ public class UserVideoActivity extends AutoLayoutActivity implements SwipeRefres
         mSrLayoutUserActivity.setRefreshing(false);
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AllUtils.getInstance().hasStart = false;
+    }
 }

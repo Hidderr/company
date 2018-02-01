@@ -15,6 +15,8 @@
     <color name="fragment_video_text_des_blue">#b9c6d8</color>
     <color name="fragment_video_text_bg_shape">#ebf0f4</color>
     <color name="flow_layout_text_bg_shape">#EDF1F6</color>
+    <color name="actors">#b9c6d8</color>
+    <color name="douban">#24d77f</color>
 
     <color name="D9D9D9">#D9D9D9</color>
     <color name="zitiyanse">#8b8b8f</color>

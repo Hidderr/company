@@ -6,6 +6,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -38,7 +39,11 @@ public class RecyclerRootItemFilmClassificationActivityAdapter extends BaseQuick
     protected void convert(AutoLayoutRecyclerBaseHolder helper, VideoClassificationBean.DataBean.CategoryBean item) {
         List<VideoClassificationBean.DataBean.CategoryBean.CategoryDataBean> category_data = item.category_data;
         final String title = item.title;
-        helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,title);
+//        helper.setText(R.id.tv_desc_recycler_item_root_video_fragment,title);
+        TextView tv = helper.getView(R.id.tv_desc_recycler_item_root_video_fragment);
+        TextPaint tp = tv.getPaint();
+        tp.setFakeBoldText(true);
+        tv.setText(title+"");
         TextView tv_more = helper.getView(R.id.tv_enter_recycler_item_root_video_fragment);
         tv_more.setVisibility(View.VISIBLE);
         final int type =item.type;
