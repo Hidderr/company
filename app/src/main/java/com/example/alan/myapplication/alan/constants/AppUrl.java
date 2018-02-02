@@ -57,4 +57,8 @@ public class AppUrl {
      * 用户收藏的影视
      */
     public static final String VIDEO_USER_VIDEO_VIDEO = "/v4/video_collections";
+    /**
+     * 移除用户收藏的影视
+     */
+    public static final String VIDEO_USER_REMOVE_USER_COLLECTION_VIDEO = "/v3/video_collection_remove";
 }

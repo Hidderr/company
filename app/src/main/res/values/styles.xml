@@ -84,9 +84,20 @@
 
 
 
+    <!--&lt;!&ndash;没有ActionBar主题&ndash;&gt;-->
+    <!--<style name="AppTheme.NoActionBar" parent="AppTheme">-->
+        <!--<item name="android:textColor">#000</item>-->
+        <!--<item name="colorPrimary">#fff</item>-->
+        <!--<item name="colorPrimaryDark">#fff</item>-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
+        <!--&lt;!&ndash;设置menu中item的图标颜色&ndash;&gt;-->
+        <!--<item name="android:textColorSecondary">#ffffff</item>-->
+    <!--</style>-->
+
+
     <!--没有ActionBar主题-->
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
-        <item name="android:textColor">#000</item>
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#fff</item>
         <item name="colorPrimaryDark">#fff</item>
         <item name="windowActionBar">false</item>
@@ -96,12 +107,8 @@
     </style>
 
 
-    <style name="AppTheme.NoActionBar.Android5" parent="AppTheme.NoActionBar">
-        <item name="colorButtonNormal">#fff</item>
-        <item name="android:listDivider">@drawable/divider_bg</item>
-        <item name="colorControlHighlight">#fff</item>
-    </style>
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
     <!--CollapsingToolbarLayout展开时标题文字样式-->
     <style name="ExpandedTitleTextAppearance" parent="TextAppearance.AppCompat.Title">
         <item name="android:textSize">20sp</item>

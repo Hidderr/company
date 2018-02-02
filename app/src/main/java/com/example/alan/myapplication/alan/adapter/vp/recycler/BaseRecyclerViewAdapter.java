@@ -13,23 +13,18 @@ import java.util.List;
  * 功能：
  */
 
-public abstract class BaseRecyclerViewAdapter<T, K extends BaseViewHolder> extends BaseQuickAdapter {
-    public boolean isShowDelete;
+abstract class BaseRecyclerViewAdapterBaseQuickAdapter<T, K extends BaseViewHolder> extends BaseQuickAdapter {
 
-    public BaseRecyclerViewAdapter(@LayoutRes int layoutResId, @Nullable List data) {
-        super(layoutResId, data);
-    }
 
-    public BaseRecyclerViewAdapter(@Nullable List data) {
+    public BaseRecyclerViewAdapterBaseQuickAdapter(@Nullable List data) {
         super(data);
     }
 
-    public BaseRecyclerViewAdapter(@LayoutRes int layoutResId) {
-        super(layoutResId);
+    public BaseRecyclerViewAdapterBaseQuickAdapter(@LayoutRes int layoutResId, @Nullable List data) {
+        super(layoutResId, data);
     }
 
-
-    public void showDelete(boolean isShowDelete){
-        this.isShowDelete = isShowDelete;
+    public BaseRecyclerViewAdapterBaseQuickAdapter(@LayoutRes int layoutResId) {
+        super(layoutResId);
     }
 }

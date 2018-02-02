@@ -204,6 +204,67 @@ public class HttpFrame {
         return getURLEncoderString(s);
     }
 
+    public  String getEncodeParam(HashMap<String,String> params) throws Exception {
+        JSONObject j = new JSONObject();
+        try {
+            Iterator<String> keys = params.keySet().iterator();
+            Iterator<String> values = params.values().iterator();
+
+            for (int i=0;i<params.size();i++ ) {
+                if (true) {
+                    String key = keys.next();
+                    String value = values.next();
+                    if ("page".equals(key)) {
+                        j.put("page", Integer.valueOf(value));
+
+                    } else if ("category_id".equals(key)) {
+                        j.put("category_id", Integer.valueOf(value));
+
+                    } else if ("id".equals(key)) {
+                        j.put("id", Integer.valueOf(value));
+
+                    }else if("user_id".equals(key)){
+                        j.put("user_id", Integer.valueOf(value));
+
+                    } else if("mac_id".equals(key)){
+                        j.put("mac_id", Integer.valueOf(value));
+
+                    }else if("watch_history".equals(key)){
+                        j.put("watch_history", Integer.valueOf(value));
+
+                    } else {
+                        j.put(key, value);
+                    }
+                }
+            }
+
+            j.put("time", String.valueOf(System.currentTimeMillis() / 1000));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+//        String res = URLEncoder.encode(EasyAES.getInstance().encrypt(j.toString()), "UTF-8");
+//        XGIMILOG.E("\n未加密参数 : " + j.toString()
+//                + "\n 加密参数 : " + EasyAES.getInstance().encrypt(j.toString()).trim()
+//                + "\nurlEncode : " + res
+//        );
+
+        LogUtil.w("TAG","post:json:  ................,,,,,,,,,,     "+j.toString());
+        String s = EasyAES.getInstance().encrypt(j.toString().trim());
+
+        return s;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * URL 转码
      *
@@ -232,13 +293,14 @@ public class HttpFrame {
     public void postFromServer(String url, ServerCallBack callBack, HashMap<String,String> map, Object obj){
         if (mOkHttpClient != null && map!=null) {
             FormBody.Builder builder = new FormBody.Builder();
-            Iterator iter = map.entrySet().iterator();
-            while (iter.hasNext()){
-                Map.Entry entry = (Map.Entry) iter.next();
-                builder.add(entry.getKey()+"",entry.getValue()+"");
+            try {
+                String value = getEncodeParam(map);
+                builder.add("param",value);
+                LogUtil.w("TAG","value:json:  ................,,,,,,,,,,     "+value);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             FormBody formBody = builder.build();
-
             Request request = new Request.Builder()
                     .header("token",TOKEN+"")
                     .tag(obj)

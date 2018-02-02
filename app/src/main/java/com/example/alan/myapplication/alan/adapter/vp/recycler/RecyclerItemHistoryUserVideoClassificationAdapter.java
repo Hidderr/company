@@ -47,7 +47,7 @@ public class RecyclerItemHistoryUserVideoClassificationAdapter extends BaseQuick
         ImageView delete = helper.getView(R.id.iv_delete_history_recycler_foot_item_history_activity);
         if (isChooseClick) {
             delete.setVisibility(View.VISIBLE);
-            if (item.isSelcted) {
+            if (chooseAll) {
                 delete.setSelected(true);
             }else {
                 delete.setSelected(false);
@@ -68,4 +68,16 @@ public class RecyclerItemHistoryUserVideoClassificationAdapter extends BaseQuick
     }
 
     public boolean isChooseClick;
+
+    /**设置是否选择全部
+     * @param chooseAll
+     */
+    public void setChooseAll(boolean chooseAll) {
+        this.chooseAll = chooseAll;
+    }
+
+    /**
+     * 是否选择全部
+     */
+    public boolean chooseAll;
 }

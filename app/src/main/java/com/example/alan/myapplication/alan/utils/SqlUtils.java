@@ -8,6 +8,7 @@ import com.example.alan.myapplication.alan.bean.UserVideoPlayHistoryBean;
 import com.example.alan.myapplication.alan.bean.VideoDetailBean;
 import com.example.alan.myapplication.alan.gimi.LogUtil;
 import com.example.alan.myapplication.alan.gimi.RecordDao;
+import com.example.alan.myapplication.alan.global.GlobalApplication;
 import com.example.alan.myapplication.alan.listener.OnControlSqlFinishListener;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class SqlUtils {
     public static SqlUtils mSqlUtils;
     public List<UserVideoPlayHistoryBean> mPlayHistoryBeanList;
     private OnControlSqlFinishListener onControlSqlFinishListener;
+    public Context applicationContext = GlobalApplication.getGlobalContext();
 
     private SqlUtils() {}
     public static SqlUtils getInstance() {
@@ -72,7 +74,7 @@ public class SqlUtils {
 
     public void addPlayHistory2Sql(final String video_id, final String playsource, final String sourceicon , final VideoDetailBean.DataBean bean, final Context cxt) {
                 if (dao == null) {
-                    dao = new RecordDao(cxt);
+                    dao = new RecordDao(applicationContext);
                 }
                 if (bean != null && dao!=null) {
                     VideoDetailBean.DataBean data= bean;
@@ -100,7 +102,7 @@ public class SqlUtils {
             @Override
             public void run() {
                 if (dao == null) {
-                    dao = new RecordDao(cxt);
+                    dao = new RecordDao(applicationContext);
                 }
                 mPlayHistoryBeanList = dao.queryVideoPlayHistory();
                 LogUtil.w("SQL","查询完成111");

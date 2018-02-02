@@ -42,6 +42,8 @@ public class UserVideoClassificationVideoBean {
             public String showtime;
             public double score;
             public boolean isSelcted;
+            public boolean allChooseTrue;
+            public boolean allChooseFalse;
         }
     }
 }

@@ -34,6 +34,8 @@ public class UserVideoCassificationFormBean {
             public String img;
             public String tag;
             public boolean isSelcted;
+            public boolean allChooseTrue;
+            public boolean allChooseFalse;
         }
     }
 }

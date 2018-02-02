@@ -4,7 +4,6 @@
               android:layout_marginRight="10px"
               android:id="@+id/ll_root_form_recycler_item_video_fragment"
               android:layout_width="match_parent"
-              android:gravity="center_vertical"
               android:layout_height="wrap_content">
 
 

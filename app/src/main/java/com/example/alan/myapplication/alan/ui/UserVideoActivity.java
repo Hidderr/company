@@ -138,7 +138,7 @@ public class UserVideoActivity extends AutoLayoutActivity implements SwipeRefres
                     }
                     mRootRecyclerItemAdapter.setData(userVideoBean.data,mVideoHistoryList);
                 }else {
-                    HttpLoadStateUtil.getInstance().loadSateChange(false);
+                    HttpLoadStateUtil.getInstance().loadSateChangeNoContent();
                 }
             }
 
@@ -181,6 +181,10 @@ public class UserVideoActivity extends AutoLayoutActivity implements SwipeRefres
     private void initSwipRefreshLayout() {
         mSrLayoutUserActivity.setColorSchemeResources(R.color.swiperefresh_color1, R.color.swiperefresh_color2, R.color.swiperefresh_color3, R.color.swiperefresh_color4);
         mSrLayoutUserActivity.setOnRefreshListener(this);
+        refresh();
+    }
+
+    private void refresh() {
         mSrLayoutUserActivity.post(new Runnable() {
             @Override
             public void run() {
@@ -188,7 +192,6 @@ public class UserVideoActivity extends AutoLayoutActivity implements SwipeRefres
             }
         });//进入刷新
     }
-
 
 
     @Override
@@ -211,5 +214,9 @@ public class UserVideoActivity extends AutoLayoutActivity implements SwipeRefres
     protected void onResume() {
         super.onResume();
         AllUtils.getInstance().hasStart = false;
+//        refresh();
+        initQuerySQL(true);
+
     }
+
 }

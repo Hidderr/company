@@ -300,7 +300,7 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
                                 mRootRecyclerItemAdapter.setNewData(subjects);
                             }else {
                                 if (!isRefresh) {
-                                    HttpLoadStateUtil.getInstance().loadSateChange(false);
+                                    HttpLoadStateUtil.getInstance().loadSateChangeNoContent();
                                 }
 
                             }

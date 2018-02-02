@@ -121,7 +121,7 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
                         }
                         mItemAdapter.loadMoreComplete();
                     }else {
-                        HttpLoadStateUtil.getInstance().loadSateChange(false);
+                        HttpLoadStateUtil.getInstance().loadSateChangeNoContent();
                         if (loadMore) {
                             mItemAdapter.loadMoreEnd();
                         }

@@ -1,11 +1,14 @@
 package com.example.alan.myapplication.alan.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,15 +23,18 @@ import com.example.alan.myapplication.alan.bean.UserVideoCassificationFormBean;
 import com.example.alan.myapplication.alan.bean.UserVideoClassificationVideoBean;
 import com.example.alan.myapplication.alan.bean.UserVideoPlayHistoryBean;
 import com.example.alan.myapplication.alan.constants.AppUrl;
+import com.example.alan.myapplication.alan.gimi.LogUtil;
 import com.example.alan.myapplication.alan.http.HttpLoadStateUtil;
 import com.example.alan.myapplication.alan.http.HttpManager;
 import com.example.alan.myapplication.alan.http.ServerCallBack;
 import com.example.alan.myapplication.alan.listener.OnControlSqlFinishListener;
+import com.example.alan.myapplication.alan.listener.OnDeleteChooseAllChangeListener;
 import com.example.alan.myapplication.alan.utils.AllUtils;
 import com.example.alan.myapplication.alan.utils.SqlUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -41,7 +47,7 @@ import butterknife.OnClick;
  * 功能：我的影视详情，收藏的影视、片单，观影记录
  */
 
-public class UserVideoClassificationActivity extends AutoLayoutActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class UserVideoClassificationActivity extends AutoLayoutActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener ,OnDeleteChooseAllChangeListener ,HttpLoadStateUtil.NetRetryListener{
 
     /**
      * 根据传入的Type判断展示 片单，影视，影视记录
@@ -99,6 +105,17 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
      * 是否正在加载
      */
     private boolean isLoading;
+    public String formTitle = "收藏片单";
+    public String videoTitle = "收藏影视";
+    public String hisoryTitle = "观影历史";
+    /**
+     * 标题
+     */
+    public String mTitle = "";
+    private String delete_success = "删除成功";
+    public List<Integer> mRemoveVideoList;
+    private String delete_fail="未知原因删除失败";
+    public String mRemoveVideoParamas;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,7 +127,12 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
         initSwiRefreshLayout();
         initView();
         initData(false);
+        initHttpRetry();
 
+    }
+
+    private void initHttpRetry() {
+        HttpLoadStateUtil.getInstance().setNetRetryListener(this);
     }
 
     private void initTopBar() {
@@ -134,13 +156,19 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
         switch (mType) {
             case "0"://片单
                 initFormData(isLoadMore);
+                mTitle = formTitle;
                 break;
             case "1"://影视
                 initVideoData(isLoadMore);
+                mTitle = videoTitle;
                 break;
             case "2"://历史记录
                 initHisoryData();
+                mTitle = hisoryTitle;
                 break;
+        }
+        if (!TextUtils.isEmpty(mTitle)) {
+            mTvTitleTitleBar.setText(mTitle + "");
         }
     }
 
@@ -154,7 +182,7 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
                 if (mHistoryList != null && mHistoryList.size() > 0) {
                     mHistoryAdapter.setNewData(mHistoryList);
                 } else {
-                    HttpLoadStateUtil.getInstance().loadSateChange(false);
+                    HttpLoadStateUtil.getInstance().loadSateChangeNoContent();
                 }
                 mSrLayoutUsrVideoClassificationActivity.post(new Runnable() {
                     @Override
@@ -189,8 +217,8 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
                         if (!isLoadMore) {
                             mVideoList = video;
                             mVideoAdapter.setNewData(mVideoList);
+                            mTvChooseTitleBar.setVisibility(View.VISIBLE);
                         } else {
-                            mVideoList.addAll(video);
                             mVideoAdapter.addData(video);
                             mVideoAdapter.loadMoreComplete();
                         }
@@ -199,12 +227,12 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
                         if (isLoadMore) {
                             mVideoAdapter.loadMoreEnd();
                         } else {
-                            HttpLoadStateUtil.getInstance().loadSateChange(false);
+                            HttpLoadStateUtil.getInstance().loadSateChangeNoContent();
                         }
                     }
 
                 } else {
-                    HttpLoadStateUtil.getInstance().loadSateChange(false);
+                    HttpLoadStateUtil.getInstance().loadSateChangeNoContent();
                 }
             }
 
@@ -215,14 +243,14 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
                 if (isLoadMore) {
                     mCurrPage--;
                 }
-                mFormAdapter.loadMoreFail();
+                mAdapter.loadMoreFail();
             }
 
             @Override
             public void responseServerFailure(String json, int code) {
                 HttpLoadStateUtil.getInstance().loadSateChange(false);
                 loadFinished();
-                mFormAdapter.loadMoreFail();
+                mAdapter.loadMoreFail();
                 if (isLoadMore) {
                     mCurrPage--;
                 }
@@ -232,7 +260,7 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
             public void netWorkFailure(String error) {
                 HttpLoadStateUtil.getInstance().loadSateChange(true);
                 loadFinished();
-                mFormAdapter.loadMoreFail();
+                mAdapter.loadMoreFail();
                 if (isLoadMore) {
                     mCurrPage--;
                 }
@@ -261,22 +289,20 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
                             mFormList = video_list;
                             mFormAdapter.setNewData(mFormList);
                         } else {
-                            mFormList.addAll(video_list);
+//                            mFormList.addAll(video_list);
                             mFormAdapter.addData(video_list);
                             mFormAdapter.loadMoreComplete();
-
                         }
-
                     } else {
                         if (isLoadMore) {
                             mFormAdapter.loadMoreEnd();
                         } else {
-                            HttpLoadStateUtil.getInstance().loadSateChange(false);
+                            HttpLoadStateUtil.getInstance().loadSateChangeNoContent();
                         }
                     }
 
                 } else {
-                    HttpLoadStateUtil.getInstance().loadSateChange(false);
+                    HttpLoadStateUtil.getInstance().loadSateChangeNoContent();
                 }
             }
 
@@ -287,14 +313,14 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
                 if (isLoadMore) {
                     mCurrPage--;
                 }
-                mFormAdapter.loadMoreFail();
+                mAdapter.loadMoreFail();
             }
 
             @Override
             public void responseServerFailure(String json, int code) {
                 HttpLoadStateUtil.getInstance().loadSateChange(false);
                 loadFinished();
-                mFormAdapter.loadMoreFail();
+                mAdapter.loadMoreFail();
                 if (isLoadMore) {
                     mCurrPage--;
                 }
@@ -304,7 +330,7 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
             public void netWorkFailure(String error) {
                 HttpLoadStateUtil.getInstance().loadSateChange(true);
                 loadFinished();
-                mFormAdapter.loadMoreFail();
+                mAdapter.loadMoreFail();
                 if (isLoadMore) {
                     mCurrPage--;
                 }
@@ -356,8 +382,12 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
     private void initRecyclerView() {
         mRecyclerViewUserVideoClassificationActivity.setLayoutManager(mLayoutManger);
         mRecyclerViewUserVideoClassificationActivity.getItemAnimator().setChangeDuration(0);
-        mRecyclerViewUserVideoClassificationActivity.setAdapter(mAdapter);
-        mAdapter.setOnLoadMoreListener(this, mRecyclerViewUserVideoClassificationActivity);
+        if (type_video_hisory.equals(mType)) {
+            mRecyclerViewUserVideoClassificationActivity.setAdapter(mHistoryAdapter);
+        } else {
+            mRecyclerViewUserVideoClassificationActivity.setAdapter(mAdapter);
+            mAdapter.setOnLoadMoreListener(this, mRecyclerViewUserVideoClassificationActivity);
+        }
 
     }
 
@@ -393,6 +423,8 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
         mAdapter = mVideoAdapter;
         LinearLayoutManager videoLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mLayoutManger = videoLayoutManager;
+        mVideoAdapter.setOnDeleteChooseAllChangeListener(this);
+        mVideoAdapter.setLayoutManager(videoLayoutManager);
     }
 
     private void initIntent() {
@@ -433,25 +465,16 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
                 finish();
                 break;
             case R.id.tv_delete_title_bar:
+                showRemoveDialog();
                 break;
             case R.id.tv_choose_title_bar:
-                if ("选择".equals(mTvChooseTitleBar.getText())) {
-                    mTvChooseTitleBar.setText("取消");
-                    mTvDeleteTitleBar.setVisibility(View.VISIBLE);
-                    mTvChooseAllTitleBar.setVisibility(View.VISIBLE);
-                    chooseClick(true);
-                }else {
-                    mTvChooseTitleBar.setText("选择");
-                    mTvDeleteTitleBar.setVisibility(View.INVISIBLE);
-                    mTvChooseAllTitleBar.setVisibility(View.INVISIBLE);
-                    chooseClick(false);
-                }
+                clickChooseTitle();
                 break;
             case R.id.tv_choose_all_title_bar:
                 if ("全选".equals(mTvChooseAllTitleBar.getText())) {
                     mTvChooseAllTitleBar.setText("全不选");
                     chooseAll(true);
-                }else {
+                } else {
                     mTvChooseAllTitleBar.setText("全选");
                     chooseAll(false);
                 }
@@ -459,35 +482,79 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
         }
     }
 
-    /**是否将条目进行全选
+    private void clickChooseTitle() {
+        if ("选择".equals(mTvChooseTitleBar.getText())) {
+            mTvChooseTitleBar.setText("取消");
+            mTvDeleteTitleBar.setVisibility(View.VISIBLE);
+            mTvChooseAllTitleBar.setVisibility(View.VISIBLE);
+            mTvChooseAllTitleBar.setText("全选");
+            mSrLayoutUsrVideoClassificationActivity.setEnabled(false);
+            mAdapter.setEnableLoadMore(false);
+            chooseClick(true);
+        } else {
+            mTvChooseTitleBar.setText("选择");
+            mSrLayoutUsrVideoClassificationActivity.setEnabled(true);
+            if (!type_video_hisory.equals(mType)) {
+                mAdapter.setEnableLoadMore(true);
+            }
+            mTvDeleteTitleBar.setVisibility(View.INVISIBLE);
+            mTvChooseAllTitleBar.setVisibility(View.INVISIBLE);
+            chooseClick(false);
+        }
+    }
+
+    private void showRemoveDialog() {
+        getRemoveVideoParams();
+        if (mRemoveVideoList == null || mRemoveVideoList.size()==0) {
+            AllUtils.showToast(this,"没有选择要删除的内容");
+            return;
+        }else {
+            removeDialog();
+        }
+    }
+
+    /**
+     * 是否将条目进行全选
+     *
      * @param chooseAll
      */
     private void chooseAll(boolean chooseAll) {
         switch (mType) {
             case "0"://片单
-                formShowDelete(chooseAll);
+                formChooseDeleteAll(chooseAll);
                 break;
             case "1"://影视
-                videoShowDelete(chooseAll);
+                videoChooseDeleteAll(chooseAll);
                 break;
             case "2"://历史记录
-                hitoryShowDelete(chooseAll);
+                historyChooseDeleteAll(chooseAll);
                 break;
         }
     }
 
-    /**判断选择是否被点击，
+    /**
+     * 判断选择是否被点击，
+     *
      * @param isChooseClick true显示条目的删除 false不显示
      */
-    public void chooseClick(boolean isChooseClick){
+    public void chooseClick(boolean isChooseClick) {
 
-                switch (mType) {
+        switch (mType) {
             case "0"://片单
                 mFormAdapter = (RecyclerItemFormUserVideoClassificationAdapter) mAdapter;
+
                 mFormAdapter.setShowDelete(isChooseClick);
                 break;
             case "1"://影视
                 mVideoAdapter = (RecyclerItemVideoUserVideoClassificationAdapter) mAdapter;
+                List<UserVideoClassificationVideoBean.DataBean.VideoBean> videolist = mVideoAdapter.getData();
+                if (mVideoList != null && mVideoList.size() > 0) {
+                    for (UserVideoClassificationVideoBean.DataBean.VideoBean videoBean : mVideoList) {
+                        videoBean.isSelcted = false;
+                        videoBean.allChooseFalse = false;
+                        videoBean.allChooseTrue = false;
+                    }
+                }
                 mVideoAdapter.setShowDelete(isChooseClick);
                 break;
             case "2"://历史记录
@@ -499,31 +566,160 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
 
     }
 
-    private void hitoryShowDelete(boolean chooseAll) {
-        if (mHistoryList != null && mHistoryList.size()>0) {
-            for (UserVideoPlayHistoryBean userVideoPlayHistoryBean : mHistoryList) {
-                userVideoPlayHistoryBean.isSelcted = chooseAll;
-            }
+    private void historyChooseDeleteAll(boolean chooseAll) {
+        if (mHistoryList != null && mHistoryList.size() > 0) {
+            mHistoryAdapter.setChooseAll(chooseAll);
             mHistoryAdapter.notifyDataSetChanged();
         }
 
     }
 
-    private void videoShowDelete(boolean chooseAll) {
-        if (mVideoList != null && mHistoryList.size()>0) {
+    private void videoChooseDeleteAll(boolean chooseAll) {
+        if (mVideoList != null && mVideoList.size() > 0) {
+            mVideoAdapter.setChooseAll(chooseAll);
             for (UserVideoClassificationVideoBean.DataBean.VideoBean videoBean : mVideoList) {
-                videoBean.isSelcted = chooseAll;
+                if (chooseAll) {
+                    videoBean.allChooseTrue = false;
+                } else {
+                    videoBean.allChooseFalse = false;
+                }
             }
             mVideoAdapter.notifyDataSetChanged();
         }
     }
 
-    private void formShowDelete(boolean chooseAll) {
-        if (mFormList != null && mFormList.size()>0) {
-            for (UserVideoCassificationFormBean.DataBean.VideoListBean videoListBean : mFormList) {
-                videoListBean.isSelcted = chooseAll;
-            }
+    private void formChooseDeleteAll(boolean chooseAll) {
+        if (mFormList != null && mFormList.size() > 0) {
+            mFormAdapter.setChooseAll(chooseAll);
             mFormAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void showChooseAllTrueTitle() {
+        mTvChooseAllTitleBar.setText("全选");
+    }
+
+    @Override
+    public void showChooseAllFalseTitle() {
+        mTvChooseAllTitleBar.setText("全不选");
+    }
+
+
+    public void removeVideoToServer() {
+       HashMap<String, String> paramas = new HashMap<>();
+        paramas.put("user_id", USER_ID + "");
+        paramas.put("video_id", mRemoveVideoParamas + "");
+        HttpManager.getInstance().postCall(AppUrl.VIDEO_USER_REMOVE_USER_COLLECTION_VIDEO,  new ServerCallBack() {
+            @Override
+            public void responseSucessful(String json) {
+                removeVideoList();
+                AllUtils.showToast(UserVideoClassificationActivity.this, delete_success);
+            }
+
+            @Override
+            public void responseClientFailure(String json, int code) {
+                AllUtils.showToast(UserVideoClassificationActivity.this, delete_fail);
+            }
+
+            @Override
+            public void responseServerFailure(String json, int code) {
+                AllUtils.showToast(UserVideoClassificationActivity.this, delete_fail);
+            }
+
+            @Override
+            public void netWorkFailure(String error) {
+                AllUtils.showToast(UserVideoClassificationActivity.this, delete_fail);
+            }
+        }, paramas,this);
+
+    }
+
+
+    /**
+     * 删除用户要删除的影视
+     */
+    public void removeVideoList() {
+        if (mRemoveVideoList != null && mRemoveVideoList.size()>0 && mVideoList !=null && mVideoList.size()>0 && mVideoList.size()>=mRemoveVideoList.size()) {
+            LogUtil.w("VIDEO11111111", mVideoList.size()+"   ，，，，，"+mRemoveVideoList.size());
+            if ("全不选".equals(mTvChooseAllTitleBar.getText())) {
+                mVideoList = new ArrayList<>();
+
+            }else {
+                for (int i = 0; i < mRemoveVideoList.size(); i++) {
+                    int key = mRemoveVideoList.get(i);
+                    mVideoList.remove(key-i);
+                }
+            }
+
+            mVideoAdapter.setNewData(mVideoList);
+            hideTitleTextView();
+            LogUtil.w("VIDEO", mVideoList.size()+""+"     "+mRemoveVideoList.size());
+        }
+
+    }
+
+    private void hideTitleTextView() {
+        mTvChooseAllTitleBar.setVisibility(View.INVISIBLE);
+        mTvChooseTitleBar.setVisibility(View.INVISIBLE);
+        mTvDeleteTitleBar.setVisibility(View.INVISIBLE);
+        HttpLoadStateUtil.getInstance().loadSateChangeNoContent();
+
+    }
+
+
+    /**获取要删除的影视id
+     * @return
+     */
+    public String getRemoveVideoParams() {
+        StringBuilder sb = new StringBuilder();
+        mRemoveVideoParamas = "";
+        mRemoveVideoList = new ArrayList<>();
+        if (mVideoList != null && mVideoList.size() > 0) {
+            for (int i = 0; i < mVideoList.size(); i++) {
+                UserVideoClassificationVideoBean.DataBean.VideoBean videoBean = mVideoList.get(i);
+                if (videoBean.isSelcted) {
+                    sb.append(videoBean.content_id + ",");
+                    mRemoveVideoList.add(i);
+                }
+            }
+            mRemoveVideoParamas = sb.toString();
+            if (mRemoveVideoParamas.length()>0) {
+                mRemoveVideoParamas = mRemoveVideoParamas.substring(0, mRemoveVideoParamas.length() - 1);
+            }
+
+
+        }
+        return mRemoveVideoParamas;
+    }
+
+
+    private void removeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("确定删除所选收藏吗？");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (mType) {
+                    case "0"://片单
+                        break;
+                    case "1"://影视
+                        removeVideoToServer();
+                        break;
+                    case "2"://历史记录
+                        break;
+                }
+
+            }
+        });
+        builder.setNegativeButton("取消", null);
+        builder.create().show();
+    }
+
+
+    @Override
+    public void netRetry() {
+        initData(true);
     }
 }

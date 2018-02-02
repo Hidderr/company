@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+              android:id="@+id/ll_root_detail_recycler_foot_item_video_fragment"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
@@ -12,7 +13,7 @@
     <LinearLayout android:layout_width="match_parent"
                   android:layout_marginLeft="10px"
                   android:layout_marginRight="10px"
-                    android:gravity="center_vertical"
+                  android:layout_marginBottom="20px"
                   android:layout_height="wrap_content">
 
 
@@ -31,7 +32,7 @@
                    android:visibility="gone"
                    android:layout_gravity="center_vertical"
                    android:id="@+id/iv_delete_detail_recycler_foot_item_video_fragment"
-                   android:src="@drawable/selector_delete"
+                   android:background="@drawable/selector_delete"
                    android:scaleType="fitXY"
                    android:layout_marginRight="25px"
                    android:layout_height="42px"/>

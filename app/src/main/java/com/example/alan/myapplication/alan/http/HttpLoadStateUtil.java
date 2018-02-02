@@ -28,7 +28,8 @@ public class HttpLoadStateUtil {
     private HttpLoadStateUtil(){}
     private Context context ;
     public final  String TYPE_NO_NET="网络未连接,点击重试";
-    public final  String TYPE_NO_Data="数据加载错误,点击重试";
+    public final  String TYPE_NO_Data="数据加载错误或者暂无数据,点击重试";
+    public final  String TYPE_NO_Content="暂无数据,点击重试";
 
 
 
@@ -91,6 +92,14 @@ public class HttpLoadStateUtil {
                 mTvLoadState.setText(TYPE_NO_Data);
             }
         }
+    }
+
+    /**暂无数据状态
+     */
+    public void loadSateChangeNoContent(){
+        setLoadingLayoutGone();
+        if (mTvLoadState != null)
+                mTvLoadState.setText(TYPE_NO_Content);
     }
 
     /**
