@@ -29,7 +29,7 @@ public class UserVideoCassificationFormBean {
              * tag : 战争,硬汉,动作
              */
 
-            public String list_id;
+            public String content_id;
             public String name;
             public String img;
             public String tag;

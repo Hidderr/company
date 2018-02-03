@@ -1,11 +1,13 @@
 package com.example.alan.myapplication.alan.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -21,6 +23,8 @@ import com.example.alan.myapplication.alan.gimi.LogUtil;
 import com.example.alan.myapplication.alan.global.GlobalApplication;
 import com.example.alan.myapplication.alan.ui.VideoDetailActivityNew;
 import com.example.alan.myapplication.alan.utils.encryptutils.CryptUtil;
+
+import java.util.List;
 
 import static com.example.alan.myapplication.alan.global.GlobalApplication.context;
 
@@ -229,6 +233,21 @@ public class AllUtils {
         tp.setFakeBoldText(true);
     }
 
+    /**
+     * 判断 Activity 是否存在栈中
+     *
+     * @param clz Activity 类
+     * @return {@code true}: 存在<br>{@code false}: 不存在
+     */
+    public static boolean isActivityExistsInStack(@NonNull final Class<?> clz) {
+        List<Activity> activities = Utils.sActivityList;
+        for (Activity aActivity : activities) {
+            if (aActivity.getClass().equals(clz)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 

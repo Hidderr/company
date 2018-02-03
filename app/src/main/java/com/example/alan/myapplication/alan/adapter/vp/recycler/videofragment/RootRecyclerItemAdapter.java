@@ -1,4 +1,4 @@
-package com.example.alan.myapplication.alan.adapter.vp.recycler;
+package com.example.alan.myapplication.alan.adapter.vp.recycler.videofragment;
 
 
 import android.content.Context;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alan.myapplication.R;
+import com.example.alan.myapplication.alan.adapter.vp.recycler.AutoLayoutRecyclerBaseHolder;
 import com.example.alan.myapplication.alan.bean.VideoFragmentProjectBean;
 import com.example.alan.myapplication.alan.gimi.LogUtil;
 import com.example.alan.myapplication.alan.utils.AllUtils;

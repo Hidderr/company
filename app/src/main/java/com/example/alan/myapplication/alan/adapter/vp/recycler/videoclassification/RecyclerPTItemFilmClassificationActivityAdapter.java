@@ -1,4 +1,4 @@
-package com.example.alan.myapplication.alan.adapter.vp.recycler;
+package com.example.alan.myapplication.alan.adapter.vp.recycler.videoclassification;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alan.myapplication.R;
+import com.example.alan.myapplication.alan.adapter.vp.recycler.AutoLayoutRecyclerBaseHolder;
 import com.example.alan.myapplication.alan.bean.VideoClassificationBean;
 import com.example.alan.myapplication.alan.picture.loadpicture.PictureManager;
 

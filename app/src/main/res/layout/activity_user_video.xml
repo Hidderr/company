@@ -4,6 +4,7 @@
               android:background="@color/white"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <include layout="@layout/title_bar"/>
     <android.support.v4.widget.SwipeRefreshLayout android:layout_width="match_parent"
                                                   android:id="@+id/sr_layout_user_activity"
                                                   android:layout_height="match_parent">

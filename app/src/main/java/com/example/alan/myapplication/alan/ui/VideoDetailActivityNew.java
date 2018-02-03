@@ -23,6 +23,7 @@ import com.example.alan.myapplication.alan.http.HttpManager;
 import com.example.alan.myapplication.alan.http.ServerCallBack;
 import com.example.alan.myapplication.alan.picture.loadpicture.PictureManager;
 import com.example.alan.myapplication.alan.utils.AllUtils;
+import com.hymane.expandtextview.ExpandTextView;
 import com.zhy.autolayout.AutoLayoutActivity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -71,7 +72,7 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
     @Bind(R.id.tv_title_video_detail_activity)
     TextView mTvTitleVideoDetailActivity;
     @Bind(R.id.expand_tv_filem_desc_video_detail_activity)
-    com.hymane.expandtextview.ExpandTextView mExpandTvFilemDescVideoDetailActivity;
+    ExpandTextView mExpandTvFilemDescVideoDetailActivity;
     @Bind(R.id.tv_director_video_detail_activity)
     TextView mTvDirectorVideoDetailActivity;
     @Bind(R.id.flowlayout_directors_video_detail_activity)
@@ -100,15 +101,39 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
 
     public VideoDetailBean mVideoDetailBean;
 
+    @Bind(R.id.tv_delete_title_bar)
+    TextView mTvDeleteTitleBar;
+    @Bind(R.id.tv_choose_title_bar)
+    TextView mTvChooseTitleBar;
+    @Bind(R.id.tv_title_title_bar)
+    TextView mTvTitleTitleBar;
+    @Bind(R.id.tv_choose_all_title_bar)
+    TextView mTvChooseAllTitleBar;
+    @Bind(R.id.ll_root_title_bar)
+    LinearLayout mLlRootTitleBar;
+    @Bind(R.id.iv_delete_history_recycler_foot_item_history_activity)
+    ImageView mIvDeleteHistoryRecyclerFootItemHistoryActivity;
+    @Bind(R.id.ll_root_detail_recycler_foot_item_video_fragment)
+    LinearLayout mLlRootDetailRecyclerFootItemVideoFragment;
+    @Bind(R.id.iv_return_title_bar)
+    ImageView mIvReturnTitleBar;
+    private String mTitle="影视详情";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_detail_animation);
         ButterKnife.bind(this);
         initIntent();
+        initTopBar();
         loadDataFromServer();
         initTextViewBold();
 
+    }
+
+    private void initTopBar() {
+        AllUtils.getInstance().setTextBold(mTvTitleTitleBar);
+        mTvTitleTitleBar.setText(mTitle+"");
     }
 
 
@@ -118,8 +143,6 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
         AllUtils.getInstance().setTextBold(mTvActorsVideoDetailActivity);
         AllUtils.getInstance().setTextBold(mTvDescRecyclerItemRootVideoFragment);
     }
-
-
 
 
     private void initView(VideoDetailBean.DataBean dataBean) {
@@ -133,50 +156,44 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
     }
 
     private void loadDataFromServer() {
-
         LinkedHashMap<String, String> paramas = new LinkedHashMap<>();
-        paramas.put("version", AllUtils.getInstance().getappVersion(this)+"");
-        paramas.put("video_id", mVideoId+"");
+        paramas.put("version", AllUtils.getInstance().getappVersion(this) + "");
+        paramas.put("video_id", mVideoId + "");
         HttpManager.getInstance().getCallWithParamas(AppUrl.VIDEO_DETAIL, paramas, new ServerCallBack() {
             @Override
             public void responseSucessful(String json) {
-                mVideoDetailBean = JsonConvertUtils.AesJson2Json(json,new VideoDetailBean());
+                mVideoDetailBean = JsonConvertUtils.AesJson2Json(json, new VideoDetailBean());
                 if (mVideoDetailBean != null) {
                     if (mVideoDetailBean.data != null) {
                         initView(mVideoDetailBean.data);
                     }
                 }
             }
-
             @Override
             public void responseClientFailure(String json, int code) {
-
             }
-
             @Override
             public void responseServerFailure(String json, int code) {
             }
-
             @Override
             public void netWorkFailure(String error) {
             }
         }, this);
-
     }
 
 
     private void initVideoForm(VideoDetailBean.DataBean dataBean) {
-        List<VideoDetailBean.DataBean.RecommendBean> recommend =   dataBean.recommend;
-        if (recommend != null && recommend.size()>0) {
-            RecyclerFormItemVideoDetailActivityAdapter mFormRecyclerAdpater = new RecyclerFormItemVideoDetailActivityAdapter(R.layout.recycler_item_form_video_fragment,recommend );
+        List<VideoDetailBean.DataBean.RecommendBean> recommend = dataBean.recommend;
+        if (recommend != null && recommend.size() > 0) {
+            RecyclerFormItemVideoDetailActivityAdapter mFormRecyclerAdpater = new RecyclerFormItemVideoDetailActivityAdapter(R.layout.recycler_item_form_video_fragment, recommend);
             mFormRecyclerAdpater.setContext(this);
             mFormRecyclerAdpater.setEnableLoadMore(false);
             mFormRecyclerAdpater.setHasStableIds(true);
-            LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
+            LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
             mRecyclerviewRecyclerItemRootVideoFragment.setLayoutManager(linearLayoutManager2);
             mRecyclerviewRecyclerItemRootVideoFragment.getItemAnimator().setChangeDuration(0);
             mRecyclerviewRecyclerItemRootVideoFragment.setAdapter(mFormRecyclerAdpater);
-        }else {
+        } else {
             mLlRootRecyclerItemRootVideoFragment.setVisibility(View.GONE);
             mDividerFooter.setVisibility(View.GONE);
         }
@@ -202,7 +219,7 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
                     return true;
                 }
             });
-        }else {
+        } else {
             mFlowlayoutActorsVideoDetailActivity.setVisibility(View.GONE);
             mTvActorsVideoDetailActivity.setText("演员（暂无）");
         }
@@ -222,7 +239,7 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
                     return true;
                 }
             });
-        }else {
+        } else {
             mFlowlayoutDirectorsVideoDetailActivity.setVisibility(View.GONE);
             mTvDirectorVideoDetailActivity.setText("导演（暂无）");
         }
@@ -277,9 +294,12 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
 
     }
 
-    @OnClick({R.id.btn_play_video_detail_activity, R.id.iv_play_source_video_detail_activity, R.id.tv_share_video_detail_activity, R.id.tv_collection_video_detail_activity})
+    @OnClick({R.id.iv_return_title_bar,R.id.btn_play_video_detail_activity, R.id.iv_play_source_video_detail_activity, R.id.tv_share_video_detail_activity, R.id.tv_collection_video_detail_activity})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.iv_return_title_bar://返回
+                finish();
+                break;
             case R.id.btn_play_video_detail_activity://播放
                 break;
             case R.id.iv_play_source_video_detail_activity://播放源
@@ -292,7 +312,6 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
                 break;
         }
     }
-
 
 
 

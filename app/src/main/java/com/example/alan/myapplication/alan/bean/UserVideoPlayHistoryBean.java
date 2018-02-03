@@ -42,6 +42,8 @@ public class UserVideoPlayHistoryBean {
      * 是否选中
      */
     public boolean isSelcted;
+    public boolean allChooseTrue;
+    public boolean allChooseFalse;
     public UserVideoPlayHistoryBean(String title, String image, String category, int duration, String year, String playsource, String sourceicon, String video_id){
         this.title = title;
         this.image = image;
@@ -51,6 +53,7 @@ public class UserVideoPlayHistoryBean {
         this.playsource = playsource;
         this.sourceicon = sourceicon;
         this.video_id = video_id;
+
 
     }
 

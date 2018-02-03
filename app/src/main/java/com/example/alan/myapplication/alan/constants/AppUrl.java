@@ -61,4 +61,8 @@ public class AppUrl {
      * 移除用户收藏的影视
      */
     public static final String VIDEO_USER_REMOVE_USER_COLLECTION_VIDEO = "/v3/video_collection_remove";
+    /**
+     * 以此用户收藏的片单
+     */
+    public static final String VIDEO_USER_REMOVE_USER_COLLECTION_FORM = "/v4/video_list_collection_remove";
 }

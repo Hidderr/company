@@ -216,23 +216,29 @@ public class RecordDao {
      */
     public List<UserVideoPlayHistoryBean> queryVideoPlayHistory(){
         ArrayList<UserVideoPlayHistoryBean> records = new ArrayList<UserVideoPlayHistoryBean>();
-        db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select * from videoplayhistory", null);
-        while (cursor.moveToNext()) {
-            String title = cursor.getString(cursor.getColumnIndex("title"));
-            String image = cursor.getString(cursor.getColumnIndex("image"));
-            String category = cursor.getString(cursor.getColumnIndex("category"));
-            int duration = cursor.getInt(cursor.getColumnIndex("duration"));
-            String year = cursor.getString(cursor.getColumnIndex("year"));
-            String playsource = cursor.getString(cursor.getColumnIndex("playsource"));
-            String sourceicon = cursor.getString(cursor.getColumnIndex("sourceicon"));
-            String video_id = cursor.getString(cursor.getColumnIndex("video_id"));
-            UserVideoPlayHistoryBean record = new UserVideoPlayHistoryBean(title, image, category, duration, year,playsource,sourceicon,video_id);
-            records.add(record);
+        try{
+
+            db = dbHelper.getWritableDatabase();
+            Cursor cursor = db.rawQuery("select * from videoplayhistory", null);
+            while (cursor.moveToNext()) {
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+                String image = cursor.getString(cursor.getColumnIndex("image"));
+                String category = cursor.getString(cursor.getColumnIndex("category"));
+                int duration = cursor.getInt(cursor.getColumnIndex("duration"));
+                String year = cursor.getString(cursor.getColumnIndex("year"));
+                String playsource = cursor.getString(cursor.getColumnIndex("playsource"));
+                String sourceicon = cursor.getString(cursor.getColumnIndex("sourceicon"));
+                String video_id = cursor.getString(cursor.getColumnIndex("video_id"));
+                UserVideoPlayHistoryBean record = new UserVideoPlayHistoryBean(title, image, category, duration, year,playsource,sourceicon,video_id);
+                records.add(record);
+            }
+            cursor.close();
+            db.close();
+            return records;
+
+        }catch (Exception e){
         }
-        cursor.close();
-        db.close();
-        return records;
+       return records;
     }
 
     /**删除数据库中已经存在的播放记录

@@ -40,36 +40,7 @@ public class SqlUtils {
         return mSqlUtils;
     }
 
-    /**向数据库添加播放记录
-     * @param video_id 影片ID用于向服务器获取详情
-     * @param playsource 播放来源名称
-     * @param sourceicon 播放来源图片
-     * @param bean 数据源
-     * @param cxt
-     */
-//    public void addPlayHistory2Sql(final String video_id, final String playsource, final String sourceicon , final VideoDetailBean.DataBean bean, final Context cxt) {
-//       new Thread(){
-//           @Override
-//           public void run() {
-//               if (dao == null) {
-//                   dao = new RecordDao(cxt);
-//               }
-//               if (bean != null && dao!=null) {
-//                   VideoDetailBean.DataBean data= bean;
-//                   if (TextUtils.isEmpty(data.image) &&  TextUtils.isEmpty(data.title)) {
-//                       List<UserVideoPlayHistoryBean> playHistoryBeanList = dao.queryVideoPlayHistory();
-//                       for (UserVideoPlayHistoryBean videoPlayHistoryBean : playHistoryBeanList) {
-//                           if (videoPlayHistoryBean.video_id.equals(video_id)) {
-//                               dao.deleteRepeatVideoPlayHistory(videoPlayHistoryBean);
-//                           }
-//                       }
-//                       dao.addPlayHistory(new UserVideoPlayHistoryBean(data.title,data.image,data.category,data.duration/60,data.year,playsource,sourceicon,video_id));
-//                   }
-//               }
-//
-//           }
-//       }.start();
-//    }
+
 
 
     public void addPlayHistory2Sql(final String video_id, final String playsource, final String sourceicon , final VideoDetailBean.DataBean bean, final Context cxt) {
@@ -98,32 +69,51 @@ public class SqlUtils {
      */
     public List<UserVideoPlayHistoryBean> queryVideoPlayHistory2Show(final Context cxt){
         LogUtil.w("SQL","查询完成000000");
-        new Thread(){
-            @Override
-            public void run() {
-                if (dao == null) {
-                    dao = new RecordDao(applicationContext);
-                }
-                mPlayHistoryBeanList = dao.queryVideoPlayHistory();
-                LogUtil.w("SQL","查询完成111");
-                if (onControlSqlFinishListener != null) {
-                    Activity activity =   (Activity)cxt;
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (onControlSqlFinishListener != null) {
-                                LogUtil.w("SQL","查询完成22222222");
-                                onControlSqlFinishListener.onQuerySqlFinishListener(mPlayHistoryBeanList);
-                            }
+            try{
+                new Thread(){
+                    @Override
+                    public void run() {
+                        if (dao == null) {
+                            dao = new RecordDao(applicationContext);
                         }
-                    });
-                }
+                        mPlayHistoryBeanList = dao.queryVideoPlayHistory();
+                        LogUtil.w("SQL","查询完成111");
+                        if (onControlSqlFinishListener != null) {
+                            Activity activity =   (Activity)cxt;
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (onControlSqlFinishListener != null) {
+                                        LogUtil.w("SQL","查询完成22222222");
+                                        onControlSqlFinishListener.onQuerySqlFinishListener(mPlayHistoryBeanList);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }.start();
+
+            }catch(Exception e){
+
             }
-        }.start();
-        if (mPlayHistoryBeanList != null && mPlayHistoryBeanList.size()==0) {
-            return  null;
-        }
         return mPlayHistoryBeanList;
+    }
+
+    /**删除数据库中影视记录
+     * @param bean true 删除成功 false 删除失败
+     * @return
+     */
+    public boolean deleteVideoPlayHisory(UserVideoPlayHistoryBean bean){
+        try{
+            if (dao == null) {
+                dao = new RecordDao(applicationContext);
+            }
+            dao.deleteRepeatVideoPlayHistory(bean);
+            return true;
+        }catch(Exception e){
+
+        }
+        return false;
     }
 
     /**数据操作完成回调

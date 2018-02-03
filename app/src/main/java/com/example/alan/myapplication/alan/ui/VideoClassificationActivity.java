@@ -4,14 +4,19 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.alan.myapplication.R;
-import com.example.alan.myapplication.alan.adapter.vp.recycler.RecyclerRootItemFilmClassificationActivityAdapter;
+import com.example.alan.myapplication.alan.adapter.vp.recycler.videoclassification.RecyclerRootItemFilmClassificationActivityAdapter;
 import com.example.alan.myapplication.alan.bean.VideoClassificationBean;
 import com.example.alan.myapplication.alan.constants.AppUrl;
 import com.example.alan.myapplication.alan.http.HttpLoadStateUtil;
 import com.example.alan.myapplication.alan.http.HttpManager;
 import com.example.alan.myapplication.alan.http.ServerCallBack;
+import com.example.alan.myapplication.alan.utils.AllUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
@@ -25,31 +30,50 @@ import butterknife.ButterKnife;
  * 功能：影视分类
  */
 
-public class VideoClassificationActivity extends AutoLayoutActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class VideoClassificationActivity extends AutoLayoutActivity implements SwipeRefreshLayout.OnRefreshListener,View.OnClickListener {
     @Bind(R.id.recycler_view_video_classification_activity)
     RecyclerView mRecyclerViewVideoClassificationActivity;
     @Bind(R.id.sr_layout_video_classification_activity)
     SwipeRefreshLayout mSrLayoutVideoClassificationActivity;
+    @Bind(R.id.iv_return_title_bar)
+    ImageView mIvReturnTitleBar;
+    @Bind(R.id.tv_delete_title_bar)
+    TextView mTvDeleteTitleBar;
+    @Bind(R.id.tv_choose_title_bar)
+    TextView mTvChooseTitleBar;
+    @Bind(R.id.tv_title_title_bar)
+    TextView mTvTitleTitleBar;
+    @Bind(R.id.tv_choose_all_title_bar)
+    TextView mTvChooseAllTitleBar;
+    @Bind(R.id.ll_root_title_bar)
+    LinearLayout mLlRootTitleBar;
     private List<VideoClassificationBean.DataBean.CategoryBean> mItemDataList = new ArrayList<>();
     public RecyclerRootItemFilmClassificationActivityAdapter mRootRecyclerItemAdapter;
     /**
      * 是否正在加载数据
      */
     private boolean isLoding;
+    private String mTitle="影视分类";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_classification);
         ButterKnife.bind(this);
+        initTopBar();
         initSwipRefreshLayout();
         initRecyclerView();
         loadDataFromServer(false);
 
     }
 
-    private void loadDataFromServer(final boolean isRefresh) {
+    private void initTopBar() {
+        AllUtils.getInstance().setTextBold(mTvTitleTitleBar);
+        mIvReturnTitleBar.setOnClickListener(this);
+        mTvTitleTitleBar.setText(mTitle+"");
+    }
 
+    private void loadDataFromServer(final boolean isRefresh) {
         HttpManager.getInstance().getCall(AppUrl.VIDEO_CLASSIFICATION, new ServerCallBack() {
             @Override
             public void responseSucessful(String json) {
@@ -61,7 +85,7 @@ public class VideoClassificationActivity extends AutoLayoutActivity implements S
                         if (category != null) {
                             if (category.size() > 0) {
                                 mRootRecyclerItemAdapter.setNewData(category);
-                            }else {
+                            } else {
                                 HttpLoadStateUtil.getInstance().loadSateChangeNoContent();
                             }
                         }
@@ -91,7 +115,6 @@ public class VideoClassificationActivity extends AutoLayoutActivity implements S
     }
 
 
-
     private void initRecyclerView() {
         mRootRecyclerItemAdapter = new RecyclerRootItemFilmClassificationActivityAdapter(R.layout.recycler_item_root_video_fragment, mItemDataList);
         mRootRecyclerItemAdapter.setContext(this);
@@ -103,7 +126,6 @@ public class VideoClassificationActivity extends AutoLayoutActivity implements S
         mRecyclerViewVideoClassificationActivity.setAdapter(mRootRecyclerItemAdapter);
         mRootRecyclerItemAdapter.setEmptyView(HttpLoadStateUtil.getInstance().setContextAndInitView(this));
     }
-
 
 
     private void initSwipRefreshLayout() {
@@ -118,21 +140,29 @@ public class VideoClassificationActivity extends AutoLayoutActivity implements S
     }
 
 
-
     @Override
     public void onRefresh() {
-       if(!isLoding) {
-           isLoding = true;
-           loadDataFromServer(true);
-       }
+        if (!isLoding) {
+            isLoding = true;
+            loadDataFromServer(true);
+        }
     }
 
 
-
-    public void loadFinished(){
+    public void loadFinished() {
         isLoding = false;
         mSrLayoutVideoClassificationActivity.setRefreshing(false);
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.iv_return_title_bar:
+                finish();
+                break;
+            default:
+                break;
+        }
+    }
 }

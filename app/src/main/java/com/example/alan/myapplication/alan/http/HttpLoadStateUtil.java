@@ -59,6 +59,7 @@ public class HttpLoadStateUtil {
          ViewGroup v =    (ViewGroup) mView.getParent();
             v.removeView(mView);
         }
+        setLoadingLayoutVisible();//重新初始化显示加载布局
         return mView;
     }
 
@@ -119,6 +120,13 @@ public class HttpLoadStateUtil {
     public void setNetRetryListener(NetRetryListener netRetryListener){
         this.netRetryListener = netRetryListener;
 
+    }
+
+    public void setLoadingLayoutVisible(){
+        if (mTvLoadingLoadState != null) {
+            mTvLoadingLoadState.setVisibility(View.VISIBLE);
+            mLlErrorLoadState.setVisibility(View.GONE);
+        }
     }
 
     /**

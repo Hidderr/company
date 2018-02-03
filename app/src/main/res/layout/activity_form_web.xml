@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:id="@+id/ll_root_form_web_activity"
+              android:layout_width="match_parent"
+              android:background="@color/C7C7C7"
+              android:layout_height="match_parent">
+    <include layout="@layout/title_bar"/>
+    <Button
+        android:text="片单收藏"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/button"/>
+    <Button
+        android:text="影视详情页面"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/button2"/>
+    <Button
+        android:text="分享片单"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/button3"/>
+
+</LinearLayout>

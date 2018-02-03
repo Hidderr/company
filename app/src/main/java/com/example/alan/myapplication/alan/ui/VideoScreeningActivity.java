@@ -8,14 +8,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alan.myapplication.R;
 import com.example.alan.myapplication.alan.adapter.vp.recycler.OnRecyclerViewItemListener;
-import com.example.alan.myapplication.alan.adapter.vp.recycler.RecyclerItemVideoAreaScreeningHeaderAdapter;
-import com.example.alan.myapplication.alan.adapter.vp.recycler.RecyclerItemVideoScreeningResultActivityAdapter;
-import com.example.alan.myapplication.alan.adapter.vp.recycler.RecyclerItemVideoTypeScreeningHeaderAdapter;
-import com.example.alan.myapplication.alan.adapter.vp.recycler.RecyclerItemVideoYearScreeningHeaderAdapter;
+import com.example.alan.myapplication.alan.adapter.vp.recycler.videoclassification.RecyclerItemVideoAreaScreeningHeaderAdapter;
+import com.example.alan.myapplication.alan.adapter.vp.recycler.videoclassification.RecyclerItemVideoScreeningResultActivityAdapter;
+import com.example.alan.myapplication.alan.adapter.vp.recycler.videoclassification.RecyclerItemVideoTypeScreeningHeaderAdapter;
+import com.example.alan.myapplication.alan.adapter.vp.recycler.videoclassification.RecyclerItemVideoYearScreeningHeaderAdapter;
 import com.example.alan.myapplication.alan.bean.JsonConvertUtils;
 import com.example.alan.myapplication.alan.bean.VideoScreeningActivityHeaderBean;
 import com.example.alan.myapplication.alan.bean.VideoScreeningResultBean;
@@ -40,7 +43,7 @@ import static com.example.alan.myapplication.alan.global.GlobalApplication.conte
  * 功能：影视筛选
  */
 
-public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQuickAdapter.RequestLoadMoreListener,SwipeRefreshLayout.OnRefreshListener {
+public class VideoScreeningActivity extends AutoLayoutActivity implements BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener,View.OnClickListener {
 
     public RecyclerView mTypeRecycler;
     public RecyclerView mYearRecycler;
@@ -49,6 +52,18 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
     RecyclerView mRecyclerviewVideoScreeningActivity;
     @Bind(R.id.sr_layout_video_screening_activity)
     SwipeRefreshLayout mSrLayoutVideoScreeningActivity;
+    @Bind(R.id.iv_return_title_bar)
+    ImageView mIvReturnTitleBar;
+    @Bind(R.id.tv_delete_title_bar)
+    TextView mTvDeleteTitleBar;
+    @Bind(R.id.tv_choose_title_bar)
+    TextView mTvChooseTitleBar;
+    @Bind(R.id.tv_title_title_bar)
+    TextView mTvTitleTitleBar;
+    @Bind(R.id.tv_choose_all_title_bar)
+    TextView mTvChooseAllTitleBar;
+    @Bind(R.id.ll_root_title_bar)
+    LinearLayout mLlRootTitleBar;
     private List<VideoScreeningActivityHeaderBean.DataBean.TypeBean> mTypeBeanList;
     private List<VideoScreeningActivityHeaderBean.DataBean.YearBean> mYearBeanList;
     private List<VideoScreeningActivityHeaderBean.DataBean.AreaBean> mAreaBeanList;
@@ -58,11 +73,11 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
 
     //筛选条件
     public int mType;
-    private int mCurrPage=1;
-    private String mPageSize="21";
-    private String mKind="";
-    private String mArea="";
-    private String mYear="";
+    private int mCurrPage = 1;
+    private String mPageSize = "21";
+    private String mKind = "";
+    private String mArea = "";
+    private String mYear = "";
     /**
      * 是否正在加载数据
      */
@@ -71,7 +86,8 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
     public RecyclerItemVideoAreaScreeningHeaderAdapter mAreaAdpater;
     public RecyclerItemVideoYearScreeningHeaderAdapter mYearAdpater;
     public RecyclerItemVideoTypeScreeningHeaderAdapter mTypeAdpater;
-    public String mTitle;
+    public String mCategory;
+    private String mTitle ="影视筛选";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +95,7 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
         setContentView(R.layout.activity_video_screening);
         ButterKnife.bind(this);
         initIntent();
+        initTopBar();
         initSwiRefreshLayout();
         initHeader();
         initItem();
@@ -91,36 +108,41 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
         loadItemData(loadMore);
     }
 
+    private void initTopBar() {
+        AllUtils.getInstance().setTextBold(mTvTitleTitleBar);
+        mIvReturnTitleBar.setOnClickListener(this);
+        mTvTitleTitleBar.setText(mTitle +"");
+    }
 
 
     private void loadItemData(final boolean loadMore) {
         LinkedHashMap<String, String> paramas = new LinkedHashMap<>();
-        paramas.put("category", mTitle+"");
+        paramas.put("category", mCategory + "");
         if (loadMore) {
             mCurrPage++;
         }
-        paramas.put("page",mCurrPage +"");
-        paramas.put("page_size",mPageSize +"");
-        paramas.put("kind",mKind +"");
-        paramas.put("area",mArea +"");
-        paramas.put("year",mYear +"");
+        paramas.put("page", mCurrPage + "");
+        paramas.put("page_size", mPageSize + "");
+        paramas.put("kind", mKind + "");
+        paramas.put("area", mArea + "");
+        paramas.put("year", mYear + "");
         HttpManager.getInstance().getCallWithParamas(AppUrl.VIDEO_CLASSIFICATION_RESULT, paramas, new ServerCallBack() {
             /**
              * @param json
              */
             @Override
             public void responseSucessful(String json) {
-                VideoScreeningResultBean resultBean = JsonConvertUtils.AESjson2Class(json,VideoScreeningResultBean.class);
+                VideoScreeningResultBean resultBean = JsonConvertUtils.AESjson2Class(json, VideoScreeningResultBean.class);
                 if (resultBean != null) {
-                    if (resultBean.data != null && resultBean.data.size()>0) {
+                    if (resultBean.data != null && resultBean.data.size() > 0) {
                         List<VideoScreeningResultBean.DataBean> data = resultBean.data;
                         if (loadMore) {
                             mItemAdapter.addData(data);
-                        }else {
+                        } else {
                             mItemAdapter.setNewData(data);
                         }
                         mItemAdapter.loadMoreComplete();
-                    }else {
+                    } else {
                         HttpLoadStateUtil.getInstance().loadSateChangeNoContent();
                         if (loadMore) {
                             mItemAdapter.loadMoreEnd();
@@ -133,68 +155,67 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
             @Override
             public void responseClientFailure(String json, int code) {
                 allCallFinished();
-                loadFinishAndChangeLoadState(false,loadMore);
+                loadFinishAndChangeLoadState(false, loadMore);
             }
 
             @Override
             public void responseServerFailure(String json, int code) {
                 allCallFinished();
-                loadFinishAndChangeLoadState(false,loadMore);
+                loadFinishAndChangeLoadState(false, loadMore);
             }
 
             @Override
             public void netWorkFailure(String error) {
                 allCallFinished();
-                loadFinishAndChangeLoadState(true,loadMore);
+                loadFinishAndChangeLoadState(true, loadMore);
             }
         }, this);
     }
 
 
-
     private void loadHeadData() {
         LinkedHashMap<String, String> paramas = new LinkedHashMap<>();
-        paramas.put("category_id",mType +"");
+        paramas.put("category_id", mType + "");
         HttpManager.getInstance().getCallWithParamas(AppUrl.VIDEO_CLASSIFICATION_CONDITION_GET, paramas, new ServerCallBack() {
             @Override
             public void responseSucessful(String json) {
-                VideoScreeningActivityHeaderBean headerBean = JsonConvertUtils.AESjson2Class(json,VideoScreeningActivityHeaderBean.class);
-                        if (headerBean != null) {
-                            if (headerBean.data != null) {
-                                VideoScreeningActivityHeaderBean.DataBean dataBean = headerBean.data;
-                                List<VideoScreeningActivityHeaderBean.DataBean.TypeBean> type =dataBean.type;
-                                if (type != null && type.size()>0) {
-                                    VideoScreeningActivityHeaderBean.DataBean.TypeBean typeBean =  new VideoScreeningActivityHeaderBean.DataBean.TypeBean();
-                                    typeBean.setName("全部");
-                                    type.add(0,typeBean);
-                                    mTypeAdpater.setNewData(type);
-                                }else {
-                                    mTypeRecycler.setVisibility(View.GONE);
-                                }
+                VideoScreeningActivityHeaderBean headerBean = JsonConvertUtils.AESjson2Class(json, VideoScreeningActivityHeaderBean.class);
+                if (headerBean != null) {
+                    if (headerBean.data != null) {
+                        VideoScreeningActivityHeaderBean.DataBean dataBean = headerBean.data;
+                        List<VideoScreeningActivityHeaderBean.DataBean.TypeBean> type = dataBean.type;
+                        if (type != null && type.size() > 0) {
+                            VideoScreeningActivityHeaderBean.DataBean.TypeBean typeBean = new VideoScreeningActivityHeaderBean.DataBean.TypeBean();
+                            typeBean.setName("全部");
+                            type.add(0, typeBean);
+                            mTypeAdpater.setNewData(type);
+                        } else {
+                            mTypeRecycler.setVisibility(View.GONE);
+                        }
 
-                                List<VideoScreeningActivityHeaderBean.DataBean.YearBean> year=dataBean.year;
-                                if (year != null && year.size()>0) {
-                                    VideoScreeningActivityHeaderBean.DataBean.YearBean yearBean =  new VideoScreeningActivityHeaderBean.DataBean.YearBean();
-                                    yearBean.setName("全部");
-                                    year.add(0,yearBean);
-                                    mYearAdpater.setNewData(year);
-                                }else {
-                                    mYearRecycler.setVisibility(View.GONE);
-                                }
+                        List<VideoScreeningActivityHeaderBean.DataBean.YearBean> year = dataBean.year;
+                        if (year != null && year.size() > 0) {
+                            VideoScreeningActivityHeaderBean.DataBean.YearBean yearBean = new VideoScreeningActivityHeaderBean.DataBean.YearBean();
+                            yearBean.setName("全部");
+                            year.add(0, yearBean);
+                            mYearAdpater.setNewData(year);
+                        } else {
+                            mYearRecycler.setVisibility(View.GONE);
+                        }
 
-                              List<VideoScreeningActivityHeaderBean.DataBean.AreaBean> area=dataBean.area;
-                                if (area != null && area.size()>0) {
-                                    VideoScreeningActivityHeaderBean.DataBean.AreaBean areaBean =  new VideoScreeningActivityHeaderBean.DataBean.AreaBean();
-                                    areaBean.setName("全部");
-                                    area.add(0,areaBean);
-                                    mAreaAdpater.setNewData(area);
-                                }else {
-                                    mAreaRecycler.setVisibility(View.GONE);
-                                }
+                        List<VideoScreeningActivityHeaderBean.DataBean.AreaBean> area = dataBean.area;
+                        if (area != null && area.size() > 0) {
+                            VideoScreeningActivityHeaderBean.DataBean.AreaBean areaBean = new VideoScreeningActivityHeaderBean.DataBean.AreaBean();
+                            areaBean.setName("全部");
+                            area.add(0, areaBean);
+                            mAreaAdpater.setNewData(area);
+                        } else {
+                            mAreaRecycler.setVisibility(View.GONE);
+                        }
 
-                        }else {
+                    } else {
 
-                            }
+                    }
                 }
                 allCallFinished();
             }
@@ -241,13 +262,11 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false);
         mRecyclerviewVideoScreeningActivity.setLayoutManager(gridLayoutManager);
         mRecyclerviewVideoScreeningActivity.getItemAnimator().setChangeDuration(0);
-        mRecyclerviewVideoScreeningActivity.addItemDecoration(new DividerItemDecoration(this,10,0xffffffff));
+        mRecyclerviewVideoScreeningActivity.addItemDecoration(new DividerItemDecoration(this, 10, 0xffffffff));
         mRecyclerviewVideoScreeningActivity.setAdapter(mItemAdapter);
         mItemAdapter.setOnLoadMoreListener(this, mRecyclerviewVideoScreeningActivity);
-        
+
     }
-    
-    
 
 
     /**
@@ -287,12 +306,12 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
         };
         mAreaAdpater.setOnRecyclerViewItemListener(new OnRecyclerViewItemListener() {
             @Override
-            public void OnRecyclerViewItemListener(int position,String condition) {
+            public void OnRecyclerViewItemListener(int position, String condition) {
                 if (linearLayoutManager3.findLastVisibleItemPosition() == position) {
                     areaScroller.setTargetPosition(position);
                     linearLayoutManager3.startSmoothScroll(areaScroller);
                 }
-                mArea = position==0?"":condition;
+                mArea = position == 0 ? "" : condition;
                 loadItemData(false);
             }
         });
@@ -318,13 +337,13 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
         };
         mYearAdpater.setOnRecyclerViewItemListener(new OnRecyclerViewItemListener() {
             @Override
-            public void OnRecyclerViewItemListener(int position,String condition) {
+            public void OnRecyclerViewItemListener(int position, String condition) {
                 if (linearLayoutManager2.findLastVisibleItemPosition() == position) {
                     yearScroller.setTargetPosition(position);
                     linearLayoutManager2.startSmoothScroll(yearScroller);
                 }
 
-                mYear = position==0?"":condition;
+                mYear = position == 0 ? "" : condition;
                 loadItemData(false);
             }
         });
@@ -350,13 +369,13 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
         };
         mTypeAdpater.setOnRecyclerViewItemListener(new OnRecyclerViewItemListener() {
             @Override
-            public void OnRecyclerViewItemListener(int position,String condition) {
+            public void OnRecyclerViewItemListener(int position, String condition) {
                 if (linearLayoutManager1.findLastVisibleItemPosition() == position) {
                     typeScroller.setTargetPosition(position);
                     linearLayoutManager1.startSmoothScroll(typeScroller);
                 }
 
-                mKind = position==0?"":condition;
+                mKind = position == 0 ? "" : condition;
                 loadItemData(false);
             }
         });
@@ -367,7 +386,7 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
     private void initIntent() {
         Intent intent = getIntent();
         if (intent != null) {
-            mTitle = intent.getStringExtra("title");
+            mCategory = intent.getStringExtra("title");
             mType = intent.getIntExtra("type", -1);
         }
     }
@@ -376,12 +395,12 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
     public void onRefresh() {
         if (mItemAdapter.isLoading()) {//正在加载更多，则不刷新
             mSrLayoutVideoScreeningActivity.setRefreshing(false);
-            AllUtils.showToast(this,"正在加载更多");
+            AllUtils.showToast(this, "正在加载更多");
             return;
         }
         if (!isLoading) {
             isLoading = true;
-            mCurrPage=1;
+            mCurrPage = 1;
             loadData(false);
         }
     }
@@ -396,15 +415,17 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
         loadItemData(true);
     }
 
-    public void loadFinished(){
+    public void loadFinished() {
         isLoading = false;
         mSrLayoutVideoScreeningActivity.setRefreshing(false);
     }
 
-    /**更改加载页数并且更新加载状态
+    /**
+     * 更改加载页数并且更新加载状态
+     *
      * @param noNet 是否是网络断开
      */
-    public void loadFinishAndChangeLoadState(boolean noNet,boolean isMore){
+    public void loadFinishAndChangeLoadState(boolean noNet, boolean isMore) {
         HttpLoadStateUtil.getInstance().loadSateChange(noNet);
         mItemAdapter.loadMoreFail();
         if (isMore) {
@@ -421,7 +442,7 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
         CALL_NUMBER++;
 //        Log.w("HTTP111","             "+CALL_NUMBER);
         if (CALL_NUMBER >= 2) {
-            CALL_NUMBER=0;
+            CALL_NUMBER = 0;
             mSrLayoutVideoScreeningActivity.post(new Runnable() {
                 @Override
                 public void run() {
@@ -429,7 +450,7 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
                         mSrLayoutVideoScreeningActivity.setRefreshing(false);
                         isLoading = false;
 //                        Log.w("HTTP","             "+CALL_NUMBER);
-                        CALL_NUMBER=0;
+                        CALL_NUMBER = 0;
                     }
                 }
             });
@@ -443,4 +464,13 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements  BaseQ
     int CALL_NUMBER = 0;
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_return_title_bar://返回
+                finish();
+            default:
+                break;
+        }
+    }
 }

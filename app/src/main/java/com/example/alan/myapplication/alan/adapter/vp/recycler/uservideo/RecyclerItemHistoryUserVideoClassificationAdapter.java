@@ -1,4 +1,4 @@
-package com.example.alan.myapplication.alan.adapter.vp.recycler;
+package com.example.alan.myapplication.alan.adapter.vp.recycler.uservideo;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -8,10 +8,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alan.myapplication.R;
-import com.example.alan.myapplication.alan.bean.UserVideoClassificationVideoBean;
+import com.example.alan.myapplication.alan.adapter.vp.recycler.AutoLayoutRecyclerBaseHolder;
+import com.example.alan.myapplication.alan.bean.UserVideoPlayHistoryBean;
 import com.example.alan.myapplication.alan.gimi.LogUtil;
 import com.example.alan.myapplication.alan.listener.OnDeleteChooseAllChangeListener;
 import com.example.alan.myapplication.alan.picture.loadpicture.PictureManager;
@@ -22,13 +24,13 @@ import java.util.List;
 
 /**
  * Created by Alan on 2018/2/1.
- * 功能：我的影视-收藏的影视专页
+ * 功能：我的影视-影视浏览记录专页
  */
 
-public class RecyclerItemVideoUserVideoClassificationAdapter extends BaseQuickAdapter<UserVideoClassificationVideoBean.DataBean.VideoBean,AutoLayoutRecyclerBaseHolder> {
+public class RecyclerItemHistoryUserVideoClassificationAdapter extends BaseQuickAdapter<UserVideoPlayHistoryBean,AutoLayoutRecyclerBaseHolder> {
     private Context context;
 
-    public RecyclerItemVideoUserVideoClassificationAdapter(@LayoutRes int layoutResId, @Nullable List<UserVideoClassificationVideoBean.DataBean.VideoBean> data) {
+    public RecyclerItemHistoryUserVideoClassificationAdapter(@LayoutRes int layoutResId, @Nullable List<UserVideoPlayHistoryBean> data) {
         super(layoutResId, data);
     }
 
@@ -36,20 +38,32 @@ public class RecyclerItemVideoUserVideoClassificationAdapter extends BaseQuickAd
         this.context = cxt;
     }
 
-
     @Override
-    protected void convert(AutoLayoutRecyclerBaseHolder helper, final UserVideoClassificationVideoBean.DataBean.VideoBean item) {
-        ImageView iv =  (ImageView) helper.getView(R.id.iv_detail_recycler_foot_item_video_fragment);
-        LinearLayout rootView = helper.getView(R.id.ll_root_detail_recycler_foot_item_video_fragment);
-        PictureManager.getInstance().loadServerPic(context,item.img, iv,R.drawable.icon_default,R.drawable.icon_default,PictureManager.ROUND_TYPE,8);
-        helper.setText(R.id.tv_title_detail_recycler_item_video_fragment,item.name+"");
-        helper.setText(R.id.tv_source_detail_recycler_item_video_fragment,"豆瓣 "+item.score);
-        helper.setText(R.id.tv_area_detail_recycler_item_video_fragment,"地区："+item.area);
-        helper.setText(R.id.tv_director_detail_recycler_item_video_fragment,"导演："+item.directors);
-        helper.setText(R.id.tv_actor_detail_recycler_item_video_fragment,"演员："+item.actors);
-        helper.setText(R.id.tv_release_time_detail_recycler_item_video_fragment,"上映时间："+item.showtime);
+    protected void convert(AutoLayoutRecyclerBaseHolder helper, final UserVideoPlayHistoryBean item) {
+        LinearLayout rootView = helper.getView(R.id.ll_root_history_recycler_foot_item_history_activity);
+        ImageView iv =  (ImageView) helper.getView(R.id.iv_history_recycler_foot_item_history_activity);
+        ImageView icon =  (ImageView) helper.getView(R.id.iv_source_icon_history_recycler_foot_item_history_activity);
+        PictureManager.getInstance().loadServerPic(context,item.image, iv,R.drawable.icon_default,R.drawable.icon_default,PictureManager.ROUND_TYPE,8);
+        PictureManager.getInstance().loadServerPic(context,item.sourceicon, icon,R.drawable.icon_default,R.drawable.icon_default,PictureManager.ROUND_TYPE,3);
+        TextView tv = helper.getView(R.id.tv_title_history_recycler_item_history_activity);
+        AllUtils.getInstance().setTextBold(tv);
+        tv.setText(item.title);
+        helper.setText(R.id.tv_duration_history_recycler_item_history_activity,"时长："+item.duration);
+        helper.setText(R.id.tv_year_history_recycler_item_history_activity,"年份："+item.year);
+        helper.setText(R.id.tv_source_history_recycler_item_history_activity,item.playsource);
 
-        final ImageView delete = helper.getView(R.id.iv_delete_detail_recycler_foot_item_video_fragment);
+        final ImageView delete = helper.getView(R.id.iv_delete_history_recycler_foot_item_history_activity);
+        if (isChooseClick) {
+            delete.setVisibility(View.VISIBLE);
+            if (chooseAll) {
+                delete.setSelected(true);
+            }else {
+                delete.setSelected(false);
+            }
+        }else {
+            delete.setVisibility(View.GONE);
+        }
+/////////////////////////////////////////
         if (isChooseClick) {
             delete.setVisibility(View.VISIBLE);
             if (chooseAllType==chooseAllTrue) {
@@ -84,25 +98,30 @@ public class RecyclerItemVideoUserVideoClassificationAdapter extends BaseQuickAd
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                List<UserVideoPlayHistoryBean> data =  getData();
+                int noSelectedCount = 0;
                 if (isChooseClick) {
                     if (delete.isSelected()) {
                         delete.setSelected(false);
                         item.isSelcted = false;
-                        if (item.allChooseTrue && onDeleteChooseAllChangeListener != null) {
-                                onDeleteChooseAllChangeListener.showChooseAllTrueTitle();
+                        for (int i = 0; i < data.size(); i++) {
+                            if (!data.get(i).isSelcted) {
+                                noSelectedCount++;
+                            }
+                        }
+                        if (noSelectedCount>0  && onDeleteChooseAllChangeListener != null) {
+                            onDeleteChooseAllChangeListener.showChooseAllTrueTitle();
                         }
                     }else {
                         delete.setSelected(true);
                         item.isSelcted = true;
-                        List<UserVideoClassificationVideoBean.DataBean.VideoBean> data =  getData();
-                        int noSelectedCount = 0;
-                        int position = layoutManager.findLastVisibleItemPosition();
-                        for (int i = 0; i < position; i++) {
+
+
+
+                        for (int i = 0; i < data.size(); i++) {
                             if (!data.get(i).isSelcted) {
                                 noSelectedCount++;
-
                             }
-                            LogUtil.w("DELETE:item",noSelectedCount+"");
                         }
                         LogUtil.w("DELETE:",data.size()+"");
                         if (noSelectedCount==0 && onDeleteChooseAllChangeListener != null) {
@@ -112,7 +131,7 @@ public class RecyclerItemVideoUserVideoClassificationAdapter extends BaseQuickAd
                     }
 
                 }else {
-                    String video_id  = item.content_id;
+                    String video_id  = item.video_id;
                     if (!TextUtils.isEmpty(video_id)) {
                         AllUtils.getInstance().startActivityWithParamas(context, VideoDetailActivityNew.class,new String[]{"video_id"},new String[]{video_id});
                     }
@@ -120,8 +139,16 @@ public class RecyclerItemVideoUserVideoClassificationAdapter extends BaseQuickAd
             }
         });
 
+
     }
 
+
+
+
+
+
+
+    ///////////////////////////////////////////////
     public void setOnDeleteChooseAllChangeListener(OnDeleteChooseAllChangeListener onDeleteChooseAllChangeListener){
         this.onDeleteChooseAllChangeListener = onDeleteChooseAllChangeListener;
     }
@@ -144,7 +171,7 @@ public class RecyclerItemVideoUserVideoClassificationAdapter extends BaseQuickAd
      * @param chooseAll
      */
     public void setChooseAll(boolean chooseAll) {
-       this.chooseAll = chooseAll;
+        this.chooseAll = chooseAll;
         if (chooseAll) {
             chooseAllType = chooseAllTrue;
         }else {

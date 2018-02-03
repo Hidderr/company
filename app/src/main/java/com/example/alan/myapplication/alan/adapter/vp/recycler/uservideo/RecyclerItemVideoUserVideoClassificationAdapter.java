@@ -1,4 +1,4 @@
-package com.example.alan.myapplication.alan.adapter.vp.recycler;
+package com.example.alan.myapplication.alan.adapter.vp.recycler.uservideo;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -8,26 +8,28 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alan.myapplication.R;
-import com.example.alan.myapplication.alan.bean.UserVideoCassificationFormBean;
+import com.example.alan.myapplication.alan.adapter.vp.recycler.AutoLayoutRecyclerBaseHolder;
+import com.example.alan.myapplication.alan.bean.UserVideoClassificationVideoBean;
 import com.example.alan.myapplication.alan.gimi.LogUtil;
 import com.example.alan.myapplication.alan.listener.OnDeleteChooseAllChangeListener;
 import com.example.alan.myapplication.alan.picture.loadpicture.PictureManager;
+import com.example.alan.myapplication.alan.ui.VideoDetailActivityNew;
+import com.example.alan.myapplication.alan.utils.AllUtils;
 
 import java.util.List;
 
 /**
  * Created by Alan on 2018/2/1.
- * 功能：我的影视-收藏的片单专页
+ * 功能：我的影视-收藏的影视专页
  */
 
-public class RecyclerItemFormUserVideoClassificationAdapter extends BaseQuickAdapter<UserVideoCassificationFormBean.DataBean.VideoListBean,AutoLayoutRecyclerBaseHolder> {
+public class RecyclerItemVideoUserVideoClassificationAdapter extends BaseQuickAdapter<UserVideoClassificationVideoBean.DataBean.VideoBean,AutoLayoutRecyclerBaseHolder> {
     private Context context;
 
-    public RecyclerItemFormUserVideoClassificationAdapter(@LayoutRes int layoutResId, @Nullable List<UserVideoCassificationFormBean.DataBean.VideoListBean> data) {
+    public RecyclerItemVideoUserVideoClassificationAdapter(@LayoutRes int layoutResId, @Nullable List<UserVideoClassificationVideoBean.DataBean.VideoBean> data) {
         super(layoutResId, data);
     }
 
@@ -35,52 +37,19 @@ public class RecyclerItemFormUserVideoClassificationAdapter extends BaseQuickAda
         this.context = cxt;
     }
 
+
     @Override
-    protected void convert(AutoLayoutRecyclerBaseHolder helper, final UserVideoCassificationFormBean.DataBean.VideoListBean item) {
-        LinearLayout rootView = helper.getView(R.id.ll_root_form_recycler_item_video_fragment);
-        ImageView iv =  (ImageView) helper.getView(R.id.iv_form_recycler_item_video_fragment);
+    protected void convert(AutoLayoutRecyclerBaseHolder helper, final UserVideoClassificationVideoBean.DataBean.VideoBean item) {
+        ImageView iv =  (ImageView) helper.getView(R.id.iv_detail_recycler_foot_item_video_fragment);
+        LinearLayout rootView = helper.getView(R.id.ll_root_detail_recycler_foot_item_video_fragment);
         PictureManager.getInstance().loadServerPic(context,item.img, iv,R.drawable.icon_default,R.drawable.icon_default,PictureManager.ROUND_TYPE,8);
+        helper.setText(R.id.tv_title_detail_recycler_item_video_fragment,item.name+"");
+        helper.setText(R.id.tv_source_detail_recycler_item_video_fragment,"豆瓣 "+item.score);
+        helper.setText(R.id.tv_area_detail_recycler_item_video_fragment,"地区："+item.area);
+        helper.setText(R.id.tv_director_detail_recycler_item_video_fragment,"导演："+item.directors);
+        helper.setText(R.id.tv_actor_detail_recycler_item_video_fragment,"演员："+item.actors);
+        helper.setText(R.id.tv_release_time_detail_recycler_item_video_fragment,"上映时间："+item.showtime);
 
-        helper.setText(R.id.tv_title_form_recycler_item_video_fragment,item.name+"");
-        TextView t1 = helper.getView(R.id.tv1_title_form_recycler_item_video_fragment);
-        TextView t2 = helper.getView(R.id.tv2_title_form_recycler_item_video_fragment);
-        TextView t3 = helper.getView(R.id.tv3_title_form_recycler_item_video_fragment);
-        String tag = item.tag;
-        if (!TextUtils.isEmpty(tag)) {
-            String[] tags =tag .split(",");
-            t1.setText(tags[0]);
-            switch (tags.length){
-                case 2:
-                    t2.setText(tags[1]);
-                    break;
-                case 3:
-                    t2.setText(tags[1]);
-                    t3.setText(tags[2]);
-                    break;
-            }
-        }else {
-            t1.setVisibility(View.INVISIBLE);
-            t2.setVisibility(View.INVISIBLE);
-            t3.setVisibility(View.INVISIBLE);
-        }
-
-
-//        ImageView delete = helper.getView(R.id.iv_delete_history_recycler_foot_item_history_activity);
-//        if (isChooseClick) {
-//            delete.setVisibility(View.VISIBLE);
-//            if (chooseAll) {
-//                delete.setSelected(true);
-//            }else {
-//                delete.setSelected(false);
-//            }
-//        }else {
-//            delete.setVisibility(View.GONE);
-//        }
-
-
-
-
-        ////////////////////////////////////////////////
         final ImageView delete = helper.getView(R.id.iv_delete_detail_recycler_foot_item_video_fragment);
         if (isChooseClick) {
             delete.setVisibility(View.VISIBLE);
@@ -112,55 +81,54 @@ public class RecyclerItemFormUserVideoClassificationAdapter extends BaseQuickAda
             item.allChooseFalse = false;
             item.allChooseTrue = false;
         }
+        LogUtil.w("DELETE 1:POSITION:  ", helper.getAdapterPosition()+"");
 
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                List<UserVideoClassificationVideoBean.DataBean.VideoBean> data =  getData();
+                int noSelectedCount = 0;
+                int position = layoutManager.findLastVisibleItemPosition();
+
                 if (isChooseClick) {
-                    if (delete.isSelected()) {
+                    if (item.isSelcted) {
                         delete.setSelected(false);
                         item.isSelcted = false;
-                        if (item.allChooseTrue && onDeleteChooseAllChangeListener != null) {
-                            onDeleteChooseAllChangeListener.showChooseAllTrueTitle();
+                        for (int i = 0; i < data.size(); i++) {
+                            if (!data.get(i).isSelcted) {
+                                noSelectedCount++;
+                            }
+                        }
+                        LogUtil.w("DELETE 11:item 为选择的条目",noSelectedCount+" 当前最后可见 positon "+position+"  总共个数size:" +data.size());
+                        if (noSelectedCount>0  && onDeleteChooseAllChangeListener != null) {
+                                onDeleteChooseAllChangeListener.showChooseAllTrueTitle();
                         }
                     }else {
                         delete.setSelected(true);
                         item.isSelcted = true;
-                        List<UserVideoCassificationFormBean.DataBean.VideoListBean>  data =  getData();
-                        int noSelectedCount = 0;
-                        int position = layoutManager.findLastVisibleItemPosition();
-                        for (int i = 0; i < position; i++) {
+                        for (int i = 0; i < data.size(); i++) {
                             if (!data.get(i).isSelcted) {
                                 noSelectedCount++;
 
                             }
-                            LogUtil.w("DELETE:item",noSelectedCount+"");
                         }
-                        LogUtil.w("DELETE:",data.size()+"");
+                        LogUtil.w("DELETE 22:item 为选择的条目：",noSelectedCount+" 当前最后可见 positon "+position+" 总共个数 size:" +data.size());
                         if (noSelectedCount==0 && onDeleteChooseAllChangeListener != null) {
                             onDeleteChooseAllChangeListener.showChooseAllFalseTitle();
-                            LogUtil.w("DELETE:回调 ",data.size()+"");
                         }
                     }
 
                 }else {
-
+                    String video_id  = item.content_id;
+                    if (!TextUtils.isEmpty(video_id)) {
+                        AllUtils.getInstance().startActivityWithParamas(context, VideoDetailActivityNew.class,new String[]{"video_id"},new String[]{video_id});
+                    }
                 }
             }
         });
 
-
-    }
-    @Override
-    public long getItemId(int position) {
-        return position;
     }
 
-
-
-
-
-    ////////////////////////////////////
     public void setOnDeleteChooseAllChangeListener(OnDeleteChooseAllChangeListener onDeleteChooseAllChangeListener){
         this.onDeleteChooseAllChangeListener = onDeleteChooseAllChangeListener;
     }
@@ -183,7 +151,7 @@ public class RecyclerItemFormUserVideoClassificationAdapter extends BaseQuickAda
      * @param chooseAll
      */
     public void setChooseAll(boolean chooseAll) {
-        this.chooseAll = chooseAll;
+       this.chooseAll = chooseAll;
         if (chooseAll) {
             chooseAllType = chooseAllTrue;
         }else {
@@ -204,4 +172,3 @@ public class RecyclerItemFormUserVideoClassificationAdapter extends BaseQuickAda
         this.layoutManager = layoutManager;
     }
 }
-

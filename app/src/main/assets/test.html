@@ -1,0 +1,53 @@
+<html>
+<meta charset="UTF-8">
+<head>
+    <title>
+        H5测试
+    </title>
+</head>
+<body>
+<h1 align="center">片单详情页面JS互调测试</h1>
+<script>
+                // 片单收藏
+                function callNativeApp(){
+                    try{
+
+                        webkit.messageHandlers.onCollHandler.postMessage("片单收藏")
+                    }catch(error){
+                        console.error('The native context not exist ')
+                    }
+					return "片单收藏";
+                }
+            // 影视详情页面
+            function callNativeApp2(){
+                try{
+
+
+                    webkit.messageHandlers.onDetailHandler.postMessage("影视详情页面")
+                }catch(error){
+                    console.error('The native context not exist ')
+                }
+				return "影视详情页面";
+            }
+            // 影视详情页面
+            function callNativeApp3(){
+                try{
+
+                    webkit.messageHandlers.onShareHandler.postMessage("分享片单")
+                }catch(error){
+                    console.error('The native context not exist ')
+                }
+				return "分享片单";
+            }
+            //APP调用js
+            function changeHead(){
+                document.querySelector('h1').style.color = "red"
+            }
+            </script>
+
+<button style="text-align:center;height:50px;width:200px;font-size:16px" onclick="callNativeApp()">片单收藏</button>
+
+<button style="text-align:center;height:50px;width:220px;font-size:16px" onclick="callNativeApp2()">影视详情页面</button>
+<button style="text-align:center;height:50px;width:220px;font-size:16px" onclick="callNativeApp3()">分享片单</button>
+</body>
+</html>

@@ -7,6 +7,7 @@
 
     <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
                                             android:layout_marginBottom="40px"
+                                            android:layout_marginTop="40px"
                                             android:id="@+id/recyclerview1_recycler_item_header_video_screening_activity"
                                             android:layout_height="wrap_content">
 

@@ -6,13 +6,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.alan.myapplication.R;
 import com.example.alan.myapplication.alan.adapter.vp.MainFragmentVpAdpater;
 import com.example.alan.myapplication.alan.fragment.FragmentFactory;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.Bind;
@@ -36,6 +34,7 @@ public class MainActivityNew extends AutoLayoutActivity {
     @Bind(R.id.vp_activity_main_new)
     ViewPager mVpActivityMainNew;
     private  String[] mTitles = {"工具", "影视", "音乐", "应用"};
+    private  TextView lastTextView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,23 +52,14 @@ public class MainActivityNew extends AutoLayoutActivity {
         mVpActivityMainNew.setAdapter(adapter);
         mVpActivityMainNew.setOffscreenPageLimit(3);//>=3
         mTablayoutActivityMainNew.setViewPager(mVpActivityMainNew);
+
     }
 
 
 
 
     private void initTabLayout() {
-        mTablayoutActivityMainNew.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-//                mTablayoutActivityMainNew.setTextsize(AllUtils.getInstance().px2sp(MainActivityNew.this,50));
-                Toast.makeText(MainActivityNew.this,""+position,Toast.LENGTH_LONG).show();
-               TextView view = mTablayoutActivityMainNew.getTitleView(position);
-//                view.setTextSize(50);
-            }
-
-            @Override
-            public void onTabReselect(int position) {}});
+       mTablayoutActivityMainNew.setCurrentTab(1);
 
     }
 

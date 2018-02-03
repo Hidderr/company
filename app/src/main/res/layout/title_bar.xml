@@ -29,6 +29,8 @@
                   android:paddingLeft="10px"
                   android:paddingRight="10px"
                   android:textSize="18sp"
+                  android:paddingTop="10px"
+                  android:paddingBottom="10px"
                   android:visibility="invisible"
                   android:id="@+id/tv_delete_title_bar"
                   android:textColor="@color/main_black"
@@ -39,6 +41,8 @@
                   android:text="选择"
                   android:paddingLeft="10px"
                   android:paddingRight="10px"
+                  android:paddingTop="10px"
+                  android:paddingBottom="10px"
                   android:id="@+id/tv_choose_title_bar"
                   android:textSize="18sp"
                   android:visibility="invisible"
@@ -70,6 +74,8 @@
                   android:text="全选"
                   android:paddingLeft="10px"
                   android:paddingRight="10px"
+                  android:paddingTop="10px"
+                  android:paddingBottom="10px"
                   android:visibility="invisible"
                   android:id="@+id/tv_choose_all_title_bar"
                   android:textSize="18sp"
@@ -77,6 +83,11 @@
                   android:textColor="@color/main_black"
                   android:layout_height="match_parent"/>
     </LinearLayout>
+
+    <View android:layout_width="match_parent"
+          android:background="#e9eff5"
+          android:layout_height="3px"/>
+
 
 
 </LinearLayout>

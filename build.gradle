@@ -19,7 +19,11 @@ allprojects {
     repositories {
         jcenter()
 
-        maven { url "https://jitpack.io" }//Alan
+        maven { url "https://jitpack.io"
+
+        }//Alan
+
+
     }
 }
 
