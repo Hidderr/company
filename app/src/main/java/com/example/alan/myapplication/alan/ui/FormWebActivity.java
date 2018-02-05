@@ -52,7 +52,7 @@ public class FormWebActivity extends AutoLayoutActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form_web);
+        setContentView(R.layout.a_activity_form_web);
         ButterKnife.bind(this);
         initIntent();
         initTopBar();
@@ -80,7 +80,7 @@ public class FormWebActivity extends AutoLayoutActivity implements View.OnClickL
                 .useDefaultIndicator()// 使用默认进度条
                 .createAgentWeb()//
                 .ready()
-                .go("file:///android_asset/test.html");
+                .go("file:///android_asset/a_test.html");
         mAgentWeb.getJsInterfaceHolder().addJavaObject("android",new Collection(list_id));
     }
 

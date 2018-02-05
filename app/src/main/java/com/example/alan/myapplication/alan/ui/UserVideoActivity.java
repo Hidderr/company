@@ -81,7 +81,7 @@ public class UserVideoActivity extends AutoLayoutActivity implements SwipeRefres
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_video);
+        setContentView(R.layout.a_activity_user_video);
         ButterKnife.bind(this);
         initTopBar();
         initSwipRefreshLayout();
@@ -208,7 +208,7 @@ public class UserVideoActivity extends AutoLayoutActivity implements SwipeRefres
 
 
     private void initRecyclerView() {
-        mRootRecyclerItemAdapter = new RecyclerItemUserVideoAdapter(R.layout.recycler_item_root_video_fragment, mItemDataList);
+        mRootRecyclerItemAdapter = new RecyclerItemUserVideoAdapter(R.layout.a_recycler_item_root_video_fragment, mItemDataList);
         mRootRecyclerItemAdapter.setContext(this);
         mRootRecyclerItemAdapter.setEnableLoadMore(false);
         mRootRecyclerItemAdapter.setHasStableIds(true);

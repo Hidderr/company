@@ -97,7 +97,7 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = LayoutInflater.from(mFragmentContext).inflate(R.layout.fragment_video, null);
+        View view = LayoutInflater.from(mFragmentContext).inflate(R.layout.a_fragment_video, null);
         ButterKnife.bind(this, view);
         initView();
         loadData();
@@ -126,7 +126,7 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
 
 
     private void initRecyclerViewfooter() {
-        mFooterView = LayoutInflater.from(mFragmentContext).inflate(R.layout.fragment_video_footer, null);
+        mFooterView = LayoutInflater.from(mFragmentContext).inflate(R.layout.a_fragment_video_footer, null);
         RecyclerView footerRecyclerView = (RecyclerView) mFooterView.findViewById(R.id.recyclerview_foot_video_fragment);
         mRecyclerFooterItemAdapter = new RecyclerFooterItemAdapter(mFooterDataList);
         mRecyclerFooterItemAdapter.setContext(mFragmentContext);
@@ -154,7 +154,7 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
     }
 
     private void initRecyclerViewHeader() {
-        mHeaderView = LayoutInflater.from(mFragmentContext).inflate(R.layout.fragment_video_header, null);
+        mHeaderView = LayoutInflater.from(mFragmentContext).inflate(R.layout.a_fragment_video_header, null);
         mHeaderVp = (InterceptViewPager) mHeaderView.findViewById(R.id.vp_header_video_fragment);
         mHeaderVp.setPageMargin(18);//设置page间间距，自行根据需求设置
         mHeaderVp.setOffscreenPageLimit(3);//>=3
@@ -171,7 +171,7 @@ public class VideoFragment extends ABaseFragment implements BaseQuickAdapter.Req
     }
 
     private void initRecyclerView() {
-        mRootRecyclerItemAdapter = new RootRecyclerItemAdapter(R.layout.recycler_item_root_video_fragment, mItemDataList);
+        mRootRecyclerItemAdapter = new RootRecyclerItemAdapter(R.layout.a_recycler_item_root_video_fragment, mItemDataList);
         mRootRecyclerItemAdapter.setContext(mFragmentContext);
         mRootRecyclerItemAdapter.setEnableLoadMore(false);
         mRootRecyclerItemAdapter.setHasStableIds(true);

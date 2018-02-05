@@ -130,7 +130,7 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_video_classification);
+        setContentView(R.layout.a_activity_user_video_classification);
         ButterKnife.bind(this);
         initIntent();
         initTopBar();
@@ -188,7 +188,7 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
 
     }
     private void initHisory() {
-        mHistoryAdapter = new RecyclerItemHistoryUserVideoClassificationAdapter(R.layout.recycler_item_history, mHistoryList);
+        mHistoryAdapter = new RecyclerItemHistoryUserVideoClassificationAdapter(R.layout.a_recycler_item_history, mHistoryList);
         mHistoryAdapter.setContext(this);
         mHistoryAdapter.setEnableLoadMore(false);
         mHistoryAdapter.setHasStableIds(true);
@@ -200,7 +200,7 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
         mHistoryAdapter.setLayoutManager(historyLayoutManager);
     }
     private void initForm() {
-        mFormAdapter = new RecyclerItemFormUserVideoClassificationAdapter(R.layout.recycler_item_user_video_form_detail, mFormList);
+        mFormAdapter = new RecyclerItemFormUserVideoClassificationAdapter(R.layout.a_recycler_item_user_video_form_detail, mFormList);
         mFormAdapter.setContext(this);
         mFormAdapter.setEnableLoadMore(true);
         mFormAdapter.setHasStableIds(true);
@@ -212,7 +212,7 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
         mFormAdapter.setLayoutManager(formLayoutManager);
     }
     private void initVideo() {
-        mVideoAdapter = new RecyclerItemVideoUserVideoClassificationAdapter(R.layout.recycler_foot_item_detail_video_fragment, mVideoList);
+        mVideoAdapter = new RecyclerItemVideoUserVideoClassificationAdapter(R.layout.a_recycler_foot_item_detail_video_fragment, mVideoList);
         mVideoAdapter.setContext(this);
         mVideoAdapter.setEnableLoadMore(true);
         mVideoAdapter.setHasStableIds(true);

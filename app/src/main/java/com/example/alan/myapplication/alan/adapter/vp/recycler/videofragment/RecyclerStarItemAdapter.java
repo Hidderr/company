@@ -40,7 +40,7 @@ public class RecyclerStarItemAdapter extends BaseQuickAdapter<VideoFragmentProje
 
         PictureManager.getInstance().loadServerPic(context,item.img, iv,R.drawable.icon_default,R.drawable.icon_default,PictureManager.ROUND_TYPE,8);
         Button btn = helper.getView(R.id.btn_ranking_star_recycler_item_video_fragment);
-        btn.setText(helper.getLayoutPosition()+"");
+        btn.setText((helper.getLayoutPosition()+1)+"");
 
         helper.setText(R.id.tv_title_star_recycler_video_fragment,item.name+"");
         RatingBar ratingBar = helper.getView(R.id.ratingbar_star_recycler_item_video_fragment);

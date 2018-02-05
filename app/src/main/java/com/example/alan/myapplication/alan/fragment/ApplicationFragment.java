@@ -16,7 +16,7 @@ import com.example.alan.myapplication.R;
 public class ApplicationFragment extends ABaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_application, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.a_fragment_application, null);
 
         return view;
     }

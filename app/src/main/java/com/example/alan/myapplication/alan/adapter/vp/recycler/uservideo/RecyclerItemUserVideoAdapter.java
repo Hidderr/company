@@ -144,7 +144,7 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
      */
     private void recommand(AutoLayoutRecyclerBaseHolder helper, RecyclerView recyclerView, TextView tv_more) {
         if (recommend_video!=null &&recommend_video.size()>0  ) {//无观影记录以及收藏影视下，推荐影视
-                RecyclerDetailRecommendUserVideoAdapter mRecyclerDeatilItemAdapter4 = new RecyclerDetailRecommendUserVideoAdapter(R.layout.recycler_foot_item_detail_video_fragment, recommend_video);
+                RecyclerDetailRecommendUserVideoAdapter mRecyclerDeatilItemAdapter4 = new RecyclerDetailRecommendUserVideoAdapter(R.layout.a_recycler_foot_item_detail_video_fragment, recommend_video);
                 mRecyclerDeatilItemAdapter4.setContext(context);
                 mRecyclerDeatilItemAdapter4.setEnableLoadMore(false);
                 mRecyclerDeatilItemAdapter4.setHasStableIds(true);
@@ -170,7 +170,7 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
      */
     private void historyVideo(AutoLayoutRecyclerBaseHolder helper, RecyclerView recyclerView, TextView tv_more, LinearLayoutManager linearLayoutManager4) {
         if (historyBeanList != null && historyBeanList.size()>0) {
-            RecyclerItemPTHistoryUserVideoAdapter mRecyclerPTItemAdapter2 = new RecyclerItemPTHistoryUserVideoAdapter(R.layout.recycler_item_p_t_video_fragment, historyBeanList);
+            RecyclerItemPTHistoryUserVideoAdapter mRecyclerPTItemAdapter2 = new RecyclerItemPTHistoryUserVideoAdapter(R.layout.a_recycler_item_p_t_video_fragment, historyBeanList);
             mRecyclerPTItemAdapter2.setContext(context);
             mRecyclerPTItemAdapter2.setEnableLoadMore(false);
             mRecyclerPTItemAdapter2.setHasStableIds(true);
@@ -198,7 +198,7 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
     private void video(AutoLayoutRecyclerBaseHolder helper, LinearLayout rootView, final RecyclerView recyclerView, TextView tv_more, final LinearLayoutManager linearLayoutManager4) {
         if (collect_video != null && collect_video.collect!=null && collect_video.collect.size()>0 ) {
             final List<UserVideoBean.DataBean.CollectVideoBean.CollectBean> collect = collect_video.collect;
-            RecyclerPTItemUserVideoAdapter mRecyclerPTItemAdapter1 = new RecyclerPTItemUserVideoAdapter(R.layout.recycler_item_p_t_video_fragment, collect);
+            RecyclerPTItemUserVideoAdapter mRecyclerPTItemAdapter1 = new RecyclerPTItemUserVideoAdapter(R.layout.a_recycler_item_p_t_video_fragment, collect);
             mRecyclerPTItemAdapter1.setContext(context);
             mRecyclerPTItemAdapter1.setEnableLoadMore(false);
             mRecyclerPTItemAdapter1.setHasStableIds(true);
@@ -252,7 +252,7 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
                 tv_more.setVisibility(View.INVISIBLE);
             }
             final List<UserVideoBean.DataBean.CollectVideoListBean.VideoListBean> video_list = collect_video_list.video_list;
-            RecyclerFormItemUserVideoAdapter mFormRecyclerAdpater0 = new RecyclerFormItemUserVideoAdapter(R.layout.recycler_item_form_video_fragment, video_list);
+            RecyclerFormItemUserVideoAdapter mFormRecyclerAdpater0 = new RecyclerFormItemUserVideoAdapter(R.layout.a_recycler_item_form_video_fragment, video_list);
             mFormRecyclerAdpater0.setContext(context);
             mFormRecyclerAdpater0.setEnableLoadMore(false);
             mFormRecyclerAdpater0.setHasStableIds(true);

@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:background="@color/white"
               android:layout_height="match_parent">
-    <include layout="@layout/title_bar"/>
+    <!--<include layout="@layout/a_http_load_state"/>-->
 
     <android.support.v4.widget.SwipeRefreshLayout android:layout_width="match_parent"
-                                                  android:id="@+id/sr_layout_usr_video_classification_activity"
+                                                  android:id="@+id/sr_layout_video_fragment"
                                                   android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
-                                                android:id="@+id/recycler_view_user_video_classification_activity"
+                                                android:id="@+id/recycler_view_video_fragment"
                                                 android:layout_height="match_parent">
         </android.support.v7.widget.RecyclerView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+</FrameLayout>

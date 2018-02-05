@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="36px"
                 android:layout_marginRight="36px"
-                layout="@layout/recycler_foot_item_detail_video_fragment"/>
+                layout="@layout/a_recycler_foot_item_detail_video_fragment"/>
 
             <View android:layout_width="match_parent"
                   android:layout_marginTop="40px"

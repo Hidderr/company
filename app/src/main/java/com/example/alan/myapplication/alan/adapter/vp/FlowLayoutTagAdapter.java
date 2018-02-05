@@ -30,7 +30,7 @@ public class FlowLayoutTagAdapter extends TagAdapter<String> {
 
     @Override
     public View getView(FlowLayout parent, int position, String s) {
-        TextView tv = (TextView) LayoutInflater.from(context).inflate(R.layout.flow_layout_item_textview,
+        TextView tv = (TextView) LayoutInflater.from(context).inflate(R.layout.a_flow_layout_item_textview,
                 mFlowLayout, false);
         tv.setText(s);
         return tv;

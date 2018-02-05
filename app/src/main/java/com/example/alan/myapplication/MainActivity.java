@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test);
+        setContentView(R.layout.a_test);
 //    WebView webView = (WebView) findViewById(R.id.webView_animation);
 //        webView.loadUrl("https://baidu.com");
 //        webView.setWebViewClient(new WebViewClient(){

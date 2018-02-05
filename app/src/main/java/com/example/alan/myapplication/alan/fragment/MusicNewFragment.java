@@ -17,7 +17,7 @@ public class MusicNewFragment extends ABaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_music_new, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.a_fragment_music_new, null);
 
         return view;
     }

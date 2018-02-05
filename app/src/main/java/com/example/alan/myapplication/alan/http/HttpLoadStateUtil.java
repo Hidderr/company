@@ -64,7 +64,7 @@ public class HttpLoadStateUtil {
     }
 
     private View initView(Context cxt) {
-        mView = View.inflate(cxt, R.layout.http_load_state,null);
+        mView = View.inflate(cxt, R.layout.a_http_load_state,null);
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -28,7 +28,7 @@ public class ListviewItemHeaderVideoScreeningActivityAdapter extends AllBaseAdap
 
         @Override
         public View initView() {
-            View view = View.inflate(mContext, R.layout.list_item_tv_video_screening_activity, null);
+            View view = View.inflate(mContext, R.layout.a_list_item_tv_video_screening_activity, null);
             tv_car_pinpai_list_item_shop_car_activity = (TextView) view.findViewById(R.id.tv_item_header_video_screening_activity);
 
             return view;

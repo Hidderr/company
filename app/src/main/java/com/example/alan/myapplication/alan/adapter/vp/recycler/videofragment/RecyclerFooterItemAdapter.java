@@ -32,8 +32,8 @@ public class RecyclerFooterItemAdapter extends BaseMultiItemQuickAdapter<VideoFr
      */
     public RecyclerFooterItemAdapter(List<VideoFragmentFooterBean.DataBean.IndividualityBean> data) {
         super(data);
-        addItemType(VideoFragmentFooterBean.DataBean.IndividualityBean.TYPE_DETAIL, R.layout.recycler_foot_item_detail_video_fragment);//类型1影视
-        addItemType(VideoFragmentFooterBean.DataBean.IndividualityBean.TYPE_FORM, R.layout.recycler_foot_item_form_video_fragment);//类型2影视片单
+        addItemType(VideoFragmentFooterBean.DataBean.IndividualityBean.TYPE_DETAIL, R.layout.a_recycler_foot_item_detail_video_fragment);//类型1影视
+        addItemType(VideoFragmentFooterBean.DataBean.IndividualityBean.TYPE_FORM, R.layout.a_recycler_foot_item_form_video_fragment);//类型2影视片单
     }
 
     public void setContext(Context cxt){

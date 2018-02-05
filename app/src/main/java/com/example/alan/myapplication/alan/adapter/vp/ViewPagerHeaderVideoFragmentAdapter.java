@@ -46,7 +46,7 @@ public class ViewPagerHeaderVideoFragmentAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.vp_item_video_fragment, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.a_vp_item_video_fragment, null);
         final int realPosition = getRealPosition(position);
         TextView title = (TextView) view.findViewById(R.id.tv_title_vp_item_video_fragment);
         TextView desc= (TextView) view.findViewById(R.id.tv_desc_vp_item_video_fragment);

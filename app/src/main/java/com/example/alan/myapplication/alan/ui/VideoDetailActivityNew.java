@@ -122,7 +122,7 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_detail_animation);
+        setContentView(R.layout.a_activity_video_detail_animation);
         ButterKnife.bind(this);
         initIntent();
         initTopBar();
@@ -185,7 +185,7 @@ public class VideoDetailActivityNew extends AutoLayoutActivity {
     private void initVideoForm(VideoDetailBean.DataBean dataBean) {
         List<VideoDetailBean.DataBean.RecommendBean> recommend = dataBean.recommend;
         if (recommend != null && recommend.size() > 0) {
-            RecyclerFormItemVideoDetailActivityAdapter mFormRecyclerAdpater = new RecyclerFormItemVideoDetailActivityAdapter(R.layout.recycler_item_form_video_fragment, recommend);
+            RecyclerFormItemVideoDetailActivityAdapter mFormRecyclerAdpater = new RecyclerFormItemVideoDetailActivityAdapter(R.layout.a_recycler_item_form_video_fragment, recommend);
             mFormRecyclerAdpater.setContext(this);
             mFormRecyclerAdpater.setEnableLoadMore(false);
             mFormRecyclerAdpater.setHasStableIds(true);

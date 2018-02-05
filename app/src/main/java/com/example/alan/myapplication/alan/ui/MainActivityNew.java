@@ -38,7 +38,7 @@ public class MainActivityNew extends AutoLayoutActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_new);
+        setContentView(R.layout.a_activity_main_new);
         ButterKnife.bind(this);
         initVp();
         initTabLayout();

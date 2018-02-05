@@ -52,7 +52,7 @@ public class RecyclerRootItemFilmClassificationActivityAdapter extends BaseQuick
 
         tv_more.setVisibility(View.VISIBLE);
         RecyclerView recyclerView = helper.getView(R.id.recyclerview_recycler_item_root_video_fragment);
-        RecyclerPTItemFilmClassificationActivityAdapter mRecyclerPTItemAdapter = new RecyclerPTItemFilmClassificationActivityAdapter(R.layout.recycler_item_p_t_video_fragment, category_data);
+        RecyclerPTItemFilmClassificationActivityAdapter mRecyclerPTItemAdapter = new RecyclerPTItemFilmClassificationActivityAdapter(R.layout.a_recycler_item_p_t_video_fragment, category_data);
         mRecyclerPTItemAdapter.setContext(context);
         mRecyclerPTItemAdapter.setEnableLoadMore(false);
         mRecyclerPTItemAdapter.setHasStableIds(true);

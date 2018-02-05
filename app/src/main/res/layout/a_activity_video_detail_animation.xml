@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include layout="@layout/title_bar"/>
+    <include layout="@layout/a_title_bar"/>
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="36px"
                     android:layout_marginRight="36px"
-                    layout="@layout/recycler_foot_item_detail_video_fragment"/>
+                    layout="@layout/a_recycler_foot_item_detail_video_fragment"/>
 
                 <View android:layout_width="match_parent"
                       android:layout_marginTop="40px"
@@ -210,7 +210,7 @@
                       android:background="#e9eff5"
                       android:layout_height="23px"/>
 
-                <include layout="@layout/recycler_item_root_video_fragment"/>
+                <include layout="@layout/a_recycler_item_root_video_fragment"/>
 
             </LinearLayout>
 

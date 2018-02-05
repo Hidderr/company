@@ -58,7 +58,7 @@ public class VideoClassificationActivity extends AutoLayoutActivity implements S
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_classification);
+        setContentView(R.layout.a_activity_video_classification);
         ButterKnife.bind(this);
         initTopBar();
         initSwipRefreshLayout();
@@ -116,7 +116,7 @@ public class VideoClassificationActivity extends AutoLayoutActivity implements S
 
 
     private void initRecyclerView() {
-        mRootRecyclerItemAdapter = new RecyclerRootItemFilmClassificationActivityAdapter(R.layout.recycler_item_root_video_fragment, mItemDataList);
+        mRootRecyclerItemAdapter = new RecyclerRootItemFilmClassificationActivityAdapter(R.layout.a_recycler_item_root_video_fragment, mItemDataList);
         mRootRecyclerItemAdapter.setContext(this);
         mRootRecyclerItemAdapter.setEnableLoadMore(false);
         mRootRecyclerItemAdapter.setHasStableIds(true);

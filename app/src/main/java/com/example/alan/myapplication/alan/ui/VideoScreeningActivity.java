@@ -92,7 +92,7 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements BaseQu
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_screening);
+        setContentView(R.layout.a_activity_video_screening);
         ButterKnife.bind(this);
         initIntent();
         initTopBar();
@@ -252,7 +252,7 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements BaseQu
 
 
     private void initItem() {
-        mItemAdapter = new RecyclerItemVideoScreeningResultActivityAdapter(R.layout.recycler_item_video_screening, mItemDataBeanList);
+        mItemAdapter = new RecyclerItemVideoScreeningResultActivityAdapter(R.layout.a_recycler_item_video_screening, mItemDataBeanList);
         mItemAdapter.setContext(this);
         mItemAdapter.setEnableLoadMore(true);
         mItemAdapter.setHasStableIds(true);
@@ -280,7 +280,7 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements BaseQu
     }
 
     private void initHeaderView() {
-        mHeaderView = View.inflate(this, R.layout.activity_video_screening_header, null);
+        mHeaderView = View.inflate(this, R.layout.a_activity_video_screening_header, null);
         mTypeRecycler = (RecyclerView) mHeaderView.findViewById(R.id.recyclerview1_recycler_item_header_video_screening_activity);
         mYearRecycler = (RecyclerView) mHeaderView.findViewById(R.id.recyclerview2_recycler_item_header_video_screening_activity);
         mAreaRecycler = (RecyclerView) mHeaderView.findViewById(R.id.recyclerview3_recycler_item_header_video_screening_activity);
@@ -289,7 +289,7 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements BaseQu
 
 
     private void initArea() {
-        mAreaAdpater = new RecyclerItemVideoAreaScreeningHeaderAdapter(R.layout.recycler_header_item_video_screening_activity, mAreaBeanList);
+        mAreaAdpater = new RecyclerItemVideoAreaScreeningHeaderAdapter(R.layout.a_recycler_header_item_video_screening_activity, mAreaBeanList);
         mAreaAdpater.setContext(context);
         mAreaAdpater.setEnableLoadMore(false);
         mAreaAdpater.setHasStableIds(true);
@@ -319,7 +319,7 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements BaseQu
 
 
     private void initYear() {
-        mYearAdpater = new RecyclerItemVideoYearScreeningHeaderAdapter(R.layout.recycler_header_item_video_screening_activity, mYearBeanList);
+        mYearAdpater = new RecyclerItemVideoYearScreeningHeaderAdapter(R.layout.a_recycler_header_item_video_screening_activity, mYearBeanList);
         mYearAdpater.setContext(context);
         mYearAdpater.setEnableLoadMore(false);
         mYearAdpater.setHasStableIds(true);
@@ -351,7 +351,7 @@ public class VideoScreeningActivity extends AutoLayoutActivity implements BaseQu
 
 
     private void initType() {
-        mTypeAdpater = new RecyclerItemVideoTypeScreeningHeaderAdapter(R.layout.recycler_header_item_video_screening_activity, mTypeBeanList);
+        mTypeAdpater = new RecyclerItemVideoTypeScreeningHeaderAdapter(R.layout.a_recycler_header_item_video_screening_activity, mTypeBeanList);
         mTypeAdpater.setContext(context);
         mTypeAdpater.setEnableLoadMore(false);
         mTypeAdpater.setHasStableIds(true);
