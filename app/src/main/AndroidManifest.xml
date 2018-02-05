@@ -12,7 +12,7 @@
         android:name=".alan.global.GlobalApplication"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".alan.ui.FormWebActivity"
+        <activity android:name=".alan.ui.MainActivityNew"
                   android:screenOrientation="portrait"
         >
             <intent-filter>
@@ -45,9 +45,9 @@
                   android:launchMode="singleTop"
                   android:screenOrientation="portrait"/>
 
-        <!--<activity android:name=".alan.ui.FormWebActivity"-->
-                  <!--android:launchMode="singleTop"-->
-                  <!--android:screenOrientation="portrait"/>-->
+        <activity android:name=".alan.ui.FormWebActivity"
+                  android:launchMode="singleTop"
+                  android:screenOrientation="portrait"/>
 
         <meta-data android:name="design_width" android:value="750">
         </meta-data>

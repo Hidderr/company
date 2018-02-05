@@ -56,15 +56,15 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
     /**
      * 收藏的片单类型
      */
-    public String type_collection_form = "0";
+    public final  String type_collection_form = "0";
     /**
      * 收藏的影视类型
      */
-    public String type_collection_video = "1";
+    public final String type_collection_video = "1";
     /**
      * 观影历史
      */
-    public String type_video_hisory = "2";
+    public final String type_video_hisory = "2";
     @Bind(R.id.recycler_view_user_video_classification_activity)
     RecyclerView mRecyclerViewUserVideoClassificationActivity;
     @Bind(R.id.sr_layout_usr_video_classification_activity)
@@ -163,13 +163,13 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
 
     private void initView() {
         switch (mType) {
-            case "0"://片单
+            case type_collection_form://片单
                 initForm();
                 break;
-            case "1"://影视
+            case type_collection_video://影视
                 initVideo();
                 break;
-            case "2"://历史记录
+            case type_video_hisory://历史记录
                 initHisory();
                 break;
         }
@@ -243,15 +243,15 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
 /////////////////////////////////////////////////加载数据///////////////////////////////////////////////////////////////////////////
     private void initData(boolean isLoadMore) {
         switch (mType) {
-            case "0"://片单
+            case type_collection_form://片单
                 initFormData(isLoadMore);
                 mTitle = formTitle;
                 break;
-            case "1"://影视
+            case type_collection_video://影视
                 initVideoData(isLoadMore);
                 mTitle = videoTitle;
                 break;
-            case "2"://历史记录
+            case type_video_hisory://历史记录
                 initHisoryData();
                 mTitle = hisoryTitle;
                 break;
@@ -259,6 +259,8 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
         if (!TextUtils.isEmpty(mTitle)) {
             mTvTitleTitleBar.setText(mTitle + "");
         }
+
+
     }
     /**
      * 设置请求参数
@@ -526,16 +528,18 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
      */
     private void chooseAll(boolean chooseAll) {
         switch (mType) {
-            case "0"://片单
+            case type_collection_form://片单
                 formChooseDeleteAll(chooseAll);
                 break;
-            case "1"://影视
+            case type_collection_video://影视
                 videoChooseDeleteAll(chooseAll);
                 break;
-            case "2"://历史记录
+            case type_video_hisory://历史记录
                 historyChooseDeleteAll(chooseAll);
                 break;
         }
+
+
     }
     /**
      * 判断选择是否被点击，
@@ -871,7 +875,7 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
      */
     private void showRemoveDialog() {
         switch (mType) {
-            case "0"://片单
+            case type_collection_form://片单
                 getRemoveFormParams();
                 if (mRemoveFormList == null || mRemoveFormList.size()==0) {
                     AllUtils.showToast(this, mContent);
@@ -880,7 +884,7 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
                     removeDialog();
                 }
                 break;
-            case "1"://影视
+            case type_collection_video://影视
                 getRemoveVideoParams();
                 if (mRemoveVideoList == null || mRemoveVideoList.size()==0) {
                     AllUtils.showToast(this,mContent);
@@ -889,7 +893,7 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
                     removeDialog();
                 }
                 break;
-            case "2"://历史记录
+            case type_video_hisory://历史记录
                 getRemoveHistoryList();
                 if (mRemoveHisoryList == null || mRemoveHisoryList.size()==0) {
                     AllUtils.showToast(this,mContent);
@@ -901,6 +905,7 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
             default:
                 break;
         }
+
 
     }
     /**
@@ -914,13 +919,13 @@ public class UserVideoClassificationActivity extends AutoLayoutActivity implemen
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (mType) {
-                    case "0"://片单
+                    case type_collection_form://片单
                         removeFormToServer();
                         break;
-                    case "1"://影视
+                    case type_collection_video://影视
                         removeVideoToServer();
                         break;
-                    case "2"://历史记录
+                    case type_video_hisory://历史记录
                         removeHistoryList();
                         break;
                 }

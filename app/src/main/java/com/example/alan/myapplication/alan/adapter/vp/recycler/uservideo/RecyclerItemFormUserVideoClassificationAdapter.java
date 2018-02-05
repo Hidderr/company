@@ -17,6 +17,8 @@ import com.example.alan.myapplication.alan.bean.UserVideoCassificationFormBean;
 import com.example.alan.myapplication.alan.gimi.LogUtil;
 import com.example.alan.myapplication.alan.listener.OnDeleteChooseAllChangeListener;
 import com.example.alan.myapplication.alan.picture.loadpicture.PictureManager;
+import com.example.alan.myapplication.alan.ui.FormWebActivity;
+import com.example.alan.myapplication.alan.utils.AllUtils;
 
 import java.util.List;
 
@@ -77,6 +79,12 @@ public class RecyclerItemFormUserVideoClassificationAdapter extends BaseQuickAda
 //        }else {
 //            delete.setVisibility(View.GONE);
 //        }
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AllUtils.getInstance().startActivityWithParamas(context, FormWebActivity.class,new String[]{"list_id"},new String[]{item.content_id});//跳转片单详情
+            }
+        });
 
 
 

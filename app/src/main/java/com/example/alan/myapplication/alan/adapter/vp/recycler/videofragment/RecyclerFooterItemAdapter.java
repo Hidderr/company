@@ -11,6 +11,8 @@ import com.example.alan.myapplication.R;
 import com.example.alan.myapplication.alan.adapter.vp.recycler.AutoLayoutRecyclerBaseHolder;
 import com.example.alan.myapplication.alan.bean.VideoFragmentFooterBean;
 import com.example.alan.myapplication.alan.picture.loadpicture.PictureManager;
+import com.example.alan.myapplication.alan.ui.FormWebActivity;
+import com.example.alan.myapplication.alan.utils.AllUtils;
 
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class RecyclerFooterItemAdapter extends BaseMultiItemQuickAdapter<VideoFr
     }
 
     @Override
-    protected void convert(AutoLayoutRecyclerBaseHolder helper, VideoFragmentFooterBean.DataBean.IndividualityBean item) {
+    protected void convert(AutoLayoutRecyclerBaseHolder helper, final VideoFragmentFooterBean.DataBean.IndividualityBean item) {
 
         switch (helper.getItemViewType()) {
             case VideoFragmentFooterBean.DataBean.IndividualityBean.TYPE_DETAIL://类型1影视
@@ -87,6 +89,13 @@ public class RecyclerFooterItemAdapter extends BaseMultiItemQuickAdapter<VideoFr
                     t2.setVisibility(View.INVISIBLE);
                     t3.setVisibility(View.INVISIBLE);
                 }
+                iv1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AllUtils.getInstance().startActivityWithParamas(context, FormWebActivity.class,new String[]{"list_id"},new String[]{item.content_id});
+                    }
+                });
+
                 break;
         }
 

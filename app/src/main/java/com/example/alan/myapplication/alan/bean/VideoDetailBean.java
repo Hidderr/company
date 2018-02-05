@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Created by Alan on 2018/1/29.
- * 功能：
+ * 功能：影视详情
  */
 
 public class VideoDetailBean {

@@ -13,6 +13,8 @@ import com.example.alan.myapplication.R;
 import com.example.alan.myapplication.alan.adapter.vp.recycler.AutoLayoutRecyclerBaseHolder;
 import com.example.alan.myapplication.alan.bean.VideoFragmentProjectBean;
 import com.example.alan.myapplication.alan.picture.loadpicture.PictureManager;
+import com.example.alan.myapplication.alan.ui.FormWebActivity;
+import com.example.alan.myapplication.alan.utils.AllUtils;
 
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class RecyclerFormItemAdapter extends BaseQuickAdapter<VideoFragmentProje
 
 
     @Override
-    protected void convert(AutoLayoutRecyclerBaseHolder helper, VideoFragmentProjectBean.DataBean.SubjectsBean.SubjectDataBean item) {
+    protected void convert(AutoLayoutRecyclerBaseHolder helper, final VideoFragmentProjectBean.DataBean.SubjectsBean.SubjectDataBean item) {
         ImageView iv =  (ImageView) helper.getView(R.id.iv_form_recycler_item_video_fragment);
         PictureManager.getInstance().loadServerPic(context,item.img, iv,R.drawable.icon_default,R.drawable.icon_default,PictureManager.ROUND_TYPE,8);
 
@@ -63,6 +65,13 @@ public class RecyclerFormItemAdapter extends BaseQuickAdapter<VideoFragmentProje
             t2.setVisibility(View.INVISIBLE);
             t3.setVisibility(View.INVISIBLE);
         }
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AllUtils.getInstance().startActivityWithParamas(context, FormWebActivity.class,new String[]{"list_id"},new String[]{item.content_id});
+            }
+        });
+
 
     }@Override
     public long getItemId(int position) {

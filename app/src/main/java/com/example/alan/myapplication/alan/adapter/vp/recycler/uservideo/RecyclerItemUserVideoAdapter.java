@@ -17,6 +17,7 @@ import com.example.alan.myapplication.alan.adapter.vp.recycler.AutoLayoutRecycle
 import com.example.alan.myapplication.alan.bean.UserVideoBean;
 import com.example.alan.myapplication.alan.bean.UserVideoPlayHistoryBean;
 import com.example.alan.myapplication.alan.bean.UserVideoRootBean;
+import com.example.alan.myapplication.alan.gimi.LogUtil;
 import com.example.alan.myapplication.alan.ui.UserVideoClassificationActivity;
 import com.example.alan.myapplication.alan.utils.AllUtils;
 
@@ -66,10 +67,6 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
      */
     public String TYPE_VIDEO_HISORY="2";
 
-    /**
-     * 跳转到Activity需要传递的类型
-     */
-    public String mType;
     public final String mName = "收藏片单";
     public final String mName1= "收藏影视";
     public final String mName2= "观影历史";
@@ -92,20 +89,20 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
         tv_more.setVisibility(View.VISIBLE);
         int position = helper.getAdapterPosition();
         rootView.setVisibility(View.VISIBLE);
-        LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
 
         switch (position){
             case 0://推荐片单或者收藏的片单
-                form(helper, recyclerView, tv_more, linearLayoutManager4);
+                form(helper, recyclerView, tv_more, linearLayoutManager);
                 break;
             case 1://收藏的影视、影视记录、推荐片单三选一
                 String title = itemDataList.get(1).titleName;
                 switch(title){
                     case mName1://
-                        video(helper, rootView, recyclerView, tv_more, linearLayoutManager4);
+                        video(helper, rootView, recyclerView, tv_more, linearLayoutManager);
                     break;
                     case mName2:
-                        historyVideo(helper, recyclerView, tv_more, linearLayoutManager4);
+                        historyVideo(helper, recyclerView, tv_more, linearLayoutManager);
                         break;
                      case mName3:
                          recommand(helper, recyclerView, tv_more);
@@ -115,12 +112,12 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
                 }
                 break;
             case 2://观影记录
-                historyVideo(helper, recyclerView, tv_more, linearLayoutManager4);
+                historyVideo(helper, recyclerView, tv_more, linearLayoutManager);
                 break;
             default:
                 break;
         }
-        AllUtils.getInstance().startActivityWithView(UserVideoClassificationActivity.class,tv_more,context,new String[]{"type"},new String[]{mType});//点击跳转详情Activity
+
 //        sroolEndEnterActivity(recyclerView,tv.getText().toString());//滑动到底跳转Activity
     }
 
@@ -186,10 +183,8 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
             recyclerView.setLayoutManager(linearLayoutManager4);
             recyclerView.getItemAnimator().setChangeDuration(0);
             recyclerView.setAdapter(mRecyclerPTItemAdapter2);
-            mType = TYPE_VIDEO_HISORY;
-            if (historyBeanList.size()!=1) {
-                sroolEndEnterActivity(recyclerView);
-            }
+            scollEndToEnterActivity(recyclerView, linearLayoutManager4,  historyBeanList.size(),TYPE_VIDEO_HISORY);
+            AllUtils.getInstance().startActivityWithView(UserVideoClassificationActivity.class,tv_more,context,new String[]{"type"},new String[]{TYPE_VIDEO_HISORY});//点击跳转详情Activity
         }
     }
 
@@ -200,7 +195,7 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
      * @param tv_more
      * @param linearLayoutManager4
      */
-    private void video(AutoLayoutRecyclerBaseHolder helper, LinearLayout rootView, RecyclerView recyclerView, TextView tv_more, LinearLayoutManager linearLayoutManager4) {
+    private void video(AutoLayoutRecyclerBaseHolder helper, LinearLayout rootView, final RecyclerView recyclerView, TextView tv_more, final LinearLayoutManager linearLayoutManager4) {
         if (collect_video != null && collect_video.collect!=null && collect_video.collect.size()>0 ) {
             final List<UserVideoBean.DataBean.CollectVideoBean.CollectBean> collect = collect_video.collect;
             RecyclerPTItemUserVideoAdapter mRecyclerPTItemAdapter1 = new RecyclerPTItemUserVideoAdapter(R.layout.recycler_item_p_t_video_fragment, collect);
@@ -216,11 +211,31 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
             recyclerView.setLayoutManager(linearLayoutManager4);
             recyclerView.getItemAnimator().setChangeDuration(0);
             recyclerView.setAdapter(mRecyclerPTItemAdapter1);
-            mType = TYPE_COLLECTION_VIDEO;
-            if (collect.size()!=1) {
-                sroolEndEnterActivity(recyclerView);
-            }
+            LogUtil.w("DELETE","pofffffffff ");
+            final int size = collect.size()-1;
+            scollEndToEnterActivity(recyclerView, linearLayoutManager4,  size,TYPE_COLLECTION_VIDEO);
+            AllUtils.getInstance().startActivityWithView(UserVideoClassificationActivity.class,tv_more,context,new String[]{"type"},new String[]{TYPE_COLLECTION_VIDEO});//点击跳转详情Activity
+
         }
+    }
+
+    /**当RecyclerView右滑到底部跳转activity
+     * @param recyclerView
+     * @param linearLayoutManager4
+     * @param size
+     */
+    private void scollEndToEnterActivity(RecyclerView recyclerView, final LinearLayoutManager linearLayoutManager4, final int size, final String type) {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int position = linearLayoutManager4.findLastCompletelyVisibleItemPosition();
+                if (position>=0 &&size >position) {
+                    AllUtils.getInstance().scrollEndEnterActivity(recyclerView,context,UserVideoClassificationActivity.class,AllUtils.HORIZONTAL,new String[]{"type"},new String[]{type});
+                }
+
+            }
+        });
     }
 
     /**推荐片单、收藏片单
@@ -244,26 +259,26 @@ public class RecyclerItemUserVideoAdapter extends BaseQuickAdapter<UserVideoRoot
             recyclerView.setLayoutManager(linearLayoutManager4);
             recyclerView.getItemAnimator().setChangeDuration(0);
             recyclerView.setAdapter(mFormRecyclerAdpater0);
-            mType = TYPE_COLLECTION_FORM;
-            if (!mName4.equals(title ) && video_list.size()!=1) {
-                sroolEndEnterActivity(recyclerView);
+            if (!mName4.equals(title ) ) {
+                scollEndToEnterActivity(recyclerView, linearLayoutManager4,  video_list.size(),TYPE_COLLECTION_FORM);
             }
+            AllUtils.getInstance().startActivityWithView(UserVideoClassificationActivity.class,tv_more,context,new String[]{"type"},new String[]{TYPE_COLLECTION_FORM});//点击跳转详情Activity
         }
     }
 
-    /**滑动到底跳转Activity
-     * @param recyclerView
-     */
-    private void sroolEndEnterActivity(RecyclerView recyclerView) {
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                    AllUtils.getInstance().scrollEndEnterActivity(recyclerView,context,UserVideoClassificationActivity.class,AllUtils.HORIZONTAL,new String[]{"type"},new String[]{mType});
-            }
-        });
-
-    }
+//    /**滑动到底跳转Activity
+//     * @param recyclerView
+//     */
+//    private void sroolEndEnterActivity(RecyclerView recyclerView) {
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                    AllUtils.getInstance().scrollEndEnterActivity(recyclerView,context,UserVideoClassificationActivity.class,AllUtils.HORIZONTAL,new String[]{"type"},new String[]{mType});
+//            }
+//        });
+//
+//    }
 
 
     /**跳转影视详情Activity

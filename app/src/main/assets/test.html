@@ -9,45 +9,57 @@
 <h1 align="center">片单详情页面JS互调测试</h1>
 <script>
                 // 片单收藏
-                function callNativeApp(){
-                    try{
-
-                        webkit.messageHandlers.onCollHandler.postMessage("片单收藏")
-                    }catch(error){
+                function callNativeApp() {
+                    try {
+                        window.android.collectForm()
+                    } catch(error) {
                         console.error('The native context not exist ')
                     }
-					return "片单收藏";
+                    try {
+                        webkit.messageHandlers.onCollHandler.postMessage("")
+                    } catch(error) {
+                        console.error('The native context not exist ')
+                    }
                 }
             // 影视详情页面
-            function callNativeApp2(){
-                try{
-
-
-                    webkit.messageHandlers.onDetailHandler.postMessage("影视详情页面")
-                }catch(error){
+            function callNativeApp2(id){
+                try {
+                    window.android.collectVideo(id)
+                } catch(error) {
                     console.error('The native context not exist ')
                 }
-				return "影视详情页面";
+                try{
+                    webkit.messageHandlers.onDetailHandler.postMessage(id)
+                } catch(error) {
+                    console.error('The native context not exist ')
+                }
             }
             // 影视详情页面
-            function callNativeApp3(){
-                try{
-
-                    webkit.messageHandlers.onShareHandler.postMessage("分享片单")
-                }catch(error){
+            function callNativeApp3(title){
+                try {
+                    window.android.share(title)
+                } catch(error) {
                     console.error('The native context not exist ')
                 }
-				return "分享片单";
+                try{
+                    webkit.messageHandlers.onShareHandler.postMessage(title)
+                } catch(error) {
+                    console.error('The native context not exist ')
+                }
             }
             //APP调用js
-            function changeHead(){
-                document.querySelector('h1').style.color = "red"
+            function changeCollectStatus(tag){
+                if (tag) {
+                    document.querySelector('#collect').style.color = "red"
+                } else {
+                    document.querySelector('#collect').style.color = "blue"
+                }
             }
             </script>
 
-<button style="text-align:center;height:50px;width:200px;font-size:16px" onclick="callNativeApp()">片单收藏</button>
+<button id='collect' style="text-align:center;height:50px;width:200px;font-size:16px" onclick="callNativeApp()">片单收藏</button>
 
-<button style="text-align:center;height:50px;width:220px;font-size:16px" onclick="callNativeApp2()">影视详情页面</button>
-<button style="text-align:center;height:50px;width:220px;font-size:16px" onclick="callNativeApp3()">分享片单</button>
+<button style="text-align:center;height:50px;width:220px;font-size:16px" onclick="callNativeApp2('72d166434618f99ec9db6ef62eed1887')">影视详情页面</button>
+<button style="text-align:center;height:50px;width:220px;font-size:16px" onclick="callNativeApp3(`牛逼的片单`)">分享片单</button>
 </body>
 </html>
