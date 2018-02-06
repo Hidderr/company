@@ -13,7 +13,7 @@ import com.example.alan.myapplication.alan.utils.Utils;
 
 public class GlobalApplication extends Application {
 
-    public static Context context;
+
 
     @Override
     public void onCreate() {
@@ -35,4 +35,5 @@ public class GlobalApplication extends Application {
         }
         return context;
     }
+    public static Context context;
 }

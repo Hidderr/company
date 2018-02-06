@@ -10,14 +10,7 @@
     <color name="color_bule">#4392F3</color>
     <color name="text_color_bule">#333333</color>
 
-    <color name="fragment_video_text_blue_nav">#007aff</color>
-    <color name="fragment_video_text_title_blue">#113260</color>
-    <color name="fragment_video_text_des_blue">#b9c6d8</color>
-    <color name="fragment_video_text_bg_shape">#ebf0f4</color>
-    <color name="flow_layout_text_bg_shape">#EDF1F6</color>
-    <color name="actors">#b9c6d8</color>
-    <color name="douban">#24d77f</color>
-    <color name="divider">#e9eff5</color>
+
 
     <color name="D9D9D9">#D9D9D9</color>
     <color name="zitiyanse">#8b8b8f</color>
@@ -60,7 +53,7 @@
     <color name="moren">#33000000</color>
     <color name="blue">#007aff</color>
     <color name="B3B3B3">#B3B3B3</color>
-    <color name="circle">#E9EFF5</color>
+
     <color name="D4D4D">#4D4D4D</color>
     <color name="filetime">#949494</color>
     <color name="C7C7C7">#C7C7C7</color>
@@ -75,6 +68,15 @@
     <color name="swiperefresh_color2">#ffffbb33</color>
     <color name="swiperefresh_color3">#ffff4444</color>
     <color name="swiperefresh_color4">#ffaa66cc</color>
+    <color name="circle">#E9EFF5</color>
+    <color name="fragment_video_text_blue_nav">#007aff</color>
+    <color name="fragment_video_text_title_blue">#113260</color>
+    <color name="fragment_video_text_des_blue">#b9c6d8</color>
+    <color name="fragment_video_text_bg_shape">#ebf0f4</color>
+    <color name="flow_layout_text_bg_shape">#EDF1F6</color>
+    <color name="actors">#b9c6d8</color>
+    <color name="douban">#24d77f</color>
+    <color name="divider">#e9eff5</color>
 
     <color name="contents_text">#ff000000</color>
     <color name="encode_view">#ffffffff</color>

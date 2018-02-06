@@ -3,6 +3,7 @@ package com.example.alan.myapplication.alan.bean;
 import android.util.Log;
 
 import com.example.alan.myapplication.alan.gimi.EasyAES;
+import com.example.alan.myapplication.alan.gimi.LogUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -65,6 +66,12 @@ public class JsonConvertUtils {
                 String js = EasyAES.getInstance().decrypt(j.getString("data"));
                 Type type = new TypeToken<List<VideoScreeningResultBean.DataBean>>(){}.getType();
                 ((VideoScreeningResultBean)instance).data = new Gson().fromJson(js, type);
+            }else if("CollectBean".equals(name)){
+                ((CollectBean)instance).msg = j.getString("msg");
+                ((CollectBean)instance).code = j.getInt("code");
+                String js = EasyAES.getInstance().decrypt(j.getString("data"));
+                LogUtil.w("TAG","判断是否收藏成功 data： "+js);
+                ((CollectBean)instance).data = new Gson().fromJson(js, CollectBean.DataBean.class);
             }
             return instance;
         } catch (InstantiationException e) {
